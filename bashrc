@@ -92,12 +92,13 @@ fi
 export PS1="$lb\u@\h \w$rb$ps "
 
 shopt -s extglob
+set -o emacs
 
 # make vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
 	export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-		vim -R -c 'set ft=man fdm=indent fdn=1 fen nomod nolist nonu' \
+		vim -R -c 'set ft=man fdm=indent fdn=1 fen nomod noma nolist nonu' \
 		-c 'map q :q<CR>' -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
 		-c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 fi

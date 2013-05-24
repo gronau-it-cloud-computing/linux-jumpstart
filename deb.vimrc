@@ -74,11 +74,22 @@ set showmatch		" Show matching brackets.
 set autowrite		" Automatically save before commands like :next and :make
 "set hidden         " Hide buffers when they are abandoned
 "set mouse=a		" Enable mouse usage (all modes)
+set ruler			" Show position in document at all times (l,c,%)
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
+
+" Disable movements with arrow keys
+inoremap  <Up>     <NOP>
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
 
 " Bind F3 to timestamp HH:MM:SS AP:\t
 nmap <F3> a<C-R>=strftime("%I:%M:%S %p:\t")<CR>
