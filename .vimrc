@@ -81,16 +81,6 @@ if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
 
-" Disable movements with arrow keys
-inoremap  <Up>     <NOP>
-inoremap  <Down>   <NOP>
-inoremap  <Left>   <NOP>
-inoremap  <Right>  <NOP>
-noremap   <Up>     <NOP>
-noremap   <Down>   <NOP>
-noremap   <Left>   <NOP>
-noremap   <Right>  <NOP>
-
 " Bind F3 to timestamp HH:MM:SS AP:\t
 nmap <F3> a<C-R>=strftime("%I:%M:%S %p:\t")<CR>
 imap <F3> <C-R>=strftime("%I:%M:%S %p:\t")<CR>
