@@ -1,0 +1,28 @@
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  handle_size = 0
+  tab_position = hidden
+[keybindings]
+  cycle_prev = None
+  next_tab = <Primary>Tab
+  cycle_next = None
+  prev_tab = <Primary><Shift>Tab
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    background_darkness = 0.49
+    audible_bell = True
+    palette = "#000000:#cd0000:#00cd00:#cdcd00:#1e90ff:#cd00cd:#00cdcd:#e5e5e5:#4c4c4c:#ff0000:#00ff00:#ffff00:#4682b4:#ff00ff:#00ffff:#ffffff"
+    foreground_color = "#00ff00"
+    icon_bell = False
+    show_titlebar = False
+[layouts]
+  [[default]]
+    [[[child1]]]
+      profile = default
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

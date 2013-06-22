@@ -1,0 +1,6 @@
+alias sudo='sudo '
+alias ll='ls -alFh'
+alias la='ls -A'
+alias l='ls -CF'
+alias proxy='ssh -D 8675 prometheus.crabdance.com'
+alias df='df -h'
