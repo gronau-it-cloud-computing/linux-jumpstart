@@ -994,6 +994,7 @@
 	<application name="terminator_desktop">
 	  <desktop>4</desktop>
 	  <fullscreen>yes</fullscreen>
+	  <maximized>yes</maximized>
 	  <skip_taskbar>yes</skip_taskbar>
 	  <layer>below</layer>
 	  <decor>no</decor>

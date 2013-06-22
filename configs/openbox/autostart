@@ -11,8 +11,8 @@ eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
 # Start Composite manager
 xcompmgr -c -t-5 -l-5 -r4.2 -o.55 &
 
-# Starts Nitogen and restore wallpaper from previous session
-nitrogen --restore &
+# Restore wallpaper from previous session
+sh ~/.fehbg &
 
 # Sound
 alsactl restore &
@@ -27,11 +27,10 @@ conky -q &
 xfce4-power-manager &
 
 # Start the Clipboard manager after 3 seconds wait
-(sleep 3s && clipit) &
+(sleep 1s && clipit) &
 
 # start volume manager after 3 seconds
-(sleep 3s && volti) &
-#(sleep 3s && volumeicon) &
+(sleep 1s && volti) &
 
 # Start screensaver
 xscreensaver -no-splash &

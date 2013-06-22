@@ -4,9 +4,10 @@
   tab_position = hidden
 [keybindings]
   cycle_prev = None
-  next_tab = <Primary>Tab
+  new_tab = <Ctrl>t
+  next_tab = <Ctrl>Tab
   cycle_next = None
-  prev_tab = <Primary><Shift>Tab
+  prev_tab = <Ctrl><Shift>Tab
 [profiles]
   [[default]]
     scrollbar_position = hidden
