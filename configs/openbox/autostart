@@ -26,9 +26,6 @@ conky -q &
 # Start up power management
 xfce4-power-manager &
 
-# Start the Clipboard manager after 3 seconds wait
-(sleep 1s && clipit) &
-
 # start volume manager after 3 seconds
 (sleep 1s && volti) &
 

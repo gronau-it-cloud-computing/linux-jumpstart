@@ -19,8 +19,13 @@
   </item>
   <item label="Home">
     <action name="Execute">
-      <execute>nautilus</execute>
+      <execute>thunar</execute>
     </action>
+  </item>
+  <item label="FBreader">
+	<action name="Execute">
+	  <execute>fbreader</execute>
+	</action>
   </item>
   <!--separator label="Places"/-->
   <separator label="Settings"/>
