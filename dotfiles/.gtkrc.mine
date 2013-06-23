@@ -1,0 +1,9 @@
+style "Sans" 
+{ 
+	font_name = "Sans 10" 
+} 
+widget_class "*" style "Sans" 
+	
+gtk-font-name = "Sans 10"
+gtk-icon-theme-name = "tango"
+gtk-toolbar-style = GTK_TOOLBAR_ICONS

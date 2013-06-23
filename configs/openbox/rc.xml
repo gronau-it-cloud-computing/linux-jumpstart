@@ -40,7 +40,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Carbon</name>
+    <name>Boje-Greyscale</name>
     <titleLayout>DSLIMC</titleLayout>
     <!--
       avaible characters are NDSLIMC, each can occur at most once.
@@ -465,21 +465,21 @@
         <command>cb-aerosnap --right</command>
       </action>
     </keybind>
-	<keybind key="XF86AudioRaiseVolume">
-	  <action name="Execute">
-    	<execute>amixer set Master 5+</execute>
-	  </action>
-	</keybind>
-	<keybind key="XF86AudioLowerVolume">
-	  <action name="Execute">
-		<execute>amixer set Master 5-</execute>
-		</action>
-	</keybind>
-	<keybind key="XF86AudioMute">
-	  <action name="Execute">
-		<execute>amixer set Master toggle</execute>
-	  </action>
-	</keybind>
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute">
+        <execute>amixer set Master 5+</execute>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute">
+        <execute>amixer set Master 5-</execute>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioMute">
+      <action name="Execute">
+        <execute>amixer set Master toggle</execute>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>8</dragThreshold>
@@ -991,13 +991,13 @@
         <y>center</y>
       </position>
     </application>
-	<application name="terminator_desktop">
-	  <desktop>4</desktop>
-	  <fullscreen>yes</fullscreen>
-	  <maximized>yes</maximized>
-	  <skip_taskbar>yes</skip_taskbar>
-	  <layer>below</layer>
-	  <decor>no</decor>
-	</application>
+    <application name="terminator_desktop">
+      <desktop>4</desktop>
+      <fullscreen>yes</fullscreen>
+      <maximized>yes</maximized>
+      <skip_taskbar>yes</skip_taskbar>
+      <layer>below</layer>
+      <decor>no</decor>
+    </application>
   </applications>
 </openbox_config>

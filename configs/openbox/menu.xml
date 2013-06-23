@@ -28,53 +28,53 @@
     <separator label="Configs"/>
     <item label="Edit Hosts">
       <action name="Execute">
-        <execute>gksudo gedit /etc/hosts</execute>
+        <execute>gksudo gvim /etc/hosts</execute>
       </action>
     </item>
     <item label="Edit Grub">
       <action name="Execute">
-        <execute>gksudo gedit /etc/default/grub</execute>
+        <execute>gksudo gvim /etc/default/grub</execute>
       </action>
     </item>
     <item label="Tint2 RC">
       <action name="Execute">
-        <command>gedit ~/.config/tint2/tint2rc</command>
+        <command>gvim ~/.config/tint2/tint2rc</command>
       </action>
     </item>
     <item label="gmrun RC">
       <action name="Execute">
-      <command>gedit ~/.gmrunrc</command>
+      <command>gvim ~/.gmrunrc</command>
       </action>
     </item>
     <item label="Gtk3 Theme rc">
       <action name="Execute">
-        <execute>gedit .config/gtk-3.0/settings.ini</execute>
+        <execute>gvim .config/gtk-3.0/settings.ini</execute>
       </action>
     </item>
     <item label="Gtk2 Theme rc">
       <action name="Execute">
-        <execute>gedit .gtkrc-2.0</execute>
+        <execute>gvim .gtkrc-2.0</execute>
       </action>
       </item>
     <item label="Edit Fstab">
       <action name="Execute">
-        <execute>gksudo gedit /etc/fstab</execute>
+        <execute>gksudo gvim /etc/fstab</execute>
       </action>
     </item>
     <menu id="obConfig" label="Openbox">
       <item label="Edit menu.xml">
         <action name="Execute">
-          <command>gedit ~/.config/openbox/menu.xml</command>
+          <command>gvim ~/.config/openbox/menu.xml</command>
         </action>
       </item>
       <item label="Edit rc.xml">
         <action name="Execute">
-          <command>gedit ~/.config/openbox/rc.xml</command>
+          <command>gvim ~/.config/openbox/rc.xml</command>
         </action>
       </item>
       <item label="Edit autostart">
         <action name="Execute">
-          <command>gedit ~/.config/openbox/autostart</command>
+          <command>gvim ~/.config/openbox/autostart</command>
         </action>
       </item>
       <separator/>
@@ -107,20 +107,10 @@
         <command>xfce4-power-manager-settings</command>
       </action>
     </item>
-    <item label="Choose Wallpaper">
-      <action name="Execute">
-        <command>nitrogen</command>
-      </action>
-    </item>
     <separator label="Tools"/>
     <item label="GParted">
       <action name="Execute">
         <command>gksudo gparted</command>
-      </action>
-    </item>
-    <item label="Synaptic Package Manager">
-      <action name="Execute">
-        <command>gksudo synaptic</command>
       </action>
     </item>
     </menu>
