@@ -70,10 +70,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-if [ -d ~/bin ]; then
-	export PATH+=":~/bin"
-fi
-
 # Set PS1
 # Colour $ red if in an ssh session
 if [ -n "$SSH_CLIENT" ]; then
