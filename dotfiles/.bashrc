@@ -27,11 +27,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
@@ -71,21 +66,28 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Set PS1
+# Pretty colors
+red='\[\e[0;31m\]'
+cyan='\[\e[0;36m\]'
+blue='\[\e[0;34m\]'
+green='\[\e[0;32m\]'
+norm='\[\e[m\]'
+
 # Colour $ red if in an ssh session
 if [ -n "$SSH_CLIENT" ]; then
-	ps='\[\e[0;31m\]\$\[\e[m\]'
+	ps="$red\$$norm"
 else
 	ps='\$'
 fi
 if [ "$SHLVL" != "1" ]; then
-	lb='\[\e[0;36m\][\[\e[m\]'
-	rb='\[\e[0;36m\]]\[\e[m\]'
+	lb="$cyan[$norm"
+	rb="$cyan]$norm"
 else
 	lb='['
 	rb=']'
 fi
 
-export PS1="$lb\u@\h \w$rb$ps "
+export PS1="$lb$green\u@\h $blue\w$norm$rb$ps "
 
 shopt -s extglob
 set -o emacs
