@@ -75,6 +75,7 @@ set autowrite		" Automatically save before commands like :next and :make
 "set hidden         " Hide buffers when they are abandoned
 "set mouse=a		" Enable mouse usage (all modes)
 set ruler			" Show position in document at all times (l,c,%)
+set nohlsearch		" Do not highlight every occurance matching the last search pattern
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")

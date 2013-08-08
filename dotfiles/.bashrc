@@ -75,7 +75,7 @@ norm='\[\e[m\]'
 
 # Colour $ red if in an ssh session
 if [ -n "$SSH_CLIENT" ]; then
-	ps="$red\$$norm"
+	ps="$red\\\$$norm"
 else
 	ps='\$'
 fi
