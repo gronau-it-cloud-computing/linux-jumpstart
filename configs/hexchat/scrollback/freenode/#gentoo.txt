@@ -1,0 +1,475 @@
+T 1379718784 29*	#gentoo :http://www.gentoo.org
+T 1379718826 18<MarduK>	lol
+T 1379718826 24*	edit_ has quit (Ping timeout: 256 seconds)
+T 1379718855 23*	theluckymike (maikls@nat/ibm/x-zsrukpzoozfcpwjq) has joined
+T 1379718862 23*	mutantkeyboard (~mutantkey@89-201-230-43.dsl.optinet.hr) has joined
+T 1379718862 18<MarduK>	jwpierce3: do you mean packages you have installed but don't have a binpkg for?
+T 1379718890 20<sluidfoe>30	Hi, I'm getting an import error with pygtk when I run a script, but I have pygtk emerged. I've run into this before and I think it had something to do with the python bindings?
+T 1379718913 19<MarduK>	sluidfoe: possibly.. where's the error?
+T 1379718928 23*	Orfheo (~Orfheo@unaffiliated/orfheo) has joined
+T 1379718938 Marbug MarduK marens Mareo marienz Marquel martiert 
+T 1379718939 Marbug MarduK marens Mareo marienz Marquel martiert 
+T 1379718943 23*	BlankVerse (~pankajm@202.3.77.238) has joined
+T 1379718964 18<jwpierce3>	MarduK: exactly
+T 1379718976 24*	Barbariandude has quit (Ping timeout: 246 seconds)
+T 1379718987 20<sluidfoe>30	MarduK: do you mean the exact error message or what is generating the error?
+T 1379718991 18<MarduK>	jwpierce3: do you know you can use "quickpkg" instead of rebuilding the packages?
+T 1379718994 23*	Proksima (~Proksima@modemcable176.215-176-173.mc.videotron.ca) has joined
+T 1379719013 19<MarduK>	sluidfoe: i mean we need to see the error in order to analyze the problem
+T 1379719030 24*	lefou has quit (Ping timeout: 256 seconds)
+T 1379719031 18<jwpierce3>	MarduK: no didn't know that
+T 1379719037 Marbug MarduK marens Mareo marienz Marquel martiert 
+T 1379719038 24*	thorus has quit (Ping timeout: 264 seconds)
+T 1379719043 18<MarduK>	jwpierce3: now you do ;-)
+T 1379719046 24*	Aquares has quit (Read error: Connection reset by peer)
+T 1379719046 24*	Aquare has quit (Read error: Connection reset by peer)
+T 1379719052 23*	poedel (~poedel@i5E86A8B1.versanet.de) has joined
+T 1379719053 24*	Maple__ has quit (Ping timeout: 245 seconds)
+T 1379719054 23*	edit_ (~edit_21@jamesphipps.plus.com) has joined
+T 1379719061 24*	PLM3 has quit (Quit: leaving)
+T 1379719067 18<MarduK>	jwpierce3: but it will by default exclude /etc files and stuff like that
+T 1379719075 20<sluidfoe>30	MarduK: Traceback (most recent call last):  File "/usr/local/bin/cb-exit", line 3, in <module> import pygtk ImportError: No module named pygtk
+T 1379719084 24*	espy has quit (Quit: KVIrc 4.3.1 Aria http://www.kvirc.net/)
+T 1379719085 23*	shrtckt (~shrtckt@2601:0:9700:37b:21f:3cff:fe27:a6ee) has joined
+T 1379719092 24*	BoomerBile has quit (Remote host closed the connection)
+T 1379719098 18*	MarduK sees /usr/local/bin and runs
+T 1379719105 24*	adeel has quit (Read error: Connection reset by peer)
+T 1379719105 23*	Aquares (aquares@lion-wave.com) has joined
+T 1379719106 23*	Aquare (~Aquare@gateway/shell/mydevil.net/x-zdiderfymnooeozk) has joined
+T 1379719128 23*	adeeln (~adeeln@199.48.103.26) has joined
+T 1379719132 24*	shrtckt has quit (Client Quit)
+T 1379719137 19<MarduK>	sluidfoe: likely it's python3 and you don't have python2 bindinds or vice versa.
+T 1379719137 23*	refrax (~refrax@lettuce.whatbox.ca) has joined
+T 1379719142 24*	jcallen has quit (Ping timeout: 252 seconds)
+T 1379719142 18<MarduK>	bindings*
+T 1379719155 23*	shrtckt (~shrtckt@2601:0:9700:37b:21f:3cff:fe27:a6ee) has joined
+T 1379719158 23*	jcallen (~quassel@gentoo/developer/jcallen) has joined
+T 1379719158 22*	26ChanServ gives voice to 18jcallen
+T 1379719184 23*	Doomhammer (~axelr@mail.avenueconsultants.com) has joined
+T 1379719199 24*	colock has quit (Quit: nice eveneing and even nicer week-end!!! bye bye meow!)
+T 1379719206 18<Doomhammer>	anyone use kde-misc/kscreen? the qdbus commands the ebuild says should be run to enable the KCM module don't actually work
+T 1379719218 23*	eyescream (~eyescream@unaffiliated/eyescream) has joined
+T 1379719260 18<MarduK>	most newer software uses gobject introspection for gtk anyway...
+T 1379719270 18<refrax>	hello all
+T 1379719297 23*	bpkent (~quassel@ool-45775d88.dyn.optonline.net) has joined
+T 1379719326 24*	spyder has quit (Quit: leaving)
+T 1379719327 18<refrax>	I am interested in trying Gentoo out but I really can't get my head aroun USE flags, I've read the official docs but I don't really know how to determine what I need based on my hardware setup
+T 1379719361 18<jwpierce3>	MarduK: I'm building a new system now. I've already built gcc, glibc and some of the packages by way of "emerge -qb @system" but I a problem I had to trace down with gcc, which I finally got. So I just didn't want to rebuild @system again and I figured there might be a way to find all the packages that I didn't have a binary for and build those.
+T 1379719363 18<Doomhammer>	ahhh, the commands are intended to be run as the user logging into KDE, not root
+T 1379719369 18<MarduK>	refrax: USE flags are basically "optional" software components for a given package.  think of it like a burger with optional fixins
+T 1379719377 24*	bpkent_ has quit (Ping timeout: 245 seconds)
+T 1379719377 Marbug MarduK marens Mareo marienz Marquel martiert 
+T 1379719398 23*	jekle (~quassel@178.79.133.76) has joined
+T 1379719407 18<refrax>	MarduK: but not using USE flags would leave me with a bland flavorless gentoo? :)
+T 1379719417 24*	28redarrow_ is now known as 18redarrow
+T 1379719425 23*	XuR (~yourmothe@ip68-96-56-38.ph.ph.cox.net) has joined
+T 1379719426 23*	Maple__ (znc@trivialand/player/maple) has joined
+T 1379719426 18<MarduK>	jwpierce3: you could list all you packages and then compare them agains /usr/portage/packages
+T 1379719427 20<sluidfoe>30	MarduK: I remembered: I had to change the shebang to /usr/bin/env python2. Thanks for jogging my memory
+T 1379719433 18<Doomhammer>	refrax, generally a good strategy is to just pick a desktop profile (if that's what you're using gentoo for), and then enable USE flags as-needed if you see something missing you want to use
+T 1379719433 23*	PLM3 (~user@78.58.113.10) has joined
+T 1379719438 18<MarduK>	refrax: no
+T 1379719442 23*	chris_99 (~chris_99@unaffiliated/chris-99/x-3062929) has joined
+T 1379719443 23*	ZogG_laptop (~ZogG_lapt@funtoo/user/ZogG) has joined
+T 1379719462 18<Doomhammer>	refrax, e.g. i use the default/linux/amd64/13.0/desktop/kde profile, and I don't have very many custom use flags enabled - just a few here or there for particular packages
+T 1379719465 18<shrtckt>	refrax: just make sure your profile is set correctly #eselect profile list
+T 1379719476 18<MarduK>	refrax: it just means you dont' have to have pickles if you don't eat pickles
+T 1379719488 18*	MarduK doesn't like pickles
+T 1379719506 24*	Doomhammer has quit (Quit: Leaving)
+T 1379719518 24*	leefan has quit (Ping timeout: 256 seconds)
+T 1379719525 18<jwpierce3>	MarduK: yeah that sucks
+T 1379719540 24*	f4cl3y has quit (Ping timeout: 256 seconds)
+T 1379719540 18<refrax>	ok. so it's nothing to do with my hardware at all then. Yeah I was misunderstanding.
+T 1379719542 24*	luke_penn has quit (Read error: Operation timed out)
+T 1379719555 18<MarduK>	jwpierce3: i don't know a magical flag that you can pass to portage that will do it all for you. might require some scripting or text file editing
+T 1379719561 23*	NIN101 (~NIN@p5DD28EC9.dip0.t-ipconnect.de) has joined
+T 1379719569 23*	f4cl3y (~f4cl3y@unaffiliated/f4cl3y) has joined
+T 1379719571 18<MarduK>	refrax: you're thinking CFLAGS.. that's different than USE flags
+T 1379719584 18<MarduK>	kinda although some USE flags relate to hardware as well
+T 1379719597 18<fim>	what would be the fastest way to check if a package is installed from a script - preferrably - using only tools provided by sys-apps/portage?
+T 1379719598 24*	eproms73 has quit (Quit: Nettalk6 - www.ntalk.de)
+T 1379719613 18<jwpierce3>	MarduK: I think that would have to be a pretty comprehensive script.
+T 1379719615 18<MarduK>	refrax: short answer is don't worry about it for now :P you can make changes later
+T 1379719616 23*	SkunkyFone (~skunky@unaffiliated/skunky) has joined
+T 1379719620 18<MarduK>	jwpierce3: not really
+T 1379719628 18<refrax>	MarduK: ok thanks
+T 1379719638 24*	Archiater has quit (Read error: Connection reset by peer)
+T 1379719657 18<theluckymike>	hey guys. I just noticed that on my win7 headphone jack doesnt work anymore ( I guess after I installed gentoo )
+T 1379719661 18<theluckymike>	any hints ? :/
+T 1379719662 18<MarduK>	jwpierce3: do an equery l put it in a file. compare to what's in packages. edit the file then quickpkg `cat file`
+T 1379719664 18<MarduK>	more or less
+T 1379719679 18<MarduK>	jwpierce3: or simply quickpkg everything. you'll just duplicate some effort
+T 1379719720 18<MarduK>	win7 headphone jack?
+T 1379719744 18<MarduK>	does win7 have it's own kind of headphone jacks?
+T 1379719780 18<theluckymike>	MarduK  I ment that when I plug in headphones, sound stops from speakers, but headphones still not working. In gentoo all is fine
+T 1379719783 18<theluckymike>	and it was fine before
+T 1379719794 24*	boris64 has quit (Ping timeout: 260 seconds)
+T 1379719795 18<theluckymike>	maybe there is some driver thing with alsa that affects also win installation?
+T 1379719813 18<MarduK>	theluckymike: it's probably an alsa/pusleaudio settings
+T 1379719827 18<MarduK>	setting*
+T 1379719836 18<jwpierce3>	MarduK: thanks
+T 1379719837 24*	tholin_ has quit (Ping timeout: 248 seconds)
+T 1379719838 18<theluckymike>	I checked alsamixer and all things are turned on. And as I tested in gentoo headphones works
+T 1379719839 18<MarduK>	maybe alsamixer?
+T 1379719853 23*	gizless (~gizmore@dslb-092-077-135-158.pools.arcor-ip.net) has joined
+T 1379719861 18<MarduK>	dunno :( sorry
+T 1379719880 18<theluckymike>	ok will test
+T 1379719881 18<theluckymike>	thx anyway
+T 1379719884 23*	Kabaka (~Kabaka@botters/kabaka) has joined
+T 1379719903 24*	PLM3 has quit (Ping timeout: 240 seconds)
+T 1379719907 18<gizless>	latest audacious fails with "sid" useflag now :(
+T 1379719937 24*	28gizless is now known as 18gizmore
+T 1379719941 24*	gizmore has quit (Changing host)
+T 1379719941 23*	gizmore (~gizmore@unaffiliated/gizmore) has joined
+T 1379719997 23*	BCMM (~BCMM@unaffiliated/bcmm) has joined
+T 1379720007 24*	28NoirSoldats_ is now known as 18NoirSoldats
+T 1379720008 24*	shrtckt has quit (Quit: Leaving)
+T 1379720027 23*	PLM3 (~user@78.58.113.10) has joined
+T 1379720038 24*	REdOG has quit (Quit: Lost terminal)
+T 1379720067 18<MarduK>	jwpierce3: (untested) for cpv in `equery l \* -F '$cpv'`; do [ -e /usr/portage/packages/$i.tbz2 ] || quickpkg =$cpv; done;
+T 1379720079 18<MarduK>	s/$i/$cpv/
+T 1379720131 18<refrax>	going to try to install gentoo on my rPI at some point, but I've never built gentoo outside of a VM, wondering if an rPI is the best first real hardware training ground for this. :P
+T 1379720186 18<MarduK>	rpi real hardware?
+T 1379720223 18<MarduK>	refrax: no
+T 1379720228 18<MarduK>	but that's just my opinion
+T 1379720230 18<refrax>	yeah I've never installed on real hardware before, jsut VMs
+T 1379720246 18<refrax>	MarduK: looking thru the guide at gentoo wiki, looks... intricate..
+T 1379720253 23*	`VL (~vl@87.245.166.81) has joined
+T 1379720255 18<MarduK>	refrax: i mean i don't consider rpi "real" hardware
+T 1379720259 18<srhb>	When I try to emerge systemd, udev blocks. Can I safely unmerge it?
+T 1379720280 18<refrax>	MarduK: only real in the sense it's more physical than a VM in Virtualbox :P
+T 1379720283 18<MarduK>	srhb: you would have to (yes)
+T 1379720291 18<ecormier>	refrax: rpi will either be crazy slow, or you'll need to learn a whole pile of cross-dev/distcc stuff
+T 1379720302 23*	zamabe (zamabe@unaffiliated/zamabe) has joined
+T 1379720308 18<jwpierce3>	MarduK: Looks like it is working fine, Than you.
+T 1379720318 18<srhb>	MarduK: Thank you. :)
+T 1379720318 18<refrax>	yeah I think I'll try a laptop or something first then. Thanks guys.
+T 1379720322 18<MarduK>	refrax: yeah but it's like comparing a blow-up doll to a corpse.. i'll take the doll thank you.
+T 1379720341 24*	dash_ has quit (Ping timeout: 260 seconds)
+T 1379720357 Bad arguments for user command.
+T 1379720360 EXIT ECHO EXEC EXECCONT EXECKILL EXECSTOP EXECWRITE 
+T 1379720362 EXIT EXEC EXECCONT EXECKILL EXECSTOP EXECWRITE 
+T 1379720364 20*	Disconnected (20)
+T 1379721915 20*	Disconnected (20)
+T 1379704784 19*	Now talking on 22#gentoo
+T 1379704784 22*	Topic for 22#gentoo is: Gentoo Linux Support | udev-200 upgrade: http://bit.ly/14ZV93u | Can't speak? /j #gentoo-ops | long pastes: dpaste.org | masked by license? http://xrl.us/bhunqc | perl-cleaner python-updater = good | read postinst messages plz
+T 1379704784 22*	Topic for 22#gentoo set by 26iamben!~iamben@adsl-70-255-19-58.dsl.spfdmo.sbcglobal.net (24Wed Apr  3 20:45:58 2013)
+T 1379704785 -18ChanServ-	[#gentoo] Welcome to #gentoo || Acceptable Usage Policy @ http://www.gentoo.org/main/en/irc.xml || Keep the language clean || Google is your friend || No bots or scripts that talk || Turn off public away messages || More than three lines to #flood or a pastebin service, no spam!
+T 1379704785 29*	#gentoo :http://www.gentoo.org
+T 1379704788 18<grknight>	Gentoo will not be choosing systemd as the default in the foreseeable future
+T 1379704807 24*	echolot has quit (Read error: Connection reset by peer)
+T 1379704840 18<srhb>	grknight: I see. I guess I'll have a forum search to see what's going on. :)
+T 1379704856 18<evelyette_>	hi, does anybody know what the "widget" at the top of the picture is: http://postimg.org/image/y2mrpyai9/ .. I would really like to try that out?
+T 1379704859 24*	Neqoxec has quit (Ping timeout: 248 seconds)
+T 1379704908 18<grknight>	yerodin: i guess if you have a more "standard" install, it works just fine
+T 1379704919 20<sluidfoe>30	howdy, I'm having some sound problems. I have an intel hda 7 series/c210, and I see that snd_hda_intel is loaded when I lspci -k. any ideas?
+T 1379704938 19<srhb>	sluidfoe: Uh, on what?
+T 1379704962 23*	Neqoxec (~Neqoxec@c-24-21-110-149.hsd1.or.comcast.net) has joined
+T 1379704967 19<srhb>	sluidfoe: What are the sound problems?
+T 1379704990 20<sluidfoe>30	srhb: it's a lenovo y500. the problem is that i don't have any sound
+T 1379705019 19<PLM3>	sluidfoe: you sure it's not muted?
+T 1379705020 19<srhb>	sluidfoe: Do you have alsa? Have you turned on the outputs in alsamixer?
+T 1379705029 23*	p3rror (~mezgani@41.249.33.244) has joined
+T 1379705050 24*	mamac has quit (Ping timeout: 245 seconds)
+T 1379705058 24*	dman777_alter has quit (Ping timeout: 252 seconds)
+T 1379705063 20<sluidfoe>30	srhb: yep, I unmuted everything in alsamixer just to be sure
+T 1379705071 18<e1z0>	:O
+T 1379705079 19<PLM3>	sluidfoe: there's a mute/unmute button on your keyboard
+T 1379705081 19<srhb>	sluidfoe: Did you also turn up the
+T 1379705082 18<PLM3>	try mashing it
+T 1379705084 18<srhb>	Ack.
+T 1379705085 18<tty1>	does anyone happen to know the name of a distro (which i cant recall) which is a three letter acronym, and often used in a corporate enviornment. I thought they called it "HEL linux" or something but i cant recall now
+T 1379705108 18<srhb>	tty1: RHE Linux?
+T 1379705117 18<srhb>	tty1: Also known as Red Hat Enterprise Linux
+T 1379705122 18<PLM3>	Hell no :D
+T 1379705126 24*	scripty has quit (Quit: Leaving)
+T 1379705146 18<tty1>	srhb, if that is a common abbreviation then yea, probably, thanks
+T 1379705155 18<srhb>	tty1: It's more commonly called RHEL I think.
+T 1379705163 18<yerodin>	grknight: You're guessing right :]
+T 1379705164 23*	freedomrun (~freedomru@unaffiliated/freedomrun) has joined
+T 1379705166 18<MarduK>	i never herd of it calle RHE Linux
+T 1379705174 18<MarduK>	heard*
+T 1379705185 18<tty1>	yea it was definately three letters :(
+T 1379705197 18<MarduK>	i kinda like HEL Linux though lol
+T 1379705198 18<tty1>	i have an account ont he box but sincei dont know what distro it is i dont know where to go for help :(
+T 1379705209 23*	qstrahl (~qstrahl@108.161.118.12) has joined
+T 1379705241 18<MarduK>	OEL?
+T 1379705261 18<grknight>	tty1: many distros have a /etc/*-release or /etc/*-version
+T 1379705261 18<MarduK>	RHEL's evil twin?
+T 1379705275 18<srhb>	tty1: uname might help you
+T 1379705287 18<e1z0>	 gentooooooooooooooooooo i love youuuuuuuuuuu!
+T 1379705293 23*	Archiater (~dmgening@109.233.242.90) has joined
+T 1379705297 18<srhb>	tty1: Like uname -a
+T 1379705297 24*	Bininin has quit (Quit: Bininin)
+T 1379705299 18<e1z0>	 damn flood
+T 1379705304 18<tty1>	there is an lsb-release ... does that sound like a hint?
+T 1379705308 18<e1z0>	sorry
+T 1379705315 18<tty1>	srhb, yea uname -a was my first try.
+T 1379705327 18<grknight>	tty1: cat out the file.. usually gives clues
+T 1379705328 18<MarduK>	oh yeah i forget about lsb_release
+T 1379705342 18<tty1>	ahh its oracle enteprise linux :)
+T 1379705346 18<tty1>	thanks for hte help guys
+T 1379705349 18<MarduK>	OEL
+T 1379705350 18<tty1>	i shall move to there
+T 1379705353 20<sluidfoe>30	PLM3: I don't see a mute button, but I mashed volume up to no effect
+T 1379705372 19<PLM3>	sluidfoe: which laptop model is this ?
+T 1379705377 18<grknight>	MarduK: there's a /etc/gentoo-release too
+T 1379705386 23*	mamac (~mamac@82.244.149.62) has joined
+T 1379705395 24*	DLPeterson has quit (Quit: leaving)
+T 1379705448 20<sluidfoe>30	Lenovo Y500 is all I can find in the documentation and on my order information. There are no dedicated media keys, just function key combos
+T 1379705472 18<PLM3>	yes, the combo key
+T 1379705479 18<PLM3>	fn + something_something
+T 1379705484 23*	pks_ (~pks@g225033228.adsl.alicedsl.de) has joined
+T 1379705562 23*	liudas (~liudas@unaffiliated/liudas) has joined
+T 1379705571 23*	Midnigh2ker (~Toker@unaffiliated/midnightoker) has joined
+T 1379705609 24*	tomboy64 has quit (Ping timeout: 240 seconds)
+T 1379705611 20<sluidfoe>30	PLM3: right, there is no mute toggle, there is only volume up and volume down. Fn+Right and Fn+Left, respectively. And I mashed volume up.
+T 1379705613 23*	leonixyz_ (~leonixyz@net-2-34-213-85.cust.dsl.vodafone.it) has joined
+T 1379705622 24*	leonixyz has quit (Read error: Connection reset by peer)
+T 1379705622 18<PLM3>	try alsamixer
+T 1379705632 18<PLM3>	and then test out with speaker-test
+T 1379705650 18<PLM3>	also, there's a chance that your hda codec is wrong (kernel config, near intel_hda....)
+T 1379705689 18<grknight>	'speaker-test -c2 -t wav' is a good basic test
+T 1379705698 19<mingdao>	sluidfoe: To test speaker: "speaker-test -Dplug:front -c2 -t wav"  To search for codec: grep Codec /proc/asound/card0/codec#*
+T 1379705716 24*	anagromataf has quit (Ping timeout: 264 seconds)
+T 1379705718 24*	evelyette_ has quit (Ping timeout: 252 seconds)
+T 1379705727 18<MarduK>	mic check one
+T 1379705735 23*	karakedi (~eAC53C340@78.190.117.171) has joined
+T 1379705738 18<mingdao>	just don't blow air ;)
+T 1379705738 24*	karakedi has quit (Changing host)
+T 1379705738 23*	karakedi (~eAC53C340@unaffiliated/orphan) has joined
+T 1379705797 18<mingdao>	Then check your kernel for codecs: zgrep -i codec /proc/config.gz   (you only need the one for your card, but enable all if you can't figure it out)
+T 1379705798 20<sluidfoe>30	oh, interesting. It doesn't work as me, but it does as root. Bad permissions somewhere?
+T 1379705807 19<mingdao>	sluidfoe: gid
+T 1379705821 19<mingdao>	sluidfoe: id ... must be in audio
+T 1379705832 20*	sluidfoe 30facepalms
+T 1379705834 23*	schaerli (~schaerli@72-137.61-188.cust.bluewin.ch) has joined
+T 1379705888 18<PLM3>	happens
+T 1379705896 19<mingdao>	sluidfoe: gpasswd -a me audio
+T 1379705912 23*	Levanu (~Levanu@cpe-98-28-4-88.columbus.res.rr.com) has joined
+T 1379705916 18<mingdao>	"It doesn't work as me" ... if your user isn't 'me', then change that.
+T 1379705943 20<sluidfoe>30	usermod -aG audio me. Thanks for the help
+T 1379705957 18<grknight>	of course, if you did it via terminal session with consolekit or logind support, you don't need the permission
+T 1379705968 18<grknight>	gid permission*
+T 1379705982 23*	Gnintendo (~Gnintendo@unaffiliated/gnintendo) has joined
+T 1379706022 23*	ZogG_laptop (~ZogG_lapt@109.64.96.222) has joined
+T 1379706022 24*	ZogG_laptop has quit (Changing host)
+T 1379706022 23*	ZogG_laptop (~ZogG_lapt@funtoo/user/ZogG) has joined
+T 1379706033 grawity gregorio Griffon26 grinsekatze Griz64 grknight 
+T 1379706043 20<sluidfoe>30	grknight: I'll look into that. thanks
+T 1379706047 24*	Jackneill has quit (Remote host closed the connection)
+T 1379814765 19*	Now talking on 22#gentoo
+T 1379814765 22*	Topic for 22#gentoo is: Gentoo Linux Support | udev-200 upgrade: http://bit.ly/14ZV93u | Can't speak? /j #gentoo-ops | long pastes: dpaste.org | masked by license? http://xrl.us/bhunqc | perl-cleaner python-updater = good | read postinst messages plz
+T 1379814765 22*	Topic for 22#gentoo set by 26iamben!~iamben@adsl-70-255-19-58.dsl.spfdmo.sbcglobal.net (24Wed Apr  3 20:45:58 2013)
+T 1379814765 -18ChanServ-	[#gentoo] Welcome to #gentoo || Acceptable Usage Policy @ http://www.gentoo.org/main/en/irc.xml || Keep the language clean || Google is your friend || No bots or scripts that talk || Turn off public away messages || More than three lines to #flood or a pastebin service, no spam!
+T 1379814765 29*	#gentoo :http://www.gentoo.org
+T 1379814837 18<eroen>	I hear one of them is less likely to lock you out of your system if you fudge it up.
+T 1379814839 18<salamanderrake>	what does this mean? http://pastebin.com/mcTQqiiu if its the same package why complain about re-emerging them?
+T 1379814841 20<sluidfoe>30	howdy. does anyone know about getting bluetooth to work with an Atheros AR8161 controller?
+T 1379814891 24*	marduk has quit (Ping timeout: 268 seconds)
+T 1379814891 18<salamanderrake>	or is that because they have not been unmasked/keyworded yet?
+T 1379814934 18<ascendant>	the main block is llvm
+T 1379814963 23*	kcroft (~kcroft@24-207-29-42.eastlink.ca) has joined
+T 1379814981 24*	mefyl has quit (Ping timeout: 248 seconds)
+T 1379814985 18<ascendant>	you asked portage to install llvm 3.3 and 3.2 at the same time
+T 1379815020 18<ascendant>	the other slot conflicts can likely be resolved automatically
+T 1379815052 18<Asphyxiated|Dk>	salamanderrake, it is reinstalling because whatever you tried to emerge has those as dependencies and need to be rebuilt with the new package, i am not sure what command you use but if it isnt allowing you to emerge try adding those packages to the ones you are emerging, add llvm clang libdrm python-exec etc to the emerge command and it will work but you will have to reinstall stuff too
+T 1379815105 18<Asphyxiated|Dk>	salamanderrake, i doubt you explicity asked for llvm 3.3 and 3.2, you have 3.2 installed and it wants to install 3.3 but you need to list llvm in the emerge command
+T 1379815175 18<mjsmith>	eroen, got it thanks to this thread. http://www.gossamer-threads.com/lists/gentoo/embedded/227484 very odd behavior
+T 1379815214 24*	twitch153 has quit (Ping timeout: 240 seconds)
+T 1379815215 18<salamanderrake>	ah ok, but what I wanted to know was why it was complaining if I used USE="wayland gles" emerge -avuND world --autounmask-write
+T 1379815224 23*	sporkbox (~daniel@unaffiliated/sporkbox) has joined
+T 1379815259 18<salamanderrake>	yes it was only complaining cause they were not unmasked to begin with, once they were keyworded and unmasked there are no more complaints.
+T 1379815493 18<sporkbox>	How do you go from the "persistent naming" to eth0, et al in eudev? I had to reinstall and deal with regular udev until I could install eudev, so now I have to reverse this retardation.
+T 1379815503 23*	qstrahl`` (~qstrahl``@76-10-152-182.dsl.teksavvy.com) has joined
+T 1379815520 18<sporkbox>	I saw something about an 80-netnames rule or something...
+T 1379815602 18<likewhoa>	sporkbox: you can disable that with "net.ifnames=0" in kernel line but it's best just to use the new retardation ;)
+T 1379815608 23*	meow271 (~meow27@ool-44c297db.dyn.optonline.net) has joined
+T 1379815626 18<sporkbox>	That's for me to decide, but that's all that needs changing?
+T 1379815634 18<likewhoa>	aye
+T 1379815650 18<sporkbox>	Is there any way to get it changed over while it's running? Also remember this is eudev.
+T 1379815675 24*	qstrahl` has quit (Ping timeout: 245 seconds)
+T 1379815677 18<likewhoa>	not without a new udev rule
+T 1379815686 18<likewhoa>	that's for you to figure out
+T 1379815693 18<sporkbox>	Ah, and that new rule's dynamically generated, eh?
+T 1379815704 18<likewhoa>	yea
+T 1379815721 18<sporkbox>	alright, I'll try the net.ifname fix
+T 1379815724 18<sporkbox>	thanks
+T 1379815725 18*	eroen wonders how you managed to get inconsistent naming in eudev without trying to.
+T 1379815764 18<sporkbox>	eroen: installed stage3, which came with udev. ran a makeworld (that included switching to eudev), went to sleep
+T 1379815776 18<salamanderrake>	eroen, you run gentoo of course, silly.
+T 1379815784 18<eroen>	Oh. :/
+T 1379815796 18<sporkbox>	iow didn't have a choice
+T 1379815798 18<sporkbox>	:(
+T 1379815822 23*	applejack (john@182.160.153.133) has joined
+T 1379815862 18<Corvus`>	"predictable" interface name problem? ))
+T 1379815879 18<sporkbox>	not a problem per se, just compulsion to go back to eth0
+T 1379815896 23*	p_adams (~p_adams@24-107-140-111.dhcp.stls.mo.charter.com) has joined
+T 1379815938 18<Corvus`>	sporkbox: actually, I think if you have more than one interface, you should rename it yourself to lan* or something
+T 1379815946 23*	twitch153 (~twitch153@cpe-142-105-168-174.buffalo.res.rr.com) has joined
+T 1379815946 24*	twitch153 has quit (Changing host)
+T 1379815946 23*	twitch153 (~twitch153@gentoo/developer/twitch153) has joined
+T 1379815946 22*	26ChanServ gives voice to 18twitch153
+T 1379815950 18<sporkbox>	Corvus`: just one ethernet adapter
+T 1379815951 18<sporkbox>	no wlan
+T 1379815953 18<Corvus`>	So it would be thrue predictable
+T 1379815958 18<Corvus`>	*true
+T 1379815970 24*	28CaptainPone is now known as 18Catie
+T 1379815972 18<sporkbox>	lan* does sound pretty good though
+T 1379815979 18<sporkbox>	checking lspci output...
+T 1379815986 18<sporkbox>	doesn't give me the identifiers I need to write a rule :(
+T 1379816010 23*	aktiv[b] (~loke@74.248.202.84.customer.cdi.no) has joined
+T 1379816015 18<Corvus`>	sporkbox: Personally I've used MAC-address
+T 1379816024 18<sporkbox>	that sounds cool
+T 1379816034 24*	p_adams has quit (Client Quit)
+T 1379816034 18<sporkbox>	how do you fetch that info?
+T 1379816042 18<sporkbox>	just use ifconfig's output?
+T 1379816043 18<Corvus`>	SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="00:24:01:00:43:a0", NAME="lan4"
+T 1379816051 23*	p_adams (~p_adams@24-107-140-111.dhcp.stls.mo.charter.com) has joined
+T 1379816057 18<Corvus`>	Yes.
+T 1379816080 18<sporkbox>	well this sucks, I don't see a mac address in its output
+T 1379816082 18<sporkbox>	even with -a
+T 1379816128 18<ascendant>	you wot?
+T 1379816131 24*	wastelock has quit (Quit: Ex-Chat)
+T 1379816134 18<ascendant>	ether 00:1e:8c:ca:be:5d
+T 1379816175 18<sporkbox>	oh, hah. Sorry, I'm so used to seeing MAC addresses in caps...
+T 1379816180 18<sporkbox>	easy to scan over
+T 1379893627 19*	Now talking on 22#gentoo
+T 1379893627 22*	Topic for 22#gentoo is: Gentoo Linux Support | udev-200 upgrade: http://bit.ly/14ZV93u | Can't speak? /j #gentoo-ops | long pastes: dpaste.org | masked by license? http://xrl.us/bhunqc | perl-cleaner python-updater = good | read postinst messages plz | libreoffice-bin + boost = http://bit.ly/19ql7OR
+T 1379893627 22*	Topic for 22#gentoo set by 26rej!~jer@gentoo/developer/jer (24Sun Sep 22 08:53:42 2013)
+T 1379893627 -18ChanServ-	[#gentoo] Welcome to #gentoo || Acceptable Usage Policy @ http://www.gentoo.org/main/en/irc.xml || Keep the language clean || Google is your friend || No bots or scripts that talk || Turn off public away messages || More than three lines to #flood or a pastebin service, no spam!
+T 1379893627 29*	#gentoo :http://www.gentoo.org
+T 1379893629 18<heilig>	i have a problem i dont get consolekit aktive : ck-list-sessions | grep is-local 	is-local = FALSE i start my i3-wm with startx (exec ck-launch-session dbus..) whats wrong?
+T 1379893658 18<TomWij>	mark1_: That's because it doesn't need to be touched; and while initramfs could be in place to load the modules, it's not the only way to do it. You can have automatic module loading without initramfs, just at a later moment in the boot.
+T 1379893682 18<grawity>	heilig: you're asking about two different things at once
+T 1379893689 18<grawity>	heilig: "is-active" and "is-local" are not the same
+T 1379893740 18<heilig>	i never said is-active
+T 1379893766 20<sluidfoe>30	hello, I have a few problems. The most prominent one is that after switching from nouveau to nvidia-drivers the fonts in GTK applications are huge.
+T 1379893771 18<heilig>	i want is-local = true
+T 1379893781 23*	millerti (~millerti@cpe-69-204-193-228.stny.res.rr.com) has joined
+T 1379893787 24*	xbskid has quit (Read error: Connection reset by peer)
+T 1379893803 23*	jcbjoe (~jcbjoe@c-50-173-42-233.hsd1.ca.comcast.net) has joined
+T 1379893838 18<jcbjoe>	im giving gentoo 1 more shot .. im going to parition this external hdd .. once paritioned i can install the base to it .. i will need help with grub you guys .. i think the ufei is boot up things .. i can install grub to uefi right ?
+T 1379893840 18<TomWij>	mark1_: Modules are loaded as they are needed, unless you somehow defer from the base installation; so, except for a few exceptions you don't need to do much manually for this.
+T 1379893852 24*	28student_ is now known as 18Quanta
+T 1379893892 18<TomWij>	jcbjoe: Yes, that's possible; make sure you follow a guide so you don't miss a necessary detail.
+T 1379893926 18<jcbjoe>	coo
+T 1379893949 18<heilig>	the point is consolekit is not starting right it should be
+T 1379893954 24*	lnxslck has quit (Remote host closed the connection)
+T 1379893956 24*	SyAchmed has quit (Ping timeout: 256 seconds)
+T 1379893969 23*	phunyguy (~phunyguy@unaffiliated/phunyguy) has joined
+T 1379893985 19<TomWij>	sluidfoe: Are the fonts really huge or might the resolution perhaps not be set correctly? If you suspect it are really font problems I suggest to check out font related settings for your desktop environment, you can also take a peek at `eselect fontconfig list` and toggle things there; other than that, I don't see how a driver switch could do this.
+T 1379894042 18<TomWij>	jcbjoe: Example: https://wiki.gentoo.org/wiki/GRUB2#UEFI.2FGPT
+T 1379894079 18<djdunn>	jcbjoe: i found syslinux to be much much easier to use than grub2
+T 1379894081 18<jcbjoe>	TomWij: i want to rm the uefi .. i want to boot to gentoo and wife the gpt complete and just have gentoo on it
+T 1379894086 18<TomWij>	heilig: Anything notable in the logs? /var/log/messages
+T 1379894093 20<sluidfoe>30	TomWij: I'm running at 1920x1080, everything else looks good, it's just the fonts. Yeah, I don't get it either.
+T 1379894096 18<jcbjoe>	/swife/have/
+T 1379894101 18<jcbjoe>	s/wife/have/
+T 1379894151 18<TomWij>	jcbjoe: Oh, yeah, that's also possible if your system can still do Legacy BIOS.
+T 1379894156 23*	jcallen (~quassel@gentoo/developer/jcallen) has joined
+T 1379894156 22*	26ChanServ gives voice to 18jcallen
+T 1379894172 18<djdunn>	jcbjoe: uefi sys or uefi fs ?
+T 1379894177 18<heilig>	repeading:
+T 1379894181 18<heilig>	1379863859.041 type=SEAT_ADDED : seat-id='Seat1' seat-kind=0 1379863859.054 type=SEAT_ADDED : seat-id='Seat2' seat-kind=1 1379863859.059 type=SEAT_SESSION_ADDED : seat-id='Seat2' session-id='Session1' session-type='' session-x11-display=':0' session-x11-display-device='/dev/tty7' session-display-device='/dev/tty1' session-remote-host-name='' session-is-local=FALSE session-unix-user=1000 session-creation-time='2013-09-22T15:30:59.052
+T 1379894197 24*	Midnigh2ker has quit (Quit: Leaving)
+T 1379894208 18<mark1_>	TomWij: Funny 'cause sata_nv was not even select in the kernel I think, and the computer was running just good
+T 1379894212 18<marduk>	werd
+T 1379894214 18<TomWij>	jcbjoe: You can reformat GPT as MBR and put the BIOS based GRUB on it if you want to; or, you can stay with GPT/UEFI. Both ways would work (assuming they are supported by your computer).
+T 1379894241 18<mark1_>	TomWij: Why would I need initramfs anyway then?
+T 1379894245 18<jcbjoe>	omg djdunn yes TomWij sorry i work from home o_O its a gpt hdd
+T 1379894251 18<TomWij>	marduk: There might be a fallback / generic implementation selected, you could see what it loaded in the dmesg output; if it's still in its buffer.
+T 1379894265 18<djdunn>	jcbjoe: im just asking because there are two different uefi settings in the kernel
+T 1379894276 18<djdunn>	jcbjoe: that dont really work together
+T 1379894296 24*	tallest_red has quit (Ping timeout: 256 seconds)
+T 1379894300 24*	turmfalke has quit (Disconnected by services)
+T 1379894302 23*	turmfalke_ (~turmfalke@p54A6B9C6.dip0.t-ipconnect.de) has joined
+T 1379894304 18*	djdunn is 100% bios free
+T 1379894310 18<jcbjoe>	lol
+T 1379894326 23*	SyAchmed (~SyAchmed@unaffiliated/syachmed) has joined
+T 1379894474 19*	Now talking on 22#gentoo
+T 1379894474 22*	Topic for 22#gentoo is: Gentoo Linux Support | udev-200 upgrade: http://bit.ly/14ZV93u | Can't speak? /j #gentoo-ops | long pastes: dpaste.org | masked by license? http://xrl.us/bhunqc | perl-cleaner python-updater = good | read postinst messages plz | libreoffice-bin + boost = http://bit.ly/19ql7OR
+T 1379894474 22*	Topic for 22#gentoo set by 26rej!~jer@gentoo/developer/jer (24Sun Sep 22 08:53:22 2013)
+T 1379894475 -18ChanServ-	[#gentoo] Welcome to #gentoo || Acceptable Usage Policy @ http://www.gentoo.org/main/en/irc.xml || Keep the language clean || Google is your friend || No bots or scripts that talk || Turn off public away messages || More than three lines to #flood or a pastebin service, no spam!
+T 1379894475 29*	#gentoo :http://www.gentoo.org
+T 1379894477 18<jcbjoe>	got it
+T 1379894478 18<djdunn>	jcbjoe: just emerged syslinux cp'd the efi64 to /boot in the right places and renamed some files
+T 1379894491 18<jcbjoe>	djdunn: is  it that hard ?
+T 1379894503 18<djdunn>	jcbjoe: if cp and rm is hard yes...
+T 1379894512 18<djdunn>	jcbjoe: but much much much easier than grub2
+T 1379894515 18<jcbjoe>	no lol i mean rnameing some file .. wha files where they
+T 1379894541 18<djdunn>	jcbjoe: well because i couldnt use efibootmgr i just renamed the .efi file that uefi boots to the default uefi bootable file
+T 1379894555 18<jcbjoe>	aw ok .. yea let me install this i will be back later
+T 1379894569 18<djdunn>	im gonna have a cigarrette ill be around if you have questions
+T 1379894582 18*	TomWij sees some instructions at https://wiki.gentoo.org/wiki/Syslinux but I don't know if they apply for UEFI, though it does mention GPT.
+T 1379894605 18<djdunn>	TomWij: i knows how to do this its easy and works fine
+T 1379894618 18<redcheckers>	TomWij: for the uefi thing i apparently need a .efi boot thingy , and then have to boot from a properly signed efi bootable livecd or similar
+T 1379894620 18<djdunn>	jcbjoe: oh you need syslinux at least version 6
+T 1379894629 18<redcheckers>	TomWij: oops, meant that for djdunn
+T 1379894636 18<TomWij>	djdunn: You need to boot from UEFI, have support in the kernel for the UEFI parameters and then you should be able to use the efibootmgr.
+T 1379894650 24*	Quanta has quit (Quit: Konversation terminated!)
+T 1379894659 18<djdunn>	TomWij: you only have to boot from uefi first if you are going to use efibootmgr
+T 1379894680 18<TomWij>	Yeah, that's what I mean; you probably tried to do from BIOS mode.
+T 1379894687 18<djdunn>	TomWij: if your just going to install to the default heirarchy with bootx64.efi it will work fine
+T 1379894715 18<djdunn>	TomWij: well i tried first in uefi mode, but efibootmgr didnt want to work right with uefi fs
+T 1379894717 18<redcheckers>	djdunn: i'd love to test your theory ^_^ i've been fiddling with my settings on a fresh install for a while now
+T 1379894747 18<TomWij>	redcheckers: You can even put your kernel there if you EFI stub it.
+T 1379894749 18<djdunn>	uefi sys efibootmgr works with but uefifs it doesnt
+T 1379894764 18<redcheckers>	TomWij: i would like to efi stub it. but first i need it to boot the very first time right?
+T 1379894792 18<djdunn>	i use an initramfs so i can use zfs on /
+T 1379894803 18<djdunn>	syslinux just kinda works
+T 1379894810 18<TomWij>	redcheckers: No, you can set up the partition the UEFI way then put the kernel or syslinux or GRUB or ... there with that file name and it'll work.
+T 1379894817 24*	ami has quit (Read error: Connection reset by peer)
+T 1379894845 18<redcheckers>	djdunn: i wanted to try that, but zfs kept locking for me ( even after trying ryao's advice) so i am trying a initramfs so i can do / on lvm inside luks/dmcrypt
+T 1379894866 18<djdunn>	redcheckers: it just needs to be in the default uefi heirarchy and renamed bootx64.efi
+T 1379894867 18<TomWij>	And yeah, the kernel method won't work if you need initramfs. :(
+T 1379894879 18<redcheckers>	djdunn: default uefi heirarchy ?
+T 1379894895 18<djdunn>	its like /boot/efi/boot/
+T 1379894909 24*	millerti has quit (Quit: millerti)
+T 1379894912 18<djdunn>	so you put the .efi at /boot/efi/boot/bootx64.efi
+T 1379894928 18<djdunn>	and point bios to boot from that disk and it should work
+T 1379894943 18<redcheckers>	djdunn: ok, so mkdir -p /boot/efi/boot/
+T 1379894949 18<redcheckers>	and then get a bootx64.efi and put it there?
+T 1379894957 24*	heilig has quit (Ping timeout: 250 seconds)
+T 1379894961 18<redcheckers>	right now i have the default kernel and initramfs that genkernel handed me
+T 1379894974 18<djdunn>	redcheckers: i use syslinux v6
+T 1379894974 18<redcheckers>	so i would cp the kernel into the bootx64.efi
+T 1379894975 18<redcheckers>	right?
+T 1379894979 18<redcheckers>	djdunn: i'd love to try it
+T 1379894985 18<djdunn>	redcheckers: no no no no
+T 1379894985 18<TomWij>	redcheckers: One step too fast, the file system also needs to be right.
+T 1379894990 18<redcheckers>	TomWij: ok
+T 1379895005 18<djdunn>	redcheckers: syslinux just wanted a simple config telling it where the kernel is located
+T 1379895008 18<TomWij>	redcheckers: Kernel won't work if you need initramfs.
+T 1379895010 23*	h3x2k13 (~lola@cpe-174-101-79-238.columbus.res.rr.com) has joined
+T 1379895018 24*	h3x2k13 (~lola@cpe-174-101-79-238.columbus.res.rr.com) has left
+T 1379895030 18<redcheckers>	TomWij: yeah, i need an initramfs
+T 1379895040 18<redcheckers>	TomWij: and i need it signed anyways, which is why i thought i would be using that stub thing
+T 1379895042 23*	Crumbz (~Crumbz@host-2-101-59-219.as13285.net) has joined
+T 1379895053 24*	Hauptfee has quit (Remote host closed the connection)
+T 1379895063 18<djdunn>	redcheckers: so with syslinux v6 or higher you would just point the config at ../../linuz-yadadya
+T 1379895065 18<redcheckers>	TomWij: right now i have my efi partition as 'vfat'
+T 1379895074 18<redcheckers>	TomWij: or rather the fs on the surface of it. as vfat
+T 1379895076 18<djdunn>	redcheckers: since syslinux looks for things from the .efi file
+T 1379895092 18<Crumbz>	How do i clean the old kernel config? Mrproper doesn't cut it with genkernel - the old config appears.
+T 1379895094 18<redcheckers>	djdunn: ok. syslinux sounds handy... is it 'signed' as far as uefi knows?
+T 1379895094 23*	gringao (~gringao__@212-198-219-28.rev.numericable.fr) has joined
+T 1379895103 18<djdunn>	redcheckers: i donno i turned signing off
+T 1379895116 18<redcheckers>	=(
+T 1379895121 18<djdunn>	redcheckers: its a kernel.org project i think
+T 1379895133 18<redcheckers>	djdunn: if you turned signing off, why do you even use the .efi at all ?
+T 1379895142 24*	gringao has quit (Remote host closed the connection)
+T 1379895154 18<djdunn>	redcheckers: to stop using bios and get the efi vars
+T 1379895205 18<mark1_>	 TomWij Now I understand initramfs, I understand that I can throw it out the window. But I need initramfs for bootsplash right?
+T 1379895209 18<redcheckers>	djdunn: ah...
+T 1379895227 18<redcheckers>	djdunn: can i /msg you to ask your advice on the initramfs since the second half of our setups is similar?
+T 1379895230 24*	gerion has quit (Quit: Leaving.)
+T 1379895232 18<djdunn>	redcheckers: you could probably sign it if you wanted
+T 1379895244 18<mark1_>	fbsplash I mean
+T 1379895251 18<djdunn>	redcheckers: yeah i want to smoke a cigg first tho
+T 1379895253 18<redcheckers>	djdunn: or i could try to find someone who'd nuked their keys and then put in a new key
+T 1379895255 23*	Cyb3r-Assassin (~Anon@gateway/tor-sasl/cyb3r-assassin) has joined
+T 1379895289 23*	gringao (~gringao@212-198-219-28.rev.numericable.fr) has joined
+T 1379895292 18<TomWij>	mark1_: Yes, for early boot splash the initramfs is needed; otherwise, without it, it can only kick in when the init system services are loading which is late in boot.
+T 1379895306 24*	stmiller has quit (Quit: Leaving)
+T 1379895317 20*	Disconnected (20)

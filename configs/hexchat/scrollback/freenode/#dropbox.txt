@@ -1,0 +1,4 @@
+T 1379709151 19*	Now talking on 22#dropbox
+T 1379709151 22*	Topic for 22#dropbox is: Dropbox talk!
+T 1379709151 22*	Topic for 22#dropbox set by 26cpg!U2FsdGVkX1@ip-70-38-59-150.static.privatedns.com (24Sun Sep 26 00:53:36 2010)
+T 1379709969 23*	DarkAceLaptop (~GodVsEvil@unaffiliated/darkacez) has joined

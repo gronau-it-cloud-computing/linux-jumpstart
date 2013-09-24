@@ -1,0 +1,73 @@
+T 1379720307 19*	Now talking on 22#steamlug
+T 1379720307 22*	Topic for 22#steamlug is: Steam Linux User Group (SteamLUG) | Site: http://steamlug.org | Events: http://steamlug.org/events | Steam Store: http://store.steampowered.com/browse/linux/ | Steam Bugs: https://github.com/ValveSoftware/steam-for-linux/issues
+T 1379720307 22*	Topic for 22#steamlug set by 26meklu!~meklu@holmes.meklu.org (24Mon Sep  2 10:10:52 2013)
+T 1379720307 29*	#steamlug :http://steamlug.org
+T 1379720317 20<sluidfoe>30	howdy. Any gentoo folks out there?
+T 1379720364 20*	Disconnected (20)
+T 1379720389 22*	26sluidfoe sets mode 24+Z on 22sluidfoe
+T 1379720389 22*	26sluidfoe sets mode 24+i on 22sluidfoe
+T 1379720389 -18NickServ-	This nickname is registered. Please choose a different nickname, or identify via /msg NickServ identify <password>.
+T 1379720395 -18NickServ-	You are now identified for sluidfoe.
+T 1379720411 19*	Now talking on 22#steamlug
+T 1379720412 22*	Topic for 22#steamlug is: Steam Linux User Group (SteamLUG) | Site: http://steamlug.org | Events: http://steamlug.org/events | Steam Store: http://store.steampowered.com/browse/linux/ | Steam Bugs: https://github.com/ValveSoftware/steam-for-linux/issues
+T 1379720412 22*	Topic for 22#steamlug set by 26meklu!~meklu@holmes.meklu.org (24Mon Sep  2 10:10:52 2013)
+T 1379720412 29*	#steamlug :http://steamlug.org
+T 1379720420 19<swordfischer>	sluidfoe: I am :)
+T 1379720424 18<weltall>	yes you are
+T 1379720493 20<sluidfoe>30	swordfischer: cool. I had Steam running on gentoo before, but my laptop died. What method of installation is considered best now? I think I was using gamerlay before.
+T 1379720533 18<meklu>	gamerlay is what I've been using
+T 1379720535 18<swordfischer>	I use the 'steam-overlay' but I believe gamerlay is considered the stable'r overlay for steam
+T 1379720546 18<swordfischer>	both works fine however
+T 1379720563 23*	dyrvere (~dyrver@unaffiliated/dyrvere) has joined
+T 1379720565 18<meklu>	and the ebuild was games-util/steam-launcher
+T 1379720632 19<salamanderrake>	sluidfoe, I am a gentoo user.
+T 1379720635 18<kisak>	I use steam-overlay
+T 1379720719 18<salamanderrake>	there is one problem atm with either steam-overlay or gamerlay since the official release of sdl2, the steam-launcher depends on libsdl2 which is provided by the overlay but there is a libsdl-2 which is in portage.
+T 1379720726 23*	kerrick (~kerrick@75-144-29-34-novato.ca.sfba.hfc.comcastbusiness.net) has joined
+T 1379720730 18<kisak>	right now it's annoying to get started with those ebuilds because it assumes a multilib environment for the most part
+T 1379720747 18<salamanderrake>	wait hold on
+T 1379720752 18<kisak>	salamanderrake: not anymore
+T 1379720775 18<salamanderrake>	or its the inverse
+T 1379720790 18<kisak>	it was the inverse, but not anymore
+T 1379720796 18<salamanderrake>	ok
+T 1379720799 18<salamanderrake>	what happened?
+T 1379720799 18*	swordfischer pads anYc for doing a great job with steam-overlay
+T 1379720821 18<kisak>	anYc: put in a blocker and switched to conform to portage
+T 1379720831 18<salamanderrake>	ah ok
+T 1379720839 18<salamanderrake>	so I need to reinstall steam-launcher then?
+T 1379720841 18<kisak>	anYc: that wasn't directed at you
+T 1379720861 18<kisak>	salamanderrake: there's nothing functional to gain yet
+T 1379720878 18<kisak>	salamanderrake: I'm assuming you're on the release version of libsdl2?
+T 1379720896 18<salamanderrake>	maybe
+T 1379720909 18<salamanderrake>	so libsdl2 is the official ebuild in portage?
+T 1379720914 18<kisak>	there's not much to gain, it's just package naming
+T 1379720931 18<kisak>	salamanderrake: yes
+T 1379720943 18<salamanderrake>	ok
+T 1379720969 18<salamanderrake>	I need to update steam-lanucher to fix the dependency issue where its trying to pull in libsdl-2.0.0
+T 1379721019 18<kisak>	I probably should mention that libsdl2 in portage isn't usable for steam because it is not multilib
+T 1379721027 18<kisak>	(on 64 bit)
+T 1379721044 18<salamanderrake>	for me it is. I use multilib portage
+T 1379721061 18<kisak>	captain fancy pants
+T 1379721067 18<salamanderrake>	but I need to set it up for it
+T 1379721179 18<salamanderrake>	now they just need the rest of the sdl2 lib packages
+T 1379721212 18<salamanderrake>	never mind they are in there
+T 1379721287 18<meklu>	wonder if I should switch from multilib portage's MULTILIB_ABI_X86 to ABI_X86
+T 1379721351 20<sluidfoe>30	got it working. Thanks, guys
+T 1379721359 18<salamanderrake>	why do I need cups for steam?
+T 1379721376 18<Cheeseness>	salamanderrake: For all that printing
+T 1379721382 18<salamanderrake>	meklu, hold off for a bit let the dust settle and the blood get cleaned up.
+T 1379721397 18<meklu>	fine by me
+T 1379721398 18<kisak>	there's a print receipt function when you activate a game, right?
+T 1379721415 18<meklu>	I think so
+T 1379721418 18<salamanderrake>	eventually everyone will go to the portage eclass 32bit stuff anyways
+T 1379721423 18<salamanderrake>	ah ok
+T 1379721429 18<meklu>	it might be a webkit thing too
+T 1379721435 18<meklu>	cool cool
+T 1379721480 18<salamanderrake>	meklu what version of nvidia-drivers do you have installed?
+T 1379721528 23*	Dezponia (~pony@h140n10-lid-a11.ias.bredband.telia.com) has joined
+T 1379721565 18<meklu>	325.15
+T 1379721610 23*	Barbariandude (~james@unaffiliated/barbariandude) has joined
+T 1379721706 23*	spacelike (~staysys@cpe-72-178-18-101.elp.res.rr.com) has joined
+T 1379721788 18<kisak>	on that note ... oh hi spacelike
+T 1379721911 Bad arguments for user command.
+T 1379721915 20*	Disconnected (20)

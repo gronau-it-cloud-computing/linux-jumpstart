@@ -4,27 +4,20 @@
 ## Run '/usr/lib/openbox/openbox-xdg-autostart --list' to list any
 ## XDG autostarted programs.
 
-## GNOME PolicyKit and Keyring
-/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
-eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
-
 # Start Composite manager
 xcompmgr -c -t-5 -l-5 -r4.2 -o.55 &
-
-# Restore wallpaper from previous session
-sh ~/.fehbg &
-
-# Sound
-alsactl restore &
 
 # start up the tint2 task bar
 tint2 &
 
+# network manager
+nm-applet &
+
+# Restore wallpaper from previous session
+sh ~/.fehbg &
+
 # Start conky
 conky -q &
-
-# Start up power management
-xfce4-power-manager &
 
 # start volume manager after 3 seconds
 (sleep 1s && volti) &
