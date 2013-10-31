@@ -79,7 +79,8 @@ if [ -n "$SSH_CLIENT" ]; then
 else
 	ps='\$'
 fi
-if [ "$SHLVL" != "1" ]; then
+# If we are in a subshell for this host, colour the brackets cyan
+if [ "$SHLVL" -gt "1" ]; then
 	lb="$cyan[$norm"
 	rb="$cyan]$norm"
 else
@@ -87,6 +88,8 @@ else
 	rb=']'
 fi
 
+# Gives us '[user pwd]\$ ' with green user, blue pwd and coloured
+# brackets and prompt character as defined above.
 export PS1="$lb$green\u@\h $blue\w$norm$rb$ps "
 
 shopt -s extglob
