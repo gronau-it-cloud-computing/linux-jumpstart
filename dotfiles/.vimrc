@@ -6,12 +6,15 @@
 " make changes after sourcing debian.vim since it alters the value of the
 " 'compatible' option.
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
+" Uncomment this on Debian and Debian-based distros
+"runtime! debian.vim
 
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
+" Source a global configuration file if available
+if filereadable("/etc/vim/vimrc.local")
+  source /etc/vim/vimrc.local
+endif
+
+" Automagical syntax highlighting
 if has("syntax")
   syntax on
 endif
@@ -21,48 +24,31 @@ if has("autocmd")
 	filetype plugin indent on
 endif
 
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-set bg=dark
+" Automagically open, but do not go to, the quickfix window
+" or close it when it becomes empty
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
-" Turn on line numbers
-set nu
+let $PAGER=''					" Set PAGER for man viewing
+set bg=dark						" Look nice (readable) on a dark background
+set	number						" Show line numbers
+set autoindent					" Turn on auto-indent
+set laststatus=1				" Always show status line
+set ffs=unix,dos				" Prefer Unix-style files
+set tabstop=4					" Make tab four spaces
+set shiftwidth=4				" Make shift width four spaces
+set showcmd						" Show (partial) command in status line.
+set showmatch					" Show matching brackets.
+set autowrite					" Automatically save before commands like :next and :make
+set ruler						" Show position in document at all times (l,c,%)
+set nohlsearch					" Do not highlight every occurance matching the last search pattern
+set diffopt=filler,vertical		" User filler lines to keep files aligned, default to vertical split
 
-" Set tab == 4
-set ts=4
-set sw=4
-
-" Turn on auto-indent
-set ai
-
-" Prefer unix-style files
-set ffs=unix,dos
-
-" Always show status line
-set laststatus=1
-
-" Set PAGER for man viewing
-let $PAGER=''
-
-
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd			" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set autowrite		" Automatically save before commands like :next and :make
-set ruler			" Show position in document at all times (l,c,%)
-set nohlsearch		" Do not highlight every occurance matching the last search pattern
-set diffopt=filler,vertical
-
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-  source /etc/vim/vimrc.local
-endif
-
-" Bind F3 to timestamp HH:MM:SS AP:\t
-nmap <F3> a<C-R>=strftime("%I:%M:%S %p:\t")<CR>
-imap <F3> <C-R>=strftime("%I:%M:%S %p:\t")<CR>
-
-" Bind F2 to toggle spellcheck
+" Bind F2 to toggle spellcheck in normal and insert modes
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
+
+" Use any of the user's local settings if they exist
+if filereadable("~/.vimrc.local")
+	source ~/.vimrc.local
+endif
