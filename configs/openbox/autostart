@@ -5,7 +5,7 @@
 ## XDG autostarted programs.
 
 # Start Composite manager
-xcompmgr -c -t-5 -l-5 -r4.2 -o.55 &
+compton --opengl --vsync opengl-swc --paint-on-overlay
 
 # start up the tint2 task bar
 tint2 &
@@ -19,7 +19,7 @@ sh ~/.fehbg &
 # Start conky
 conky -q &
 
-# start volume manager after 3 seconds
+# start volume manager after 1 second
 (sleep 1s && volti) &
 
 # Start screensaver
@@ -27,3 +27,6 @@ xscreensaver -no-splash &
 
 # Start terminator
 terminator_desktop &
+
+# Start dropbox
+~/.dropbox-dist/dropbox &
