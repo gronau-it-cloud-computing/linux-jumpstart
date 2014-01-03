@@ -4,8 +4,8 @@
 ## Run '/usr/lib/openbox/openbox-xdg-autostart --list' to list any
 ## XDG autostarted programs.
 
-# Start Composite manager
-compton --opengl --vsync opengl-swc --paint-on-overlay
+# Start ssh-agent
+eval $(ssh-agent)
 
 # start up the tint2 task bar
 tint2 &
@@ -22,11 +22,16 @@ conky -q &
 # start volume manager after 1 second
 (sleep 1s && volti) &
 
-# Start screensaver
-xscreensaver -no-splash &
+# Start Composite manager
+compton --opengl --vsync opengl-swc --paint-on-overlay &
 
 # Start terminator
-terminator_desktop &
+tmp_lvl=SHLVL
+SHLVL=0 terminator_desktop &
+SHLVL=tmp_lvl
+
+# Start screensaver
+xscreensaver -no-splash &
 
 # Start dropbox
 ~/.dropbox-dist/dropbox &
