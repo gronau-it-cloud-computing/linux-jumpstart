@@ -33,16 +33,28 @@ let $PAGER=''					" Set PAGER for man viewing
 set bg=dark						" Look nice (readable) on a dark background
 set	number						" Show line numbers
 set autoindent					" Turn on auto-indent
-set laststatus=1				" Always show status line
 set ffs=unix,dos				" Prefer Unix-style files
 set tabstop=4					" Make tab four spaces
 set shiftwidth=4				" Make shift width four spaces
 set showcmd						" Show (partial) command in status line.
 set showmatch					" Show matching brackets.
 set autowrite					" Automatically save before commands like :next and :make
-set ruler						" Show position in document at all times (l,c,%)
-set nohlsearch					" Do not highlight every occurance matching the last search pattern
+set nohlsearch					" Do not highlight every occurrence matching the last search pattern
 set diffopt=filler,vertical		" User filler lines to keep files aligned, default to vertical split
+set cursorline					" Highlight current line
+
+" Status Line
+set laststatus=2				" Always show status line
+set statusline=%f\ 				" Filename (without path)
+set statusline+=[%{&ff}]\ 		" File format
+set statusline+=%-6{FileSize()}	" File size
+set statusline+=%4(%m%)			" Modified flag
+set statusline+=%-10(%r%)		" Readonly flag
+set statusline+=%(CHAR\ %-4b%)	" Character value
+set statusline+=%=				" Left/Right division point
+set statusline+=LN\ %l/%L\ 		" Line number
+set statusline+=COL\ %-8(%c%V%)	" Column number
+set statusline+=%P				" Percentage through file
 
 " Bind F2 to toggle spellcheck in normal and insert modes
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
@@ -52,3 +64,24 @@ inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 if filereadable("~/.vimrc.local")
 	source ~/.vimrc.local
 endif
+
+function! FileSize()
+	let bytes = getfsize(expand("%:p"))
+	if bytes <= 0
+		return ""
+	endif
+	if bytes < 1024
+		return bytes
+	endif
+	if bytes < 1048576
+		return (bytes / 1024) . "K"
+	endif
+	if bytes < 1073741824
+		return (bytes / 1048576) . "M"
+	endif
+	if bytes < 1099511627776
+		return (bytes / 1073741824) . "G"
+	else
+		return ";_;"
+	endif
+endfunction
