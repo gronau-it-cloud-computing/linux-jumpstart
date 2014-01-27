@@ -44,17 +44,19 @@ set diffopt=filler,vertical		" User filler lines to keep files aligned, default 
 set cursorline					" Highlight current line
 
 " Status Line
-set laststatus=2				" Always show status line
-set statusline=%f\ 				" Filename (without path)
-set statusline+=[%{&ff}]\ 		" File format
-set statusline+=%-6{FileSize()}	" File size
-set statusline+=%4(%m%)			" Modified flag
-set statusline+=%-10(%r%)		" Readonly flag
-set statusline+=%(CHAR\ %-4b%)	" Character value
-set statusline+=%=				" Left/Right division point
-set statusline+=LN\ %l/%L\ 		" Line number
-set statusline+=COL\ %-8(%c%V%)	" Column number
-set statusline+=%P				" Percentage through file
+set laststatus=2											" Always show status line
+set statusline=[%02.2n]\ 	 								" Show the buffer number
+set statusline+=%-30.30f\ 									" Filename (with relative path, or as typed)
+set statusline+=%-7.7([%{&ff}]%)							" File format
+set statusline+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
+set statusline+=%6.6{FileSize()}							" File size
+set statusline+=%4.4(%4.4m%)								" Modified flag
+set statusline+=%4.4(%4.4r%)								" Readonly flag
+set statusline+=%-7.7(%{(&bomb?\"[BOM]\":\"\")}%)			" Byte-order mark flag
+set statusline+=%=											" Left/Right division point
+set statusline+=LN\ %l/%L\ 									" Line number
+set statusline+=COL\ %-8(%c%V%)								" Column number
+set statusline+=%P											" Percentage through file
 
 " Bind F2 to toggle spellcheck in normal and insert modes
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
