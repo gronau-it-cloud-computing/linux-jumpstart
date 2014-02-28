@@ -63,11 +63,6 @@ set statusline+=%P											" Percentage through file
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 
-" Use any of the user's local settings if they exist
-if filereadable("~/.vimrc.local")
-	source ~/.vimrc.local
-endif
-
 function! FileSize()
 	let bytes = getfsize(expand("%:p"))
 	if bytes <= 0
@@ -88,3 +83,8 @@ function! FileSize()
 		return ";_;"
 	endif
 endfunction
+
+" Use any of the user's local settings if they exist
+if filereadable("~/.vimrc.local")
+	source ~/.vimrc.local
+endif
