@@ -268,12 +268,7 @@
     </keybind>
     <keybind key="Print">
       <action name="Execute">
-        <command>xfce4-screenshooter</command>
-      </action>
-    </keybind>
-    <keybind key="A-Print">
-      <action name="Execute">
-        <command>scrot '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/images/ &amp; viewnior ~/images/$f'</command>
+        <command>winshot</command>
       </action>
     </keybind>
     <!-- Keybindings for window switching -->
@@ -368,9 +363,18 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Web Browser</name>
+          <name>Chromium</name>
         </startupnotify>
-        <command>x-www-browser</command>
+        <command>chromium-browser</command>
+      </action>
+	  </keybind>
+	  <keybind key="W-S-w">
+      <action name="Execute">
+        <startupnotify>
+          <enabled>true</enabled>
+          <name>Chromium Incognito</name>
+        </startupnotify>
+        <command>chromium-browser --incognito</command>
       </action>
     </keybind>
     <keybind key="W-l">
@@ -398,24 +402,6 @@
           <name>Mediaplayer</name>
         </startupnotify>
         <command>vlc</command>
-      </action>
-    </keybind>
-    <keybind key="W-h">
-      <action name="Execute">
-        <startupnotify>
-          <enabled>true</enabled>
-          <name>htop</name>
-        </startupnotify>
-        <command>terminator --command="htop"</command>
-      </action>
-    </keybind>
-    <keybind key="W-v">
-      <action name="Execute">
-        <startupnotify>
-          <enabled>true</enabled>
-          <name>Volume</name>
-        </startupnotify>
-        <command>pavucontrol</command>
       </action>
     </keybind>
     <keybind key="W-x">
@@ -480,6 +466,16 @@
         <execute>amixer set Master toggle</execute>
       </action>
     </keybind>
+	<keybind key="XF86MonBrightnessUp">
+	  <action name="Execute">
+		<execute>xbacklight +5</execute>
+	  </action>
+	</keybind>
+	<keybind key="XF86MonBrightnessDown">
+	  <action name="Execute">
+		<execute>xbacklight -5</execute>
+	  </action>
+	</keybind>
   </keyboard>
   <mouse>
     <dragThreshold>8</dragThreshold>
