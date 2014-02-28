@@ -30,10 +30,10 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 let $PAGER=''					" Set PAGER for man viewing
-set bg=dark						" Look nice (readable) on a dark background
+set background=dark				" Look nice (readable) on a dark background
 set	number						" Show line numbers
 set autoindent					" Turn on auto-indent
-set ffs=unix,dos				" Prefer Unix-style files
+set fileformats=unix,dos		" Prefer Unix-style files
 set tabstop=4					" Make tab four spaces
 set shiftwidth=4				" Make shift width four spaces
 set showcmd						" Show (partial) command in status line.
@@ -42,6 +42,7 @@ set autowrite					" Automatically save before commands like :next and :make
 set nohlsearch					" Do not highlight every occurrence matching the last search pattern
 set diffopt=filler,vertical		" User filler lines to keep files aligned, default to vertical split
 set cursorline					" Highlight current line
+set nrformats=alpha,octal,hex	" Allow {in,de}crementing of alphabetical, octal, and hex formats
 
 " Status Line
 set laststatus=2											" Always show status line

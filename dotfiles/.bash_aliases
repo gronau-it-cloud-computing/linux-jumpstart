@@ -3,6 +3,5 @@ alias sudo='sudo '
 alias ll='ls -alFh'
 # List all files with type characters
 alias la='ls -A'
-alias proxy='agent && ssh -D 8675 sluidfoe@eris.crabdance.com'
 # Show df with human-readable units
 alias df='df -h'
