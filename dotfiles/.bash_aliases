@@ -8,6 +8,6 @@ alias la='ls -A'
 alias df='df -h'
 
 # Source any local aliases that may exist
-if [ -r /Users/dyerr15/.bash_aliases.local ] ; then
-	source /Users/dyerr15/.bash_aliases.local
+if [ -r ~/.bash_aliases.local ] ; then
+	. ~/.bash_aliases.local
 fi
