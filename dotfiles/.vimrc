@@ -18,36 +18,36 @@ endif
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-let $PAGER=''												" Set PAGER for man viewing
-set background=dark											" Look nice on a dark background
-set	number													" Show line numbers
-set autoindent												" Turn on auto-indent
-set fileformats=unix,dos									" Prefer Unix-style files
-set tabstop=4												" Make tab four spaces
-set shiftwidth=4											" Make shift width four spaces
-set showcmd													" Show command in status line.
-set showmatch												" Show matching brackets.
-set autowrite												" Automagically save before some commands
-set nohlsearch												" Do not highlight every match
-set diffopt=filler,vertical									" Keep files aligned, default to vsplit
-set cursorline												" Highlight current line
-set nrformats=alpha,octal,hex								" Allow {in,de}crementing of alpha, octal, hex formats
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<		" Keep tab-aligned when list is enabled
+let $PAGER=''											" Set PAGER for man viewing
+set background=dark										" Look nice on a dark background
+set	number												" Show line numbers
+set autoindent											" Turn on auto-indent
+set fileformats=unix,dos								" Prefer Unix-style files
+set tabstop=4											" Make tab four spaces
+set shiftwidth=4										" Make shift width four spaces
+set showcmd												" Show command in status line.
+set showmatch											" Show matching brackets.
+set autowrite											" Automagically save before some commands
+set nohlsearch											" Do not highlight every match
+set diffopt=filler,vertical								" Keep files aligned, default to vsplit
+set cursorline											" Highlight current line
+set nrformats=alpha,octal,hex							" {in,de}crementing of alpha, octal, hex formats
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<	" Keep tab-aligned when list is enabled
 
 " Status Line
-set laststatus=2											" Always show status line
-set statusline=[%02.2n]\ 	 								" Show the buffer number
-set statusline+=%-30.30f\ 									" Filename (with relative path, or as typed)
-set statusline+=%-7.7([%{&ff}]%)							" File format
-set statusline+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
-set statusline+=%6.6{FileSize()}							" File size
-set statusline+=%4.4(%4.4m%)								" Modified flag
-set statusline+=%4.4(%4.4r%)								" Readonly flag
-set statusline+=%-7.7(%{(&bomb?\"[BOM]\":\"\")}%)			" Byte-order mark flag
-set statusline+=%=											" Left/Right division point
-set statusline+=LN\ %l/%L\ 									" Line number
-set statusline+=COL\ %-8(%c%V%)								" Column number
-set statusline+=%P											" Percentage through file
+set laststatus=2										" Always show status line
+set statusline=[%02.2n]\ 	 							" Show the buffer number
+set stl+=%-50.50f\ 										" Filename (with relative path, or as typed)
+set stl+=%-7.7([%{&ff}]%)								" File format
+set stl+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
+set stl+=%6.6{FileSize()}								" File size
+set stl+=%4.4(%4.4m%)									" Modified flag
+set stl+=%4.4(%4.4r%)									" Readonly flag
+set stl+=%-7.7(%{(&bomb?\"[BOM]\":\"\")}%)				" Byte-order mark flag
+set stl+=%=												" Left/Right division point
+set stl+=LN\ %l/%L\ 									" Line number
+set stl+=COL\ %-8(%c%V%)								" Column number
+set stl+=%P												" Percentage through file
 
 " Bind F2 to toggle spellcheck in normal and insert modes
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
