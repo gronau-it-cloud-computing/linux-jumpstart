@@ -49,6 +49,17 @@ set stl+=LN\ %l/%L\ 									" Line number
 set stl+=COL\ %-8(%c%V%)								" Column number
 set stl+=%P												" Percentage through file
 
+" Keybindings
+" Disable arrow keys in normal, visual, and insert modes
+noremap <UP> <NOP>
+inoremap <UP> <NOP>
+noremap <LEFT> <NOP>
+inoremap <LEFT> <NOP>
+noremap <DOWN> <NOP>
+inoremap <DOWN> <NOP>
+noremap <RIGHT> <NOP>
+inoremap <RIGHT> <NOP>
+
 " Bind F2 to toggle spellcheck in normal and insert modes
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
