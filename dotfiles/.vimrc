@@ -18,11 +18,12 @@ endif
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
+" Miscellaneous options
 let $PAGER=''											" Set PAGER for man viewing
 set background=dark										" Look nice on a dark background
 set	number												" Show line numbers
 set autoindent											" Turn on auto-indent
-set fileformats=unix,dos								" Prefer Unix-style files
+set fileformats=unix,dos								" Automagically detect format by EOL
 set tabstop=4											" Make tab four spaces
 set shiftwidth=4										" Make shift width four spaces
 set showcmd												" Show command in status line.
@@ -31,13 +32,14 @@ set autowrite											" Automagically save before some commands
 set nohlsearch											" Do not highlight every match
 set diffopt=filler,vertical								" Keep files aligned, default to vsplit
 set cursorline											" Highlight current line
-set nrformats=alpha,octal,hex							" {in,de}crementing of alpha, octal, hex formats
+set nrformats=alpha,octal,hex							" {in,de}crementing of alpha, octal, hex
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<	" Keep tab-aligned when list is enabled
+set hidden												" Keeps abandoned buffers loaded. Beware!
 
 " Status Line
 set laststatus=2										" Always show status line
-set statusline=[%02.2n]\ 	 							" Show the buffer number
-set stl+=%-50.50f\ 										" Filename (with relative path, or as typed)
+set statusline=%4.4([%02.2n]%)\ 	 					" Show the buffer number
+set stl+=%-40.40f\ 										" Filename (with relative path, or as typed)
 set stl+=%-7.7([%{&ff}]%)								" File format
 set stl+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
 set stl+=%6.6{FileSize()}								" File size
@@ -51,19 +53,20 @@ set stl+=%P												" Percentage through file
 
 " Keybindings
 " Disable arrow keys in normal, visual, and insert modes
-noremap <UP> <NOP>
-inoremap <UP> <NOP>
-noremap <LEFT> <NOP>
-inoremap <LEFT> <NOP>
-noremap <DOWN> <NOP>
-inoremap <DOWN> <NOP>
-noremap <RIGHT> <NOP>
-inoremap <RIGHT> <NOP>
+noremap 	<LEFT>	<NOP>
+noremap 	<DOWN>	<NOP>
+noremap 	<RIGHT>	<NOP>
+noremap		<UP>	<NOP>
+inoremap 	<LEFT>	<NOP>
+inoremap 	<DOWN>	<NOP>
+inoremap 	<RIGHT>	<NOP>
+inoremap 	<UP>	<NOP>
 
 " Bind F2 to toggle spellcheck in normal and insert modes
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 
+" Custom functions
 " Function to get the filesize in bytes and convert it to human-readable units
 function! FileSize()
 	" Get size of the file in bytes

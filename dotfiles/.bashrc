@@ -24,11 +24,14 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# enable programmable completion features
 if [ -f /etc/profile.d/bash-completion.sh ] && ! shopt -oq posix; then
     . /etc/profile.d/bash-completion.sh
+fi
+
+# Automagical preprocessing of files to be read by less
+if [ -x /usr/bin/lesspipe ]; then
+	LESSOPEN="| lesspipe.sh %s" && export LESSOPEN
 fi
 
 # Set PS1
@@ -61,10 +64,11 @@ export PS1="$lb$green\u@\h $blue\w$norm$rb$ps "
 # make Vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
-	export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+	export MANPAGER="/bin/sh -c \"unset MANPAGER; col -b -x | \
 		vim -R -c 'set ft=man fdm=indent fdn=1 fen nomod noma nolist nonu' \
-		-c 'map q :q<CR>' -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
-		-c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+		-c 'nmap q :q<CR>' -c 'nmap <SPACE> <C-D>' -c 'nmap b <C-U>' \
+		-c 'nmap <UP> <UP>' -c 'nmap <DOWN> <DOWN>' -c 'nmap <LEFT> <LEFT>' \
+		-c 'nmap <RIGHT> <RIGHT>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 fi
 
 # Source alias definitions
