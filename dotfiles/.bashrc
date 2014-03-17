@@ -25,13 +25,13 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # enable programmable completion features
-if [ -f /etc/profile.d/bash-completion.sh ] && ! shopt -oq posix; then
-    . /etc/profile.d/bash-completion.sh
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
 fi
 
 # Automagical preprocessing of files to be read by less
 if [ -x /usr/bin/lesspipe ]; then
-	LESSOPEN="| lesspipe.sh %s" && export LESSOPEN
+	LESSOPEN="| lesspipe %s" && export LESSOPEN
 fi
 
 # Set PS1
@@ -66,9 +66,9 @@ if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
 	export MANPAGER="/bin/sh -c \"unset MANPAGER; col -b -x | \
 		vim -R -c 'set ft=man fdm=indent fdn=1 fen nomod noma nolist nonu' \
-		-c 'nmap q :q<CR>' -c 'nmap <SPACE> <C-D>' -c 'nmap b <C-U>' \
-		-c 'nmap <UP> <UP>' -c 'nmap <DOWN> <DOWN>' -c 'nmap <LEFT> <LEFT>' \
-		-c 'nmap <RIGHT> <RIGHT>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+		-c 'map q :q<CR>' -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+		-c 'map <UP> <UP>' -c 'map <DOWN> <DOWN>' -c 'map <LEFT> <LEFT>' \
+		-c 'map <RIGHT> <RIGHT>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 fi
 
 # Source alias definitions
