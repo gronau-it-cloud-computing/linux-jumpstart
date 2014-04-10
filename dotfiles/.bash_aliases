@@ -1,4 +1,5 @@
 # ~/.bash_aliases: used to add aliases in bash(1)
+# Pass aliases through sudo
 alias sudo='sudo '
 # Show all files in long format with type characters and human-readable units
 alias ll='ls -alFh'

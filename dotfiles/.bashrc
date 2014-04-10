@@ -66,17 +66,17 @@ if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
 	export MANPAGER="/bin/sh -c \"unset MANPAGER; col -b -x | \
 		vim -R -c 'set ft=man fdm=indent fdn=1 fen nomod noma nolist nonu' \
-		-c 'map q :q<CR>' -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
-		-c 'map <UP> <UP>' -c 'map <DOWN> <DOWN>' -c 'map <LEFT> <LEFT>' \
-		-c 'map <RIGHT> <RIGHT>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
-fi
-
-# Source alias definitions
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+		-c 'nmap q :q<CR>' -c 'nmap <SPACE> <C-D>' -c 'nmap b <C-U>' \
+		-c 'nmap <UP> <UP>' -c 'nmap <DOWN> <DOWN>' -c 'nmap <LEFT> <LEFT>' \
+		-c 'nmap <RIGHT> <RIGHT>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 fi
 
 # Source any local options that may exist
 if [ -f ~/.bashrc.local ]; then
     . ~/.bashrc.local
+fi
+
+# Source alias definitions
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
