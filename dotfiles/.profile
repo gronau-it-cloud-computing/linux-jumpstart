@@ -8,6 +8,21 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+platform=$(uname -s)
+
+case $platform in
+	OpenBSD)
+		version=$(uname -r)
+		machine=$(uname -m)
+		PKG_PATH="ftp://mirror.planetunix.net/pub/OpenBSD/$version/packages/$machine/"
+		PKG_PATH="$PKG_PATH:ftp://mirror.team-cymru.org/pub/OpenBSD/$version/packages/$machine/"
+		export PKG_PATH
+		unset version
+		unset machine
+		;;
+esac
+unset platform
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ]; then
     PATH="$PATH:$HOME/bin"
