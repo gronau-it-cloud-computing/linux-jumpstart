@@ -103,7 +103,7 @@ function! FileSize()
 	if bytes < 0
 		return ""
 	endif
-	
+
 	" If there is less than 1KB, display in B
 	if bytes < 1024
 		return bytes . "B"
