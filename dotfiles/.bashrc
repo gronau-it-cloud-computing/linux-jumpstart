@@ -14,7 +14,7 @@ HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	[ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto -F'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
@@ -43,7 +43,7 @@ green='\[\e[0;32m\]'
 norm='\[\e[m\]'
 
 # Colour $ red if in an ssh session
-if [ -n "$SSH_CLIENT" ]; then
+if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ]; then
 	ps="$red\\\$$norm"
 else
 	ps='\$'
