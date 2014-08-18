@@ -3,6 +3,9 @@ if filereadable("/etc/vim/vimrc.local")
 	source /etc/vim/vimrc.local
 endif
 
+" Turn off vi compatibility. Come on.
+set nocompatible
+
 " Automagical syntax highlighting
 if has("syntax")
 	syntax on
@@ -90,6 +93,7 @@ nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 augroup filetype_help
 	" Clear any other autocommands for sanity
 	autocmd!
+	" Close help buffer with "q" a la man
 	autocmd BufWinEnter * if &l:buftype ==# 'help' | nnoremap <buffer> q :bw<CR> | endif
 augroup END
 
