@@ -9,24 +9,24 @@ shopt -s checkwinsize	# Check window size after commands, update if necessary
 shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
 shopt -s histappend		# append to the history file, don't overwrite it
 HISTSIZE=1000			# Store 1000 history entries in memory
-HISTFILESIZE=2000		# Store 2000 lines of history in $HISTFILE
+HISTFILESIZE=5000		#Store 5000 lines of history in $HISTFILE
 HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
 	[ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto -F'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
+	alias ls='ls --color=auto -F'
+	alias dir='dir --color=auto'
+	alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
 
 # enable programmable completion features
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
+	source /etc/bash_completion
 fi
 
 # Automagical preprocessing of files to be read by less
@@ -72,11 +72,11 @@ if [ -x /usr/bin/vim ]; then
 fi
 
 # Source any local options that may exist
-if [ -f ~/.bashrc.local ]; then
-    . ~/.bashrc.local
+if [ -r ~/.bashrc.local ]; then
+	source ~/.bashrc.local
 fi
 
 # Source alias definitions
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -r ~/.bash_aliases ]; then
+	source ~/.bash_aliases
 fi
