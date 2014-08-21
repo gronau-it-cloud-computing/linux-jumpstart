@@ -33,7 +33,5 @@ SHLVL=tmp_lvl
 # Start screensaver
 xscreensaver -no-splash &
 
-~/bin/cb-aerosnap --daemon
-
 # Start dropbox
 ~/.dropbox-dist/dropbox &
