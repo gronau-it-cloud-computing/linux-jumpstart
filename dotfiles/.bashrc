@@ -1,7 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+[[ $- != *i* ]] && return
 
 shopt -s checkhash		# Build hash of commands run, check hash before PATH
 shopt -s checkjobs		# Require confirmation to exit with jobs running
