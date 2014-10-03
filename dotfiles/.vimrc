@@ -97,6 +97,10 @@ augroup filetype_help
 	autocmd BufWinEnter * if &l:buftype ==# 'help' | nnoremap <buffer> q :bw<CR> | endif
 augroup END
 
+""" Custom commands
+" Put all lines matching the pattern argument into a scratch buffer                                                                                                                                                                         
+command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+
 """ Custom functions
 " Function to get the filesize in bytes and convert it to human-readable units
 function! FileSize()
