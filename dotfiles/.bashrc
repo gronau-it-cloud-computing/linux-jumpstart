@@ -42,6 +42,18 @@ blue='\[\e[0;34m\]'
 green='\[\e[0;32m\]'
 norm='\[\e[m\]'
 
+# Username
+un="${green}\\u${norm}"
+
+# At
+at="${green}@${norm}"
+
+# Hostname
+hn="${green}\\h${norm}"
+
+# Present directory
+pd="${blue}\\w${norm}"
+
 # Colour $ red if in an ssh session
 if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ]; then
 	ps="$red\\\$$norm"
@@ -57,9 +69,11 @@ else
 	rb=']'
 fi
 
-# Gives us '[user pwd]\$ ' with green user, blue pwd and coloured
-# brackets and prompt character as defined above.
-export PS1="$lb$green\u@\h $blue\w$norm$rb$ps "
+# Prompt of the form [user@host pwd]$                                                                                                                                                                                                       
+export PS1="${lb}${un}${at}${hn} ${pd}${rb}${ps} "
+
+# Get rid of all of the garbage we just defined
+unset red cyan blue green norm un hn pd ps lb rb
 
 # make Vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ]; then
