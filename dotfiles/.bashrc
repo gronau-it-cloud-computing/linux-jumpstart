@@ -8,8 +8,8 @@ shopt -s checkjobs		# Require confirmation to exit with jobs running
 shopt -s checkwinsize	# Check window size after commands, update if necessary
 shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
 shopt -s histappend		# append to the history file, don't overwrite it
-HISTSIZE=1000			# Store 1000 history entries in memory
-HISTFILESIZE=5000		#Store 5000 lines of history in $HISTFILE
+HISTSIZE=				# Store 1000 history entries in memory
+HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
 HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
@@ -29,8 +29,8 @@ if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
 	source /etc/bash_completion
 fi
 
-# Automagical preprocessing of files to be read by less
-if [ -x /usr/bin/lesspipe ]; then
+# Automagical preprocessing of arguments to less
+if [ -x /usr/bin/lesspipe ] ; then
 	LESSOPEN="| lesspipe %s" && export LESSOPEN
 fi
 
@@ -60,16 +60,17 @@ if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ]; then
 else
 	ps='\$'
 fi
-# If we are in a subshell for this host, colour the brackets cyan
-if [ "$SHLVL" -gt "1" ]; then
-	lb="$cyan[$norm"
-	rb="$cyan]$norm"
-else
+
+# If we are in a "subshell" for this host, colour the brackets cyan
+if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
 	lb='['
 	rb=']'
+else
+	lb="$cyan[$norm"
+	rb="$cyan]$norm"
 fi
 
-# Prompt of the form [user@host pwd]$                                                                                                                                                                                                       
+# Prompt of the form [user@host pwd]$
 export PS1="${lb}${un}${at}${hn} ${pd}${rb}${ps} "
 
 # Get rid of all of the garbage we just defined
@@ -78,11 +79,11 @@ unset red cyan blue green norm un hn pd ps lb rb
 # make Vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
-	export MANPAGER="/bin/sh -c \"unset MANPAGER; col -b -x | \
-		vim -R -c 'set ft=man fdm=indent fdn=1 fen nomod noma nolist nonu' \
-		-c 'nmap q :q<CR>' -c 'nmap <SPACE> <C-D>' -c 'nmap b <C-U>' \
-		-c 'nmap <UP> <UP>' -c 'nmap <DOWN> <DOWN>' -c 'nmap <LEFT> <LEFT>' \
-		-c 'nmap <RIGHT> <RIGHT>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
+	# Alias man to a script that detects pipes to set MANPAGER appropriately
+	if [ -x "$realhome/bin/man.sh" ] ; then
+		alias man="$realhome/bin/man.sh"
+	fi
 fi
 
 # Source any local options that may exist

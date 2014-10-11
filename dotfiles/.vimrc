@@ -73,7 +73,7 @@ inoremap	<UP>	<NOP>
 nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 
-" Bind w!! to WRITE WITH EXTREME PREJUDICE
+" Bind :w!! to WRITE WITH EXTREME PREJUDICE
 cmap w!! w !sudo tee % >/dev/null
 
 " Bind C-<Movement> to move tabs/windows
@@ -98,7 +98,7 @@ augroup filetype_help
 augroup END
 
 """ Custom commands
-" Put all lines matching the pattern argument into a scratch buffer                                                                                                                                                                         
+" Put all lines matching the pattern argument into a scratch buffer
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
 
 """ Custom functions
