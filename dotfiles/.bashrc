@@ -81,8 +81,8 @@ if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
 
 	# Alias man to a script that detects pipes to set MANPAGER appropriately
-	if [ -x "$realhome/bin/man.sh" ] ; then
-		alias man="$realhome/bin/man.sh"
+	if [ -x ~/bin/man.sh ] ; then
+		alias man=~/bin/man.sh
 	fi
 fi
 
