@@ -37,10 +37,14 @@ fi
 # Set PS1
 # Pretty colors
 red='\[\e[0;31m\]'
-cyan='\[\e[0;36m\]'
-blue='\[\e[0;34m\]'
+orange='\[\e[38;5;202m\]'
+yellow='\[\e[0;93m\]'
 green='\[\e[0;32m\]'
+blue='\[\e[0;34m\]'
+violet='\[\e[0;35m\]'
+white='\[\e[0;37m\]'
 norm='\[\e[m\]'
+colors=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
 
 # Username
 un="${green}\\u${norm}"
@@ -58,29 +62,33 @@ pd="${blue}\\w${norm}"
 if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ]; then
 	ps="$red\\\$$norm"
 else
-	ps='\$'
+	ps="$white\\\$$norm"
 fi
 
-# If we are in a "subshell" for this host, colour the brackets cyan
+# If we are in a "subshell" for this host, colour the brackets
 if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
-	lb='['
-	rb=']'
+	lb="$white[$norm"
+	rb="$white]$norm"
 else
-	lb="$cyan[$norm"
-	rb="$cyan]$norm"
+	# The colour chosen will be one of ROYGBV
+	# Red is for the first subshell, orange for the second, etc.
+	color="${colors[($SHLVL - 2) % 6]}"
+	lb="$color[$norm"
+	rb="$color]$norm"
 fi
 
 # Prompt of the form [user@host pwd]$
 export PS1="${lb}${un}${at}${hn} ${pd}${rb}${ps} "
 
 # Get rid of all of the garbage we just defined
-unset red cyan blue green norm un hn pd ps lb rb
+unset red orange yellow green blue violet white color colors norm un hn pd ps lb rb
 
 # make Vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ]; then
 	export EDITOR=/usr/bin/vim
 
 	# Alias man to a script that detects pipes to set MANPAGER appropriately
+	# Will use vim if stdout is connected to a TTY, less elsewise
 	if [ -x ~/bin/man.sh ] ; then
 		alias man=~/bin/man.sh
 	fi
