@@ -8,7 +8,8 @@ shopt -s checkjobs		# Require confirmation to exit with jobs running
 shopt -s checkwinsize	# Check window size after commands, update if necessary
 shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
 shopt -s histappend		# append to the history file, don't overwrite it
-HISTSIZE=				# Store 1000 history entries in memory
+shopt -s histreedit		# Retry failed history substitutions
+HISTSIZE=				# Store unlimited history entries in memory
 HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
 HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
@@ -36,14 +37,15 @@ fi
 
 # Set PS1
 # Pretty colors
-red='\[\e[0;31m\]'
-orange='\[\e[38;5;202m\]'
-yellow='\[\e[0;93m\]'
-green='\[\e[0;32m\]'
-blue='\[\e[0;34m\]'
-violet='\[\e[0;35m\]'
-white='\[\e[0;37m\]'
-norm='\[\e[m\]'
+black='\[\e[15\]'
+red='\[\e[31m\]'
+orange='\[\e[38;5;208m\]'
+yellow='\[\e[93m\]'
+green='\[\e[32m\]'
+blue='\[\e[34m\]'
+violet='\[\e[35m\]'
+white='\[\e[97m\]'
+norm='\[\e[39m\]'
 colors=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
 
 # Username
@@ -59,7 +61,7 @@ hn="${green}\\h${norm}"
 pd="${blue}\\w${norm}"
 
 # Colour $ red if in an ssh session
-if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ]; then
+if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
 	ps="$red\\\$$norm"
 else
 	ps="$white\\\$$norm"
@@ -95,8 +97,13 @@ if [ -x /usr/bin/vim ]; then
 fi
 
 # Source any local options that may exist
-if [ -r ~/.bashrc.local ]; then
+if [ -r ~/.bashrc.local ] ; then
 	source ~/.bashrc.local
+fi
+
+# Source function definitions
+if [ -r ~/.bash_functions ] ; then
+	source ~/.bash_functions
 fi
 
 # Source alias definitions

@@ -41,7 +41,7 @@ set shiftwidth=4										" Make shift width four spaces
 set showcmd												" Show command in status line.
 set showmatch											" Show matching brackets.
 set tabstop=4											" Make tab four spaces
-set wildignore=*.swp,*.pyc,*.class,*.o " Ignore these things in tab completion
+set wildignore=*.swp,*.pyc,*.class,*.o					" Ignore these things in tab completion
 
 """ Status Line
 set laststatus=2										" Always show status line
@@ -54,6 +54,7 @@ set stl+=%4.4(%4.4m%)									" Modified flag
 set stl+=%4.4(%4.4r%)									" Readonly flag
 set stl+=%-7.7(%{(&bomb?\"[BOM]\":\"\")}%)				" Byte-order mark flag
 set stl+=%=												" Left/Right division point
+set stl+=%-8.8(0x%04B%)									" Show value of byte under cursor in hex
 set stl+=LN\ %l/%L\ 									" Line number
 set stl+=COL\ %-8(%c%V%)								" Column number
 set stl+=%P												" Percentage through file
