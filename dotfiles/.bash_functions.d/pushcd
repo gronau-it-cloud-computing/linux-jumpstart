@@ -3,9 +3,9 @@ cd()
 	local dir=''
 
 	case "$*" in
-		'')		dir="$realhome"
+		'')		dir=~
 				;;
-		'~')	dir="$realhome"
+		'~')	dir=~
 				;;
 		'-')	builtin pushd > /dev/null
 				return $?
@@ -24,6 +24,15 @@ cd()
 	return $?
 }
 
-if [ -r "$realhome/.bash_functions.local" ] ; then
-	source "$realhome/.bash_functions.local" 
-fi
+popd()
+{
+	if [ -z "$*" ] ; then
+		if [ $(dirs -p | wc -l) -le 1 ] ; then
+			builtin cd ~
+			return $?
+		fi
+	fi
+
+	builtin popd "$@"
+	return $?
+}

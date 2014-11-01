@@ -102,8 +102,8 @@ if [ -r ~/.bashrc.local ] ; then
 fi
 
 # Source function definitions
-if [ -r ~/.bash_functions ] ; then
-	source ~/.bash_functions
+if [ -d ~/.bash_functions.d ] ; then
+	source ~/.bash_functions.d/*
 fi
 
 # Source alias definitions
