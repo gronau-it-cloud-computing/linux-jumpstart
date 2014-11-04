@@ -14,7 +14,7 @@ HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
 HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [ -x /usr/bin/dircolors ] ; then
 	[ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 	alias ls='ls --color=auto -F'
 	alias dir='dir --color=auto'
@@ -86,7 +86,7 @@ export PS1="${lb}${un}${at}${hn} ${pd}${rb}${ps} "
 unset red orange yellow green blue violet white color colors norm un hn pd ps lb rb
 
 # make Vim the default editor and man viewer if it exists
-if [ -x /usr/bin/vim ]; then
+if [ -x /usr/bin/vim ] ; then
 	export EDITOR=/usr/bin/vim
 
 	# Alias man to a script that detects pipes to set MANPAGER appropriately
@@ -107,6 +107,6 @@ if [ -d ~/.bash_functions.d ] ; then
 fi
 
 # Source alias definitions
-if [ -r ~/.bash_aliases ]; then
+if [ -r ~/.bash_aliases ] ; then
 	source ~/.bash_aliases
 fi
