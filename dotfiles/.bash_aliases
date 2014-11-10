@@ -5,8 +5,9 @@ alias sudo='sudo '
 alias ll='ls -alFh'
 # List all files with type characters
 alias la='ls -A'
-# Show df with human-readable units
+# Show d[fu] with human-readable units
 alias df='df -h'
+alias du='du -h'
 
 # Source any local aliases that may exist
 if [ -r ~/.bash_aliases.local ] ; then
