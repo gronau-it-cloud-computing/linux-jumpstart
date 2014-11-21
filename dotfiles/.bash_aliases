@@ -15,6 +15,6 @@ alias du='du -h'
 alias sprintf='printf -v'
 
 # Source any local aliases that may exist
-if [ -r ~/.bash_aliases.local ] ; then
-	. ~/.bash_aliases.local
+if [ -r "$HOME/.bash_aliases.local" ] ; then
+    source "$HOME/.bash_aliases.local"
 fi

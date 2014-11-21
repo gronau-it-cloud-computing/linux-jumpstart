@@ -1,38 +1,50 @@
+# Make cd a function so that cding manipulates dirstack
 cd()
 {
-	local dir=''
+    local dir=''
 
-	case "$*" in
-		'')		dir=~
-				;;
-		'~')	dir=~
-				;;
-		'-')	builtin pushd > /dev/null
-				return $?
-				;;
-		*)		dir="$*"
-				;;
-	esac
+    # Determine where to cd to
+    case "$*" in
+        # cd with no args or the arg ~ should go HOME
+        '')     dir="$HOME"
+                ;;
+        '~')    dir="$HOME"
+                ;;
+        '-')    # If there are entries on the stack, twiddle
+                builtin pushd > /dev/null 2>&1 && return 0
+                # Else, put OLDPWD onto the stack
+                dir="$OLDPWD"
+                ;;
+        # Special cases are covered, just pushd the argument
+        *)      dir="$*"
+                ;;
+    esac
 
+    # If we're in HOME, don't put it on the stack; it just creates clutter
+    if [ "$PWD" == "$HOME" -o "$PWD" == "$HOME" ] ; then
+        builtin cd "$dir" 
+    else
+        builtin pushd "$dir" > /dev/null
+    fi
 
-	if [ "$PWD" == "$realhome" -o "$PWD" == "$HOME" ] ; then
-		builtin cd "$dir"
-	else
-		builtin pushd "$dir" > /dev/null
-	fi
-
-	return $?
+    # Return the executed command's exit status
+    return $?
 }
 
+# Go HOME when dirstack is empty and there are no args to popd
 popd()
 {
-	if [ -z "$*" ] ; then
-		if [ $(dirs -p | wc -l) -le 1 ] ; then
-			builtin cd ~
-			return $?
-		fi
-	fi
+    # There are no arguments to popd
+    if [ -z "$*" ] ; then
+        # There's nothing to pop
+        if [ "$DIRSTACK" == "$(dirs)" ] ; then
+            # cd to HOME
+            builtin cd "$HOME"
+            return $?
+        fi
+    fi
 
-	builtin popd "$@"
-	return $?
+    # popd as normal
+    builtin popd "$@"
+    return $?
 }

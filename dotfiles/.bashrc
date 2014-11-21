@@ -3,36 +3,36 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-shopt -s checkhash		# Build hash of commands run, check hash before PATH
-shopt -s checkjobs		# Require confirmation to exit with jobs running
-shopt -s checkwinsize	# Check window size after commands, update if necessary
-shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
-shopt -s histappend		# append to the history file, don't overwrite it
-shopt -s histreedit		# Retry failed history substitutions
-HISTSIZE=				# Store unlimited history entries in memory
-HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
-HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
+shopt -s checkhash      # Build hash of commands run, check hash before PATH
+shopt -s checkjobs      # Require confirmation to exit with jobs running
+shopt -s checkwinsize   # Check window size after commands, update if necessary
+shopt -s globstar       # ** globs to all files and zero+ dirs and subdirs
+shopt -s histappend     # append to the history file, don't overwrite it
+shopt -s histreedit     # Retry failed history substitutions
+HISTSIZE=               # Store unlimited history entries in memory
+HISTFILESIZE=25000      # Store 25000 lines of history in $HISTFILE
+HISTCONTROL=ignoreboth  # Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ] ; then
-	[ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto -F'
-	alias dir='dir --color=auto'
-	alias vdir='vdir --color=auto'
+if [ -x /usr/bin/dircolors ]; then
+    [ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto -F'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
-	alias grep='grep --color=auto'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # enable programmable completion features
 if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
-	source /etc/bash_completion
+    source /etc/bash_completion
 fi
 
 # Automagical preprocessing of arguments to less
 if [ -x /usr/bin/lesspipe ] ; then
-	LESSOPEN="| lesspipe %s" && export LESSOPEN
+    LESSOPEN="| lesspipe %s" && export LESSOPEN
 fi
 
 # Set PS1
@@ -62,21 +62,21 @@ pd="${blue}\\w${norm}"
 
 # Colour $ red if in an ssh session
 if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
-	ps="$red\\\$$norm"
+    ps="$red\\\$$norm"
 else
-	ps="$white\\\$$norm"
+    ps="$white\\\$$norm"
 fi
 
 # If we are in a "subshell" for this host, colour the brackets
 if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
-	lb="$white[$norm"
-	rb="$white]$norm"
+    lb="$white[$norm"
+    rb="$white]$norm"
 else
-	# The colour chosen will be one of ROYGBV
-	# Red is for the first subshell, orange for the second, etc.
-	color="${colors[($SHLVL - 2) % 6]}"
-	lb="$color[$norm"
-	rb="$color]$norm"
+    # The colour chosen will be one of ROYGBV
+    # Red is for the first subshell, orange for the second, etc.
+    color="${colors[($SHLVL - 2) % 6]}"
+    lb="$color[$norm"
+    rb="$color]$norm"
 fi
 
 # Prompt of the form [user@host pwd]$
@@ -87,26 +87,28 @@ unset red orange yellow green blue violet white color colors norm un hn pd ps lb
 
 # make Vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ] ; then
-	export EDITOR=/usr/bin/vim
+    export EDITOR=/usr/bin/vim
 
-	# Alias man to a script that detects pipes to set MANPAGER appropriately
-	# Will use vim if stdout is connected to a TTY, less elsewise
-	if [ -x ~/bin/man.sh ] ; then
-		alias man=~/bin/man.sh
-	fi
-fi
-
-# Source any local options that may exist
-if [ -r ~/.bashrc.local ] ; then
-	source ~/.bashrc.local
+    # Alias man to a script that detects pipes to set MANPAGER appropriately
+    # Will use vim if stdout is connected to a TTY, less elsewise
+    if [ -x "$HOME/bin/man.sh" ] ; then
+        alias man="$HOME/bin/man.sh"
+    fi
 fi
 
 # Source function definitions
-if [ -d ~/.bash_functions.d ] ; then
-	source ~/.bash_functions.d/*
+if [ -d "$HOME/.bash_functions.d" ] ; then
+    for func in "$HOME/.bash_functions.d"/* ; do
+        source "$func"
+    done
 fi
 
 # Source alias definitions
-if [ -r ~/.bash_aliases ] ; then
-	source ~/.bash_aliases
+if [ -r "$HOME/.bash_aliases" ] ; then
+    source "$HOME/.bash_aliases"
+fi
+
+# Source any local options that may exist
+if [ -r "$HOME/.bashrc.local" ] ; then
+    source "$HOME/.bashrc.local"
 fi
