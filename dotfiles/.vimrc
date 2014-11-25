@@ -29,6 +29,7 @@ set background=dark                                     " Look nice on a dark ba
 set backspace=indent,eol,start                          " backspace over everything
 set cursorline                                          " Highlight current line
 set diffopt=filler,vertical                             " Keep files aligned, default to vsplit
+set directory=$HOME/.vim/swap                           " Store swapfiles in central directory
 set expandtab                                           " Insert spaces instead of a tab character
 set fileformats=unix,dos                                " Automagically detect format by EOLs
 set hidden                                              " Keeps abandoned buffers loaded. Beware!
@@ -41,8 +42,10 @@ set number                                              " Show line numbers
 set shiftwidth=4                                        " Make shift width four spaces
 set showcmd                                             " Show command in status line.
 set showmatch                                           " Show matching brackets.
+set splitright                                          " Open vertical splits on the right
 set tabstop=4                                           " Make tab four spaces
 set wildignore+=*.sw[nop],*.pyc,*.class,*.o             " Ignore these things in tab completion
+set wildmode=longest,list                               " Make tab-completion act like the shell's
 
 """ Status Line
 set laststatus=2                                        " Always show status line
