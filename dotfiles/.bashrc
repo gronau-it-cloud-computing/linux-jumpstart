@@ -3,36 +3,36 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-shopt -s checkhash      # Build hash of commands run, check hash before PATH
-shopt -s checkjobs      # Require confirmation to exit with jobs running
-shopt -s checkwinsize   # Check window size after commands, update if necessary
-shopt -s globstar       # ** globs to all files and zero+ dirs and subdirs
-shopt -s histappend     # append to the history file, don't overwrite it
-shopt -s histreedit     # Retry failed history substitutions
-HISTSIZE=               # Store unlimited history entries in memory
-HISTFILESIZE=25000      # Store 25000 lines of history in $HISTFILE
-HISTCONTROL=ignoreboth  # Ignore duplicate lines and lines starting with a space
+shopt -s checkhash		# Build hash of commands run, check hash before PATH
+shopt -s checkjobs		# Require confirmation to exit with jobs running
+shopt -s checkwinsize	# Check window size after commands, update if necessary
+shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
+shopt -s histappend		# append to the history file, don't overwrite it
+shopt -s histreedit		# Retry failed history substitutions
+HISTSIZE=				# Store unlimited history entries in memory
+HISTFILESIZE=25000 		# Store 25000 lines of history in $HISTFILE
+HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [ -x /usr/bin/dircolors ] ; then
     [ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto -F'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
+	alias ls='ls --color=auto -F'
+	alias dir='dir --color=auto'
+	alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
 
 # enable programmable completion features
 if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
-    source /etc/bash_completion
+	source /etc/bash_completion
 fi
 
 # Automagical preprocessing of arguments to less
 if [ -x /usr/bin/lesspipe ] ; then
-    LESSOPEN="| lesspipe %s" && export LESSOPEN
+	LESSOPEN="| lesspipe %s" && export LESSOPEN
 fi
 
 # Set PS1
