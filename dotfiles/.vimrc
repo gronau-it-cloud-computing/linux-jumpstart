@@ -48,7 +48,7 @@ set wildmode=longest,list								" Make tab-completion act like the shell's
 """ Status Line
 set laststatus=2										" Always show status line
 set statusline=%4.4([%02.2n]%)\ 						" Show the buffer number
-set stl+=%-40.40f\ 										" Filename (with relative path, or as typed)
+set stl+=%-35.35f\ 										" Filename (with relative path, or as typed)
 set stl+=%-7.7([%{&ff}]%)								" File format
 set stl+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
 set stl+=%6.6{FileSize()}								" File size
