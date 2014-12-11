@@ -1,4 +1,5 @@
 [global_config]
+  geometry_hinting = False
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   handle_size = 0
   tab_position = hidden
@@ -10,13 +11,16 @@
   prev_tab = <Ctrl><Shift>Tab
 [profiles]
   [[default]]
-    scrollbar_position = hidden
-    background_darkness = 0.49
-    audible_bell = True
     palette = "#000000:#cd0000:#00cd00:#cdcd00:#1e90ff:#cd00cd:#00cdcd:#e5e5e5:#4c4c4c:#ff0000:#00ff00:#ffff00:#4682b4:#ff00ff:#00ffff:#ffffff"
-    foreground_color = "#00ff00"
+    font = Tengwar Cursive 12
+    background_darkness = 0.49
+    scrollback_lines = 1000
+    scrollbar_position = hidden
+    cursor_color = "#b3b3b3"
     icon_bell = False
     show_titlebar = False
+    copy_on_selection = True
+    audible_bell = True
 [layouts]
   [[default]]
     [[[child1]]]

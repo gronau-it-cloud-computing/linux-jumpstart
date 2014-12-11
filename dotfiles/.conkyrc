@@ -1,8 +1,7 @@
 # conky configuration
 #
-# The list of variables has been removed from this file in favour
-# of keeping the documentation more maintainable.
-# Check http://conky.sf.net for an up-to-date-list.
+# For a complete lust of variables, please see:
+# http://conky.sf.net
 #
 # For ideas about how to modify conky, please see:
 # http://crunchbanglinux.org/forums/topic/59/my-conky-config/
@@ -10,7 +9,6 @@
 # For help with conky, please see:
 # http://crunchbanglinux.org/forums/topic/2047/conky-help/
 #
-# Enjoy! :)
 ##############################################
 #  Settings
 ##############################################

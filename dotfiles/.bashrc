@@ -62,21 +62,21 @@ pd="${blue}\\w${norm}"
 
 # Colour $ red if in an ssh session
 if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
-    ps="$red\\\$$norm"
+	ps="$red\\\$$norm"
 else
-    ps="$white\\\$$norm"
+	ps="$white\\\$$norm"
 fi
 
 # If we are in a "subshell" for this host, colour the brackets
 if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
-    lb="$white[$norm"
-    rb="$white]$norm"
+	lb="$white[$norm"
+	rb="$white]$norm"
 else
-    # The colour chosen will be one of ROYGBV
-    # Red is for the first subshell, orange for the second, etc.
-    color="${colors[($SHLVL - 2) % 6]}"
-    lb="$color[$norm"
-    rb="$color]$norm"
+	# The colour chosen will be one of ROYGBV
+	# Red is for the first subshell, orange for the second, etc.
+	color="${colors[($SHLVL - 2) % 6]}"
+	lb="$color[$norm"
+	rb="$color]$norm"
 fi
 
 # Prompt of the form [user@host pwd]$
@@ -87,28 +87,28 @@ unset red orange yellow green blue violet white color colors norm un hn pd ps lb
 
 # make Vim the default editor and man viewer if it exists
 if [ -x /usr/bin/vim ] ; then
-    export EDITOR=/usr/bin/vim
+	export EDITOR=/usr/bin/vim
 
-    # Alias man to a script that detects pipes to set MANPAGER appropriately
-    # Will use vim if stdout is connected to a TTY, less elsewise
-    if [ -x "$HOME/bin/man.sh" ] ; then
-        alias man="$HOME/bin/man.sh"
-    fi
+	# Alias man to a script that detects pipes to set MANPAGER appropriately
+	# Will use vim if stdout is connected to a TTY, less elsewise
+	if [ -x "$HOME/bin/man.sh" ] ; then
+		alias man="$HOME/bin/man.sh"
+	fi
 fi
 
 # Source function definitions
 if [ -d "$HOME/.bash_functions.d" ] ; then
-    for func in "$HOME/.bash_functions.d"/* ; do
-        source "$func"
-    done
+	for func in "$HOME/.bash_functions.d"/* ; do
+		source "$func"
+	done
 fi
 
 # Source alias definitions
 if [ -r "$HOME/.bash_aliases" ] ; then
-    source "$HOME/.bash_aliases"
+	source "$HOME/.bash_aliases"
 fi
 
 # Source any local options that may exist
 if [ -r "$HOME/.bashrc.local" ] ; then
-    source "$HOME/.bashrc.local"
+	source "$HOME/.bashrc.local"
 fi

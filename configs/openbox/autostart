@@ -11,7 +11,7 @@ eval $(ssh-agent)
 tint2 &
 
 # network manager
-nm-applet &
+wicd-gtk -t &
 
 # Restore wallpaper from previous session
 sh ~/.fehbg &

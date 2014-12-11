@@ -25,13 +25,13 @@ unset platform
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ]; then
-    PATH="$PATH:$HOME/bin"
+	PATH="$PATH:$HOME/bin"
 fi
 
 # If running bash
 if [ -n "$BASH_VERSION" ]; then
-    # Source .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+	# Source .bashrc if it exists
+	if [ -f "$HOME/.bashrc" ]; then
+		. "$HOME/.bashrc"
+	fi
 fi

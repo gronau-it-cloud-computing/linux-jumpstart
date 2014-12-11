@@ -1,134 +1,134 @@
 pathctl()
 {
-    # What action should we take?
-    local action="$1"
-    shift
+	# What action should we take?
+	local action="$1"
+	shift
 
-    # Override any dirs already in PATH?
-    local force=0
-    if [ "$1" == '-f' ] ; then
-        force=1
-        shift
-    fi
+	# Override any dirs already in PATH?
+	local force=0
+	if [ "$1" == '-f' ] ; then
+		force=1
+		shift
+	fi
 
-    # Determine if the action specified is valid
-    case "$action" in
-        push)   _pathctl_add push $force "$@"
-                ;;
-        queue)  _pathctl_add queue $force "$@"
-                ;;
-        remove) _pathctl_rem "$@"
-                ;;
-        *)      _pathctl_usage && return 1
-                ;;
-    esac
-    shift
+	# Determine if the action specified is valid
+	case "$action" in
+		push)	_pathctl_add push $force "$@"
+				;;
+		queue)	_pathctl_add queue $force "$@"
+				;;
+		remove) _pathctl_rem "$@"
+				;;
+		*)		_pathctl_usage && return 1
+				;;
+	esac
+	shift
 
-    _pathctl_fin
+	_pathctl_fin
 }
 
 # Add new dirs to PATH
 _pathctl_add()
 {
-    # Value of action
-    local action=$1
+	# Value of action
+	local action=$1
 
-    # Value of force
-    local force=$2
+	# Value of force
+	local force=$2
 
-    # Shift the action and force values off of $@
-    shift 2
+	# Shift the action and force values off of $@
+	shift 2
 
-    # Process the directories in $@
-    for dir ; do
-        # Argument is not a directory, ignore it
-        if ! [ -d "$dir" ] ; then
-            continue
-        fi
+	# Process the directories in $@
+	for dir ; do
+		# Argument is not a directory, ignore it
+		if ! [ -d "$dir" ] ; then
+			continue
+		fi
 
-        # What do we do if $dir is already in PATH?
-        if _pathctl_contains "$dir" ; then
-            # If force is off, ignore dir
-            if [ $force -eq 0 ] ; then
-                continue
-            # If force is on, remove the offender
-            else
-                _pathctl_rem "$dir" || return 1
-            fi
-        fi
+		# What do we do if $dir is already in PATH?
+		if _pathctl_contains "$dir" ; then
+			# If force is off, ignore dir
+			if [ $force -eq 0 ] ; then
+				continue
+			# If force is on, remove the offender
+			else
+				_pathctl_rem "$dir" || return 1
+			fi
+		fi
 
-        # Add dir to PATH as specified by action
-        case "$action" in
-            push)   PATH="$dir:$PATH"
-                    ;;
-            queue)  PATH="$PATH:$dir"
-                    ;;
-            *)      return 1
-                    ;;
-        esac
-    done
+		# Add dir to PATH as specified by action
+		case "$action" in
+			push)	PATH="$dir:$PATH"
+					;;
+			queue)	PATH="$PATH:$dir"
+					;;
+			*)		return 1
+					;;
+		esac
+	done
 }
 
 # Remove all instances of dir from PATH
 _pathctl_rem()
 {
-    # Process $@
-    for dir ; do
-        PATH="$(echo "$PATH" | sed -e "s;^${dir}:\|:${dir}:\|:${dir}$;:;g")"
-        _pathctl_contains "$dir" && return 1
-    done
+	# Process $@
+	for dir ; do
+		PATH="$(echo "$PATH" | sed -e "s;^${dir}:\|:${dir}:\|:${dir}$;:;g")"
+		_pathctl_contains "$dir" && return 1
+	done
 
-    return 0
+	return 0
 }
 
 # Does PATH contain dir?
 _pathctl_contains()
 {
-    case ":$PATH:" in
-        *":$1:"*)   #PATH contains dir
-                    return 0
-                    ;;
-        *)          #PATH does not contain dir
-                    return 1
-                    ;;
-    esac
+	case ":$PATH:" in
+		*":$1:"*)	#PATH contains dir
+					return 0
+					;;
+		*)			#PATH does not contain dir
+					return 1
+					;;
+	esac
 }
 
 # Remove undesirable entries from PATH
 _pathctl_clean_path()
 {
-    # Remove any instances of `.'
-    PATH="$(echo "$PATH" | sed -e 's;^\.:\|:.:\|:.$;:;g')"
-    # Remove any instances of `::', aka "implicit ."
-    PATH="$(echo "$PATH" | sed -e 's;::;:;g')"
-    # Remove leading or trailing `:'
-    PATH="$(echo "$PATH" | sed -e 's;^:\|:$;;g')"
+	# Remove any instances of `.'
+	PATH="$(echo "$PATH" | sed -e 's;^\.:\|:.:\|:.$;:;g')"
+	# Remove any instances of `::', aka "implicit ."
+	PATH="$(echo "$PATH" | sed -e 's;::;:;g')"
+	# Remove leading or trailing `:'
+	PATH="$(echo "$PATH" | sed -e 's;^:\|:$;;g')"
 }
 
 # Steps to be taken at the end of a successful call to pathctl
 _pathctl_fin()
 {
-    # Clean up PATH
-    _pathctl_clean_path
+	# Clean up PATH
+	_pathctl_clean_path
 
-    # Export PATH to children
-    export PATH
+	# Export PATH to children
+	export PATH
 }
 
 _pathctl_usage()
 {
-    cat << 'EOF'
+	cat << 'EOF'
 Usage: pathctl {push | queue} [-f] DIR [DIR] ... 
-       pathctl remove DIR [DIR] ... 
+	   pathctl remove DIR [DIR] ... 
 Add or remove entries from PATH.
 
 Actions:
-        push        Add directories to the front of PATH in stack-order
-        queue       Add directories to the end of PATH in queue-order
-        remove      Remove all instances of specified directories from PATH
+		push		Add directories to the front of PATH in stack-order
+		queue		Add directories to the end of PATH in queue-order
+		remove		Remove all instances of specified directories from PATH
 
 Options:
-        -f          Add DIRs to PATH, even if DIR already exists.
-                    Removes all instances of DIR prior to adding
+		-f			Add DIRs to PATH, even if DIR already exists.
+					Removes all instances of DIR prior to adding
 EOF
 }
