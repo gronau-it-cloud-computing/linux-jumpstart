@@ -16,5 +16,5 @@ alias sprintf='printf -v'
 
 # Source any local aliases that may exist
 if [ -r "$HOME/.bash_aliases.local" ] ; then
-    source "$HOME/.bash_aliases.local"
+	source "$HOME/.bash_aliases.local"
 fi

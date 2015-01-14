@@ -20,7 +20,7 @@ HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ] ; then
-    [ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
+	[ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
 	alias ls='ls --color=auto -F'
 	alias dir='dir --color=auto'
 	alias vdir='vdir --color=auto'

@@ -118,17 +118,17 @@ _pathctl_fin()
 _pathctl_usage()
 {
 	cat << 'EOF'
-Usage: pathctl {push | queue} [-f] DIR [DIR] ... 
-	   pathctl remove DIR [DIR] ... 
+Usage: pathctl {push | queue} [-f] DIR [DIR] ...
+       pathctl remove DIR [DIR] ...
 Add or remove entries from PATH.
 
 Actions:
-		push		Add directories to the front of PATH in stack-order
-		queue		Add directories to the end of PATH in queue-order
-		remove		Remove all instances of specified directories from PATH
+        push        Add directories to the front of PATH in stack-order
+        queue       Add directories to the end of PATH in queue-order
+        remove      Remove all instances of specified directories from PATH
 
 Options:
-		-f			Add DIRs to PATH, even if DIR already exists.
-					Removes all instances of DIR prior to adding
+        -f          Add DIRs to PATH, even if DIR already exists.
+                    Removes all instances of DIR prior to adding
 EOF
 }
