@@ -29,11 +29,11 @@ set background=dark										" Look nice on a dark background
 set backspace=indent,eol,start							" backspace over everything
 set cursorline											" Highlight current line
 set diffopt=filler,vertical								" Keep files aligned, default to vsplit
-set fileformats=unix,dos								" Automagically detect format by EOLs
+set fileformats=unix,dos								" Automagically detect format by EOL
 set hidden												" Keeps abandoned buffers loaded. Beware!
 set nohlsearch											" Do not highlight every match
 set lazyredraw											" Don't redraw while executing macros
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:< " Keep tab-aligned when list is enabled
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<	" Keep tab-aligned when list is enabled
 set nomodeline											" Modelines be dangerous
 set nrformats=alpha,octal,hex							" {in,de}crementing of alpha, octal, hex
 set number												" Show line numbers
@@ -65,11 +65,11 @@ set stl+=%P												" Percentage through file
 " Disable arrow keys in normal, visual, and insert modes
 noremap		<LEFT>	<NOP>
 noremap		<DOWN>	<NOP>
-noremap		<RIGHT> <NOP>
+noremap		<RIGHT>	<NOP>
 noremap		<UP>	<NOP>
 inoremap	<LEFT>	<NOP>
 inoremap	<DOWN>	<NOP>
-inoremap	<RIGHT> <NOP>
+inoremap	<RIGHT>	<NOP>
 inoremap	<UP>	<NOP>
 
 " Bind F2 to toggle spellcheck in normal and insert modes

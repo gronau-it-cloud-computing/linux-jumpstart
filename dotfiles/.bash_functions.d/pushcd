@@ -44,6 +44,22 @@ popd()
 		fi
 	fi
 
+	# I don't want this stack anymore
+	if [ "$1" == '-c' ] ; then
+		builtin dirs -c
+		shift 
+
+		local dir=''
+		if [ -n "$*" ] ; then
+			dir="$*"
+		else
+			dir="$HOME"
+		fi
+
+		builtin cd "$dir"
+		return $?
+	fi
+
 	# popd as normal
 	builtin popd "$@"
 	return $?
