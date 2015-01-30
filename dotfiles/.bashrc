@@ -7,9 +7,10 @@ shopt -s checkhash		# Build hash of commands run, check hash before PATH
 shopt -s checkjobs		# Require confirmation to exit with jobs running
 shopt -s checkwinsize	# Check window size after commands, update if necessary
 
-# Globbing settings	
+# Globbing settings
+GLOBIGNORE='.:*/.:*/..'	# Ignore . and .. when globbing
+shopt -u dotglob		# Bash turns dotglob on when GLOBIGNORE is non-null
 shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
-GLOBIGNORE='.:..'		# Ignore . and .. when globbing
 
 # History settings
 shopt -s histappend		# append to the history file, don't overwrite it
