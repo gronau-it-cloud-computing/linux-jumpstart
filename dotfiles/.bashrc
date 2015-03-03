@@ -43,7 +43,6 @@ fi
 
 # Set PS1
 # Pretty colors
-black='\[\e[15\]'
 red='\[\e[31m\]'
 orange='\[\e[38;5;208m\]'
 yellow='\[\e[93m\]'
