@@ -11,7 +11,7 @@ if has("syntax")
 	syntax on
 endif
 
-" Automagical filetype autoindentation.
+" Automagical filetype autoindentation
 if has("autocmd")
 	filetype plugin indent on
 endif
@@ -22,7 +22,8 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 """ Miscellaneous options
-let $PAGER=''											" Set PAGER for man viewing
+let $PAGER = ''											" Set PAGER for man viewing
+let mapleader = ' '										" Use <Space> as leader
 set autoindent											" Turn on auto-indent
 set autowrite											" Automagically save before some commands
 set background=dark										" Look nice on a dark background
@@ -33,17 +34,19 @@ set fileformats=unix,dos								" Automagically detect format by EOL
 set hidden												" Keeps abandoned buffers loaded. Beware!
 set nohlsearch											" Do not highlight every match
 set lazyredraw											" Don't redraw while executing macros
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<	" Keep tab-aligned when list is enabled
+set listchars=tab:>-,trail:~,nbsp:.						" Show tabs, trailing spaces, and nbsp
+set listchars+=eol:$,extends:>,precedes:<				" Show EOL, mark long (unwrapped) lines
 set nomodeline											" Modelines be dangerous
 set nrformats=alpha,octal,hex							" {in,de}crementing of alpha, octal, hex
 set number												" Show line numbers
 set shiftwidth=4										" Make shift width four spaces
-set showcmd												" Show command in status line.
-set showmatch											" Show matching brackets.
+set showcmd												" Show command in status line
+set showmatch											" Show matching brackets
 set splitright											" Open vertical splits on the right
 set tabstop=4											" Make tab four spaces
 set wildignore+=*.sw[nop],*.pyc,*.class,*.o				" Ignore these things in tab completion
 set wildmode=longest,list								" Make tab-completion act like the shell's
+""" END Miscellanea
 
 """ Status Line
 set laststatus=2										" Always show status line
@@ -60,9 +63,10 @@ set stl+=%-8.8(0x%04B%)									" Show value of byte under cursor in hex
 set stl+=LN\ %l/%L\ 									" Line number
 set stl+=COL\ %-8(%c%V%)								" Column number
 set stl+=%P												" Percentage through file
+""" END Status Line
 
 """ Keybindings
-" Disable arrow keys in normal, visual, and insert modes
+" Disable arrow keys everywhere but command mode
 noremap		<LEFT>	<NOP>
 noremap		<DOWN>	<NOP>
 noremap		<RIGHT>	<NOP>
@@ -72,39 +76,39 @@ inoremap	<DOWN>	<NOP>
 inoremap	<RIGHT>	<NOP>
 inoremap	<UP>	<NOP>
 
-" Bind F2 to toggle spellcheck in normal and insert modes
-nnoremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
+" Bind F2 to toggle spellcheck
+noremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 
 " Bind :w!! to WRITE WITH EXTREME PREJUDICE
 cmap w!! w !sudo tee % >/dev/null
 
-" Bind C-<Movement> to move tabs/windows
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+" Bind C-<Direction> to move windows
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" Bind <leader>-<Direction> to move tabs
+noremap <leader>h gT
+noremap <leader>l gt
 
 " Make Y act like you'd expect it to
 nnoremap Y y$
 
 " Shortcut to source vimrc
 nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
+""" END Keybindings
 
 """ Autocommands
-" Autocommand group for setting up help windows
-augroup filetype_help
-	" Clear any other autocommands for sanity
-	autocmd!
-	" Close help buffer with "q" a la man
-	autocmd BufWinEnter * if &l:buftype ==# 'help' | nnoremap <buffer> q :bw<CR> | endif
-augroup END
+""" END Autocommands
 
-""" Custom commands
+""" Custom Commands
 " Put all lines matching the pattern argument into a scratch buffer
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+""" END Custom Commands
 
-""" Custom functions
+""" Custom Functions
 " Function to get the filesize in bytes and convert it to human-readable units
 function! FileSize()
 	" Get size of the file in bytes
@@ -134,8 +138,9 @@ function! FileSize()
 	return "(•̩̩̩̩＿•̩̩̩̩)"
 
 endfunction
+""" END Custom Functions
 
 " Use any of the user's local settings if they exist
-if filereadable("$HOME/.vimrc.local")
-	source "$HOME/.vimrc.local"
+if filereadable($HOME . "/.vimrc.local")
+	source $HOME/.vimrc.local
 endif
