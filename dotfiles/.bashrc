@@ -13,13 +13,13 @@ shopt -u dotglob		# Bash turns dotglob on when GLOBIGNORE is non-null
 shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
 
 # History settings
-shopt -s histappend		# append to the history file, don't overwrite it
+shopt -s histappend		# Append to the history file, don't overwrite it
 shopt -s histreedit		# Retry failed history substitutions
 HISTSIZE=				# Store unlimited history entries in memory
 HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
 HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
 
-# enable color support of ls and also add handy aliases
+# Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ] ; then
 	[ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
 	alias ls='ls --color=auto -F'
@@ -31,15 +31,13 @@ if [ -x /usr/bin/dircolors ] ; then
 	alias egrep='egrep --color=auto'
 fi
 
-# enable programmable completion features
+# Enable programmable completion features
 if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
 	source /etc/bash_completion
 fi
 
 # Automagical preprocessing of arguments to less
-if [ -x /usr/bin/lesspipe ] ; then
-	LESSOPEN="| lesspipe %s" && export LESSOPEN
-fi
+[ -x /usr/bin/lesspipe ] && LESSOPEN="| lesspipe %s" && export LESSOPEN
 
 # Set PS1
 # Pretty colors
@@ -90,30 +88,18 @@ export PS1="${lb}${un}${at}${hn} ${pd}${rb}${ps} "
 # Get rid of all of the garbage we just defined
 unset red orange yellow green blue violet white color colors norm un hn pd ps lb rb
 
-# make Vim the default editor and man viewer if it exists
-if [ -x /usr/bin/vim ] ; then
-	export EDITOR=/usr/bin/vim
-
-	# Alias man to a script that detects pipes to set MANPAGER appropriately
-	# Will use vim if stdout is connected to a TTY, less elsewise
-	if [ -x "$HOME/bin/man.sh" ] ; then
-		alias man="$HOME/bin/man.sh"
-	fi
-fi
+# Make Vim the default editor if it exists
+[ -x /usr/bin/vim ] && export EDITOR=/usr/bin/vim
 
 # Source function definitions
 if [ -d "$HOME/.bash_functions.d" ] ; then
 	for func in "$HOME/.bash_functions.d"/* ; do
-		source "$func"
+		[ -r "$func" ] && source "$func"
 	done
 fi
 
 # Source alias definitions
-if [ -r "$HOME/.bash_aliases" ] ; then
-	source "$HOME/.bash_aliases"
-fi
+[ -r "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 # Source any local options that may exist
-if [ -r "$HOME/.bashrc.local" ] ; then
-	source "$HOME/.bashrc.local"
-fi
+[ -r "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"

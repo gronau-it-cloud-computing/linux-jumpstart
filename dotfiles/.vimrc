@@ -104,6 +104,12 @@ nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 """ END Autocommands
 
 """ Custom Commands
+" Open the help buffer in a full window
+cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
+
+" Mimic a vertical version of :sb
+cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
+
 " Put all lines matching the pattern argument into a scratch buffer
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
 """ END Custom Commands
@@ -136,11 +142,10 @@ function! FileSize()
 
 	" This file is a gig or larger, cry
 	return "(•̩̩̩̩＿•̩̩̩̩)"
-
 endfunction
 """ END Custom Functions
 
 " Use any of the user's local settings if they exist
-if filereadable($HOME . "/.vimrc.local")
+if filereadable($HOME . '/.vimrc.local')
 	source $HOME/.vimrc.local
 endif
