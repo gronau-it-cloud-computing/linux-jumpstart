@@ -17,11 +17,5 @@ set nolist
 set nonumber
 
 " Keybindings
-nmap q 			:q<CR>
-nmap <SPACE>	<C-D>
-nmap b			<C-U>
-nmap <UP> 		<UP>
-nmap <DOWN>		<DOWN>
-nmap <LEFT>		<LEFT>
-nmap <RIGHT>	<RIGHT>
-nmap K			:Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>
+nnoremap q 			:q<CR>
+nnoremap K			:Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>
