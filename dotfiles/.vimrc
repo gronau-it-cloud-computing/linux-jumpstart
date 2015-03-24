@@ -81,7 +81,7 @@ noremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 
 " Bind :w!! to WRITE WITH EXTREME PREJUDICE
-cmap w!! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % >/dev/null
 
 " Bind C-<Direction> to move windows
 noremap <C-h> <C-w>h
@@ -98,6 +98,12 @@ nnoremap Y y$
 
 " Shortcut to source vimrc
 nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" Set up default (*shudder* emacs-like) readline keys for ccommandline
+cnoremap <C-a>	<Home>
+cnoremap <C-e>	<End>
+cnoremap <Esc>b	<S-Left>
+cnoremap <Esc>f	<S-Right>
 """ END Keybindings
 
 """ Autocommands

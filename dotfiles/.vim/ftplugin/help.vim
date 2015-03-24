@@ -10,5 +10,5 @@ nnoremap <buffer> O ?'\l\{2,\}'<CR>
 nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
 nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 
-" Close help buffers with q, a la man
+" Close help buffers with q, à la man
 nnoremap <buffer> q :bw<CR>

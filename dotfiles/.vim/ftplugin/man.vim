@@ -1,21 +1,21 @@
 " Fold manpages by section (or try to)
-set foldenable
-set foldmethod=indent
-set foldnestmax=1
+setl foldenable
+setl foldmethod=indent
+setl foldnestmax=1
 
 " It doesn't make sense to modify the buffer
-set nomodified
-set nomodifiable
-set readonly
+setl nomodified
+setl nomodifiable
+setl readonly
 
 " You never know what's capitalised where
-set ignorecase
-set smartcase
+setl ignorecase
+setl smartcase
 
 " Miscellaneous display niceties
-set nolist
-set nonumber
+setl nolist
+setl nonumber
+setl norelativenumber
 
 " Keybindings
-nnoremap q 			:q<CR>
-nnoremap K			:Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>
+nnoremap <buffer> q	:q<CR>
