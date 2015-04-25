@@ -22,8 +22,8 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 """ Miscellaneous options
-let $PAGER = ''											" Set PAGER for man viewing
-let mapleader = ' '										" Use <Space> as leader
+let $PAGER=''											" Set PAGER for man viewing
+let mapleader=' '										" Use <Space> as leader
 set autoindent											" Turn on auto-indent
 set autowrite											" Automagically save before some commands
 set background=dark										" Look nice on a dark background
@@ -47,6 +47,18 @@ set tabstop=4											" Make tab four spaces
 set wildignore+=*.sw[nop],*.pyc,*.class,*.o				" Ignore these things in tab completion
 set wildmode=longest,list								" Make tab-completion act like the shell's
 """ END Miscellanea
+
+""" Session Settings
+set sessionoptions=buffers								" Save hidden, unloaded buffers in session
+set ssop+=help											" Save the help window(s)
+set ssop+=localoptions									" Keep any local options or mappings
+set ssop+=resize										" Size of the Window: 'lines' and 'columns'
+set ssop+=slash											" Replace back with fack in session file
+set ssop+=tabpages										" Store all tabs in session
+set ssop+=unix											" Use Unix line endings for session file
+set ssop+=winpos										" Position of the Vim Window
+set ssop+=winsize										" Size of each window
+""" END Session Settings
 
 """ Status Line
 set laststatus=2										" Always show status line
@@ -99,26 +111,25 @@ nnoremap Y y$
 " Shortcut to source vimrc
 nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 
-" Set up default (*shudder* emacs-like) readline keys for ccommandline
+" Set up default readline keys for commandline
 cnoremap <C-a>	<Home>
 cnoremap <C-e>	<End>
 cnoremap <Esc>b	<S-Left>
 cnoremap <Esc>f	<S-Right>
 """ END Keybindings
 
-""" Autocommands
-""" END Autocommands
+""" Commands
+" Put all lines matching the pattern argument into a scratch buffer
+command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
 
-""" Custom Commands
+"" Not actual commands, but abbreviations
 " Open the help buffer in a full window
 cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
 
 " Mimic a vertical version of :sb
 cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
-
-" Put all lines matching the pattern argument into a scratch buffer
-command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
-""" END Custom Commands
+"" END abbreviations
+""" END Commands
 
 """ Custom Functions
 " Function to get the filesize in bytes and convert it to human-readable units
