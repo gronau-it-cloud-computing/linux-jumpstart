@@ -4,27 +4,22 @@ cd()
 	local dir=''
 
 	# Determine where to cd to
-	case "$*" in
+	case "$1" in
 		# cd with no args or the arg ~ should go HOME
 		'')		dir="$HOME"
 				;;
 		'~')	dir="$HOME"
 				;;
-		'-')	# If there are entries on the stack, twiddle
-				# This could be annoying when $HOME is involved,
-				# but most closely replicates normal behaviour
-				builtin pushd >/dev/null 2>&1 && return 0
-				# Else, put OLDPWD onto the stack
-				dir="$OLDPWD"
+		'-')	dir="$OLDPWD"
 				;;
 		# Special cases are covered, just pushd the argument
-		*)		dir="$*"
+		*)		dir="$1"
 				;;
 	esac
 
 	# If we're in HOME, don't put it on the stack; it just creates clutter
 	if [ "$PWD" == "$HOME" ] ; then
-		builtin cd "$dir" 
+		builtin cd "$dir"
 	else
 		builtin pushd "$dir" > /dev/null
 	fi
@@ -33,14 +28,14 @@ cd()
 	return $?
 }
 
-# Go HOME when dirstack is empty and there are no args to popd
+# Add some nicities to popd
 popd()
 {
 	# There are no arguments to popd
-	if [ -z "$*" ] ; then
+	if [ -z "$1" ] ; then
 		# There's nothing to pop
 		if [ "$DIRSTACK" == "$(dirs)" ] ; then
-			# cd to HOME
+			# cd to HOME instead of complaining
 			builtin cd "$HOME"
 			return $?
 		fi
@@ -49,11 +44,12 @@ popd()
 	# I don't want this stack anymore
 	if [ "$1" == '-c' ] ; then
 		builtin dirs -c
-		shift 
 
 		local dir=''
-		if [ -n "$*" ] ; then
-			dir="$*"
+		# Did we get an additional argument?
+		if [ -n "$2" ] ; then
+			# Where do we want our new stack to start?
+			dir="$2"
 		else
 			dir="$HOME"
 		fi
