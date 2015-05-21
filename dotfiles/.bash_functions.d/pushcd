@@ -1,3 +1,10 @@
+# Sometimes you just want a plain old cd
+bcd()
+{
+	builtin cd "$@"
+	return $?
+}
+
 # Make cd a function so that cding manipulates dirstack
 cd()
 {
