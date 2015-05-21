@@ -131,13 +131,17 @@ cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
 "" END abbreviations
 """ END Commands
 
+" Put all lines matching the pattern argument into a scratch buffer
+command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+""" END Custom Commands
+
 """ Custom Functions
 " Function to get the filesize in bytes and convert it to human-readable units
 function! FileSize()
 	" Get size of the file in bytes
 	let bytes = getfsize(expand("%:p"))
 
-	" This is probably a new file
+	" This is an empty file
 	if bytes < 0
 		return ""
 	endif
