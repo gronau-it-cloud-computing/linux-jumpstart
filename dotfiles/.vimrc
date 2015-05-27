@@ -129,10 +129,12 @@ cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
 " Mimic a vertical version of :sb
 cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
 "" END abbreviations
-""" END Commands
 
 " Put all lines matching the pattern argument into a scratch buffer
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+
+" Put the output of an arbitrary command into a scratch buffer
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 """ END Custom Commands
 
 """ Custom Functions
@@ -163,6 +165,15 @@ function! FileSize()
 
 	" This file is a gig or larger, cry
 	return "(•̩̩̩̩＿•̩̩̩̩)"
+endfunction
+
+function! s:ExecuteInShell(command)
+  let command = join(map(split(a:command), 'expand(v:val)'))
+  let winnr = bufwinnr('^' . command . '$')
+  silent! execute  winnr < 0 ? 'vert botright new ' . fnameescape(command) : winnr . 'wincmd w'
+  setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+  silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+  silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
 endfunction
 """ END Custom Functions
 
