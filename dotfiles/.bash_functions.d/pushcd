@@ -2,7 +2,18 @@
 bcd()
 {
 	builtin cd "$@"
-	return $?
+}
+
+cd_dash()
+{
+	local dir=''
+
+	if [ "$OLDPWD" == "${DIRSTACK[1]}" ] ; then
+		builtin pushd >/dev/null
+		return $?
+	fi
+
+	builtin pushd "$OLDPWD" >/dev/null
 }
 
 # Make cd a function so that cding manipulates dirstack
@@ -17,7 +28,8 @@ cd()
 				;;
 		'~')	dir="$HOME"
 				;;
-		'-')	dir="$OLDPWD"
+		'-')	cd_dash
+				return $?
 				;;
 		# Special cases are covered, just pushd the argument
 		*)		dir="$1"
@@ -26,13 +38,10 @@ cd()
 
 	# If we're in HOME, don't put it on the stack; it just creates clutter
 	if [ "$PWD" == "$HOME" ] ; then
-		builtin cd "$dir"
+		bcd "$dir"
 	else
-		builtin pushd "$dir" > /dev/null
+		builtin pushd "$dir" >/dev/null
 	fi
-
-	# Return the executed command's exit status
-	return $?
 }
 
 # Add some nicities to popd
@@ -41,9 +50,9 @@ popd()
 	# There are no arguments to popd
 	if [ -z "$1" ] ; then
 		# There's nothing to pop
-		if [ "$DIRSTACK" == "$(dirs)" ] ; then
+		if [ "${#DIRSTACK[@]}" -lt 2 ] ; then
 			# cd to HOME instead of complaining
-			builtin cd "$HOME"
+			bcd "$HOME"
 			return $?
 		fi
 	fi
@@ -61,11 +70,10 @@ popd()
 			dir="$HOME"
 		fi
 
-		builtin cd "$dir"
+		bcd "$dir"
 		return $?
 	fi
 
 	# popd as normal
 	builtin popd "$@"
-	return $?
 }
