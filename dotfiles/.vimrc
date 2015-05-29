@@ -135,6 +135,7 @@ command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=
 
 " Put the output of an arbitrary command into a scratch buffer
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+command! -complete=file -nargs=+ Gitdiff call s:ExecuteInShell("git diff --cached " . <q-args>)
 """ END Custom Commands
 
 """ Custom Functions
