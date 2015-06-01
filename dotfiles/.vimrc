@@ -135,7 +135,7 @@ command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=
 
 " Put the output of an arbitrary command into a scratch buffer
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-command! -complete=file -nargs=+ Gitdiff call s:ExecuteInShell("git diff --cached " . <q-args>)
+command! -complete=file -nargs=+ GitDiff call s:ExecGitDiff(<q-args>)
 """ END Custom Commands
 
 """ Custom Functions
@@ -176,6 +176,12 @@ function! s:ExecuteInShell(command)
 	silent! execute 'silent %!'. command
 	silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
 	silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
+endfunction
+
+function! s:ExecGitDiff(files)
+	let files = join(map(split(a:files), 'expand(v:val)'))
+	call s:ExecuteInShell("git diff --cached " . files)
+	setlocal ft=git
 endfunction
 """ END Custom Functions
 
