@@ -98,6 +98,9 @@ if [ -d "$HOME/.bash_functions.d" ] ; then
 	done
 fi
 
+# Put my bin on the front of PATH
+pathctl push -f "$HOME/bin"
+
 # Source alias definitions
 [ -r "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
