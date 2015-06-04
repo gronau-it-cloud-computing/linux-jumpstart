@@ -1,19 +1,27 @@
-# Sometimes you just want a plain old cd
+# Sometimes you just want a plain old cd/popd/pushd
 bcd()
 {
 	builtin cd "$@"
 }
 
+bpopd()
+{
+	builtin popd "$@"
+}
+
+bpushd()
+{
+	builtin pushd "$@"
+}
+
+# Determine how to handle cd -
 cd_dash()
 {
 	local dir=''
 
-	if [ "$OLDPWD" == "${DIRSTACK[1]}" ] ; then
-		builtin pushd >/dev/null
-		return $?
-	fi
-
-	builtin pushd "$OLDPWD" >/dev/null
+	[ "$OLDPWD" == "${DIRSTACK[1]}" ] \
+		&& bpushd >/dev/null \
+		|| bpushd "$OLDPWD" >/dev/null
 }
 
 # Make cd a function so that cding manipulates dirstack
@@ -36,44 +44,31 @@ cd()
 				;;
 	esac
 
-	# If we're in HOME, don't put it on the stack; it just creates clutter
-	if [ "$PWD" == "$HOME" ] ; then
-		bcd "$dir"
-	else
-		builtin pushd "$dir" >/dev/null
-	fi
+	# Don't put $HOME on the stack
+	[ "$PWD" == "$HOME" ] \
+		&& bcd "$dir" \
+		|| bpushd "$dir" >/dev/null
 }
 
 # Add some nicities to popd
 popd()
 {
-	# There are no arguments to popd
-	if [ -z "$1" ] ; then
-		# There's nothing to pop
-		if [ "${#DIRSTACK[@]}" -lt 2 ] ; then
+	# There are no arguments to popd and nothing to pop
+	if [ -z "$1" ] && [ "${#DIRSTACK[@]}" -lt 2 ] ; then
 			# cd to HOME instead of complaining
 			bcd "$HOME"
 			return $?
-		fi
 	fi
 
 	# I don't want this stack anymore
 	if [ "$1" == '-c' ] ; then
 		builtin dirs -c
 
-		local dir=''
-		# Did we get an additional argument?
-		if [ -n "$2" ] ; then
-			# Where do we want our new stack to start?
-			dir="$2"
-		else
-			dir="$HOME"
-		fi
-
+		local dir="${2:-$HOME}"
 		bcd "$dir"
 		return $?
 	fi
 
 	# popd as normal
-	builtin popd "$@"
+	bpopd "$@"
 }
