@@ -131,7 +131,7 @@ cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
 "" END abbreviations
 
 " Put all lines matching the pattern argument into a scratch buffer
-command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+command! -nargs=? Filter let @z='' | execute 'g/<args>/y Z' | vert new | setl bt=nofile | 0put! z
 
 " Put the output of an arbitrary command into a scratch buffer
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
