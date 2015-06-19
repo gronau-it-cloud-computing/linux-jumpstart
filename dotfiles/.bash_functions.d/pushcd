@@ -14,14 +14,21 @@ bpushd()
 	builtin pushd "$@"
 }
 
+# Wrap cd -L and cd -P
+cd_opt()
+{
+	# Push a copy of PWD onto the stack
+	bpushd -n "$PWD" > /dev/null || return $?
+	# Replace DIRSTACK[0] by cding
+	bcd "$@"
+}
+
 # Determine how to handle cd -
 cd_dash()
 {
-	local dir=''
-
 	[ "$OLDPWD" == "${DIRSTACK[1]}" ] \
-		&& bpushd >/dev/null \
-		|| bpushd "$OLDPWD" >/dev/null
+		&& bpushd > /dev/null \
+		|| bpushd "$OLDPWD" > /dev/null
 }
 
 # Make cd a function so that cding manipulates dirstack
@@ -32,22 +39,29 @@ cd()
 	# Determine where to cd to
 	case "$1" in
 		# cd with no args or the arg ~ should go HOME
-		'')		dir="$HOME"
-				;;
-		'~')	dir="$HOME"
-				;;
-		'-')	cd_dash
-				return $?
-				;;
+		'')
+			dir="$HOME"
+		;;
+		'~')
+			dir="$HOME"
+		;;
+		-[LP])
+			cd_opt "$@"
+			return $?
+		;;
+		'-')
+			cd_dash
+			return $?
+		;;
 		# Special cases are covered, just pushd the argument
 		*)		dir="$1"
-				;;
+		;;
 	esac
 
 	# Don't put $HOME on the stack
 	[ "$PWD" == "$HOME" ] \
 		&& bcd "$dir" \
-		|| bpushd "$dir" >/dev/null
+		|| bpushd "$dir" > /dev/null
 }
 
 # Add some nicities to popd
