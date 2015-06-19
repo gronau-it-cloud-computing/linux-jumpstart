@@ -108,8 +108,9 @@ noremap <leader>l gt
 " Make Y act like you'd expect it to
 nnoremap Y y$
 
-" Shortcut to source vimrc
+" Shortcuts for .vimrc stuff
 nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :tabedit $MYVIMRC<CR>
 
 " Set up default readline keys for commandline
 cnoremap <C-a>	<Home>
