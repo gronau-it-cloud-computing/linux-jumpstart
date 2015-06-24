@@ -121,7 +121,12 @@ cnoremap <Esc>f	<S-Right>
 
 """ Commands
 " Put all lines matching the pattern argument into a scratch buffer
-command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+command! -nargs=? Filter let @z='' | execute 'g/<args>/y Z' | vert new | setl bt=nofile | 0put! z
+command! -nargs=? Vilter let @z='' | execute 'v/<args>/y Z' | vert new | setl bt=nofile | 0put! z
+
+" Put the output of an arbitrary command into a scratch buffer
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+command! -complete=file -nargs=+ GitDiff call s:ExecGitDiff(<q-args>)
 
 "" Not actual commands, but abbreviations
 " Open the help buffer in a full window
@@ -130,42 +135,21 @@ cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
 " Mimic a vertical version of :sb
 cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
 "" END abbreviations
-
-" Put all lines matching the pattern argument into a scratch buffer
-command! -nargs=? Filter let @z='' | execute 'g/<args>/y Z' | vert new | setl bt=nofile | 0put! z
-
-" Put the output of an arbitrary command into a scratch buffer
-command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-command! -complete=file -nargs=+ GitDiff call s:ExecGitDiff(<q-args>)
 """ END Custom Commands
 
 """ Custom Functions
 " Function to get the filesize in bytes and convert it to human-readable units
 function! FileSize()
-	" Get size of the file in bytes
-	let bytes = getfsize(expand("%:p"))
-
-	" This is an empty file
+	let bytes = getfsize(expand("%:p")) " Get size of the file in bytes
 	if bytes < 0
 		return ""
-	endif
-
-	" If there is less than 1KB, display in B
-	if bytes < 1024
+	elseif bytes < 1024 
 		return bytes . "B"
-	endif
-
-	" If there are more than 1023 B, but less than 1MB, display in KB
-	if bytes < 1048576
+	elseif bytes < 1048576
 		return (bytes / 1024) . "KB"
-	endif
-
-	" If there are more than 1023KB, but less than 1GB, display in MB
-	if bytes < 1073741824
+	elseif bytes < 1073741824
 		return (bytes / 1048576) . "MB"
 	endif
-
-	" This file is a gig or larger, cry
 	return "(•̩̩̩̩＿•̩̩̩̩)"
 endfunction
 
@@ -174,7 +158,7 @@ function! s:ExecuteInShell(command)
 	let winnr = bufwinnr('^' . command . '$')
 	silent! execute  winnr < 0 ? 'vert botright new ' . fnameescape(command) : winnr . 'wincmd w'
 	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
-	silent! execute 'silent %!'. command
+	silent! execute 'silent %!' . command
 	silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
 	silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
 endfunction
