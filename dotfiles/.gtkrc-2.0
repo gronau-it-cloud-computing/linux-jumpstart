@@ -1,2 +1,2 @@
-include "/home/robert/.themes/Boje-Orange/gtk-2.0/gtkrc"
+include "/usr/share/themes/Boje-Orange/gtk-2.0/gtkrc"
 include "/home/robert/.gtkrc.mine"

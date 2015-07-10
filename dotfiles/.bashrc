@@ -3,21 +3,24 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-shopt -s checkhash		# Build hash of commands run, check hash before PATH
-shopt -s checkjobs		# Require confirmation to exit with jobs running
-shopt -s checkwinsize	# Check window size after commands, update if necessary
+shopt -s checkhash				# Build hash of commands run, check hash before PATH
+shopt -s checkjobs				# Require confirmation to exit with jobs running
+shopt -s checkwinsize			# Check window size after commands, update if necessary
 
 # Globbing settings
-GLOBIGNORE='.:*/.:*/..'	# Ignore . and .. when globbing
-shopt -u dotglob		# Bash turns dotglob on when GLOBIGNORE is non-null
-shopt -s globstar		# ** globs to all files and zero+ dirs and subdirs
+export GLOBIGNORE='.:*/.:*/..'	# Ignore . and .. when globbing
+shopt -u dotglob				# Bash turns dotglob on when GLOBIGNORE is non-null
+shopt -s globstar				# ** globs to all files and zero+ dirs and subdirs
 
 # History settings
-shopt -s histappend		# Append to the history file, don't overwrite it
-shopt -s histreedit		# Retry failed history substitutions
-HISTSIZE=				# Store unlimited history entries in memory
-HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
-HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
+shopt -s histappend				# Append to the history file, don't overwrite it
+shopt -s histreedit				# Retry failed history substitutions
+export HISTSIZE=				# Store unlimited history entries in memory
+export HISTFILESIZE=25000		# Store 25000 lines of history in $HISTFILE
+export HISTCONTROL=ignoreboth	# Ignore duplicate lines and lines starting with a space
+
+# Custom prompt for sudo
+export SUDO_PROMPT='[sudo] Password for %u@%h: '
 
 # Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ] ; then
