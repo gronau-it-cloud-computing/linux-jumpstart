@@ -1,0 +1,140 @@
+#!/bin/bash
+
+### Set up and export functions
+get_yn()
+{
+	while true ; do
+		printf "$@"
+		read resp;
+
+		case "$resp" in
+			[Yy]|[Yy][Ee][Ss])
+				return 0
+				;;
+			[Nn]|[Nn][Oo])
+				return 1
+				;;
+		esac
+	done
+}
+export -f get_yn
+
+check_diff()
+{
+	diff >/dev/null 2>&1 "$1" "$2" 
+}
+export -f check_diff
+
+check_dir()
+{
+	dir="$(dirname "$1")"
+	[ -d "$dir" ] || mkdir -p "$dir"
+}
+export -f check_dir
+
+diff_show()
+{
+	file="$1"
+	diff -q "$file" "$dst/$file"
+}
+export -f diff_show
+
+diff_edit()
+{
+	srcfile="$1"
+	dstfile="$dst/$srcfile"
+
+	check_diff "$srcfile" "$dstfile" && return 0
+	if [ "$inter" == "true" ] ; then
+		if ! [ -e "$dstfile" ] ; then
+			get_yn "File %s does not exist, create it? " "$dstfile" \
+				|| return 0
+		else
+			get_yn "Edit file %s? " "$dstfile" || return 0
+		fi
+	fi
+
+	check_dir "$dstfile"
+	vim "$srcfile" -c "vert diffsplit $dstfile"
+}
+export -f diff_edit
+
+diff_put()
+{
+	srcfile="$1"
+	dstfile="$dst/$srcfile"
+	check_diff "$srcfile" "$dstfile" && return 0
+	if [ "$inter" == "true" ] ; then
+		if [ -f "$dstfile" ] ; then
+			get_yn "File %s already exists, overwrite it? " "$dstfile" || return 0
+		else
+			get_yn "Copy new file %s? " "$dstfile" || return 0
+		fi
+	fi
+
+	check_dir "$dstfile"
+	cp -a "$srcfile" "$dstfile"
+}
+export -f diff_put
+### Done setting up functions
+
+opts=$(getopt -o d:cegipsv --long core,dest:,edit,gui,interactive,put,show,vim -n diff-dotfiles -- "$@")
+[ $? -ne 0 ] && exit 1
+eval set -- "$opts"
+
+dst="$HOME"
+edit="false"
+files=( )
+inter="false"
+put="false"
+show="true"
+while true ; do
+	case "$1" in 
+		--dest|-d)
+			dst="$2"; shift
+			;;
+		--core|-c)
+			files+=( .bashrc .bash_aliases .bash_functions.d .profile .screenrc .vim .vimrc )
+			;;
+		--edit|-e)
+			edit="true"
+			show="false"
+			;;
+		--gui|-g)
+			files+=( .gtkrc-2.0 .gtkrc.mine .gvimrc .conkyrc .dmrc )
+			;;
+		--interactive|-i)
+			inter="true"
+			show="false"
+			;;
+		--put|-p)
+			put="true"
+			show="false"
+			;;
+		--show|-s)
+			show="true"
+			;;
+		--vim|-v)
+			files+=( .gvimrc .vim .vimrc )
+			;;
+		--)
+			shift ; break
+			;;
+		*)
+			break
+			;;
+	esac
+	shift
+done
+
+export dst edit inter put show
+dir="$(realpath "$(dirname "$0")/dotfiles")"
+cd "$dir"
+
+if [ $show == "true" ] ; then
+	find "${files[@]}" -not \( -path .git -prune \) -type f -exec bash -c 'diff_show "$0"' "{}" \;
+elif [ $edit == "true" ] ; then
+	find "${files[@]}" -not \( -path .git -prune \) -type f -exec bash -c 'diff_edit "$0"' "{}" \;
+elif [ $put == "true" ] ; then
+	find "${files[@]}" -not \( -path .git -prune \) -type f -exec bash -c 'diff_put "$0"' "{}" \;
+fi
