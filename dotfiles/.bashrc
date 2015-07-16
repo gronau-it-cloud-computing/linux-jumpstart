@@ -95,8 +95,8 @@ unset red orange yellow green blue violet white color colors norm un hn pd ps lb
 [ -x /usr/bin/vim ] && export EDITOR=/usr/bin/vim
 
 # Source function definitions
-if [ -d "$HOME/.bash_functions.d" ] ; then
-	for func in "$HOME/.bash_functions.d"/* ; do
+if [ -d "$HOME/.bash_func.d" ] ; then
+	for func in "$HOME/.bash_func.d"/* ; do
 		[ -r "$func" ] && source "$func"
 	done
 fi
