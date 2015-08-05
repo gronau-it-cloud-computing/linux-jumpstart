@@ -44,7 +44,7 @@ set showcmd												" Show command in status line
 set showmatch											" Show matching brackets
 set splitright											" Open vertical splits on the right
 set tabstop=4											" Make tab four spaces
-set wildignore+=*.sw[nop],*.pyc,*.class,*.o				" Ignore these things in tab completion
+set wildignore+=.*.sw?,*.pyc,*.class,*.o				" Ignore these things in tab completion
 set wildmode=longest,list								" Make tab-completion act like the shell's
 """ END Miscellanea
 
@@ -171,6 +171,6 @@ endfunction
 """ END Custom Functions
 
 " Use any of the user's local settings if they exist
-if filereadable($HOME . '/.vimrc.local')
-	source $HOME/.vimrc.local
+if filereadable($MYVIMRC . '.local')
+	source $MYVIMRC.local
 endif
