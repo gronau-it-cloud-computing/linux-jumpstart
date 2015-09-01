@@ -77,6 +77,12 @@ set stl+=COL\ %-8(%c%V%)								" Column number
 set stl+=%P												" Percentage through file
 """ END Status Line
 
+""" Plugin Settings
+"" Rainbow Parens
+let g:rainbow_active = 1
+"" END Rainbow Parens
+""" END Plugin Settings
+
 """ Keybindings
 " Disable arrow keys everywhere but command mode
 noremap		<LEFT>	<NOP>
