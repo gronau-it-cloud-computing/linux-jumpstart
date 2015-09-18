@@ -111,6 +111,10 @@ noremap <C-l> <C-w>l
 noremap <leader>h gT
 noremap <leader>l gt
 
+" Next/Previous buffer
+nnoremap <leader>n :bn<CR>
+nnoremap <leader>p :bp<CR>
+
 " Make Y act like you'd expect it to
 nnoremap Y y$
 
