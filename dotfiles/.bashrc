@@ -41,6 +41,7 @@ fi
 if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
 	source /etc/bash_completion
 fi
+bind Space:magic-space
 
 # Automagical preprocessing of arguments to less
 [ -x /usr/bin/lesspipe ] && LESSOPEN="| lesspipe %s" && export LESSOPEN
