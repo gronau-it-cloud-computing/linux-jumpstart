@@ -17,5 +17,10 @@ setl nolist
 setl nonumber
 setl norelativenumber
 
+" Some wizardry to make the page/terminal title all nice
+let mantitle = toupper($MAN_PN)
+execute 'silent file ' . mantitle
+let &l:titlestring = mantitle
+
 " Keybindings
 nnoremap <buffer> q	:q<CR>
