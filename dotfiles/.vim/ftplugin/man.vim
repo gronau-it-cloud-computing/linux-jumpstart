@@ -12,15 +12,16 @@ setl readonly
 setl ignorecase
 setl smartcase
 
+" Obey MANWIDTH, if it is set
+let &l:tw = $MANWIDTH ? $MANWIDTH : 0
+
 " Miscellaneous display niceties
 setl nolist
 setl nonumber
 setl norelativenumber
 
 " Some wizardry to make the page/terminal title all nice
-let mantitle = toupper($MAN_PN)
-execute 'silent file ' . mantitle
-let &l:titlestring = mantitle
+execute 'silent file ' . $MAN_PN
 
 " Keybindings
 nnoremap <buffer> q	:q<CR>
