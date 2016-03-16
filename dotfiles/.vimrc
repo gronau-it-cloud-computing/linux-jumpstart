@@ -127,6 +127,15 @@ cnoremap <C-a>	<Home>
 cnoremap <C-e>	<End>
 cnoremap <Esc>b	<S-Left>
 cnoremap <Esc>f	<S-Right>
+
+" Some shortcuts for system clipboards
+nnoremap <leader>p "+p
+nnoremap <leader>P "*p
+nnoremap <leader>y "+y
+nnoremap <leader>Y "*y
+
+" Quick unicode input
+inoremap <C-u> <C-v>u
 """ END Keybindings
 
 """ Commands
@@ -144,6 +153,9 @@ cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
 
 " Mimic a vertical version of :sb
 cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
+
+" Write and re-edit the current file
+cabbrev we <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|e' : 'we')<CR>
 "" END abbreviations
 """ END Custom Commands
 
