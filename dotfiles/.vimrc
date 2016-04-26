@@ -23,7 +23,6 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 """ Miscellaneous options
 let $PAGER=''											" Set PAGER for man viewing
-let mapleader=' '										" Use <Space> as leader
 set autoindent											" Turn on auto-indent
 set autowrite											" Automagically save before some commands
 set background=dark										" Look nice on a dark background
@@ -135,7 +134,7 @@ nnoremap <leader>y "+y
 nnoremap <leader>Y "*y
 
 " Quick unicode input
-inoremap <C-u> <C-v>u
+inoremap <leader>u <C-v>u
 """ END Keybindings
 
 """ Commands
@@ -146,6 +145,9 @@ command! -nargs=? Vilter let @z='' | execute 'v/<args>/y Z' | vert new | setl bt
 " Put the output of an arbitrary command into a scratch buffer
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 command! -complete=file -nargs=+ GitDiff call s:ExecGitDiff(<q-args>)
+
+" Wrapper around swap words for swapping quotes
+command! -range SwapQuotes <line1>,<line2>call s:SwapWords({"'":'"'})
 
 "" Not actual commands, but abbreviations
 " Open the help buffer in a full window
@@ -189,6 +191,31 @@ function! s:ExecGitDiff(files)
 	let files = join(map(split(a:files), 'expand(v:val)'))
 	call s:ExecuteInShell("git diff --cached " . files)
 	setlocal ft=git
+endfunction
+
+function! s:Mirror(dict)
+    for [key, value] in items(a:dict)
+        let a:dict[value] = key
+    endfor
+    return a:dict
+endfunction
+
+function! s:S(number)
+    return submatch(a:number)
+endfunction
+
+function! s:SwapWords(dict, ...) range
+    let words = keys(a:dict) + values(a:dict)
+    let words = map(words, 'escape(v:val, "|")')
+    if(a:0 == 1)
+        let delimiter = a:1
+    else
+        let delimiter = '/'
+    endif
+    let pattern = '\v(' . join(words, '|') . ')'
+    exe a:firstline . ',' . a:lastline . 's' . delimiter . pattern . delimiter
+        \ . '\=' . string(Mirror(a:dict)) . '[S(0)]'
+        \ . delimiter . 'g'
 endfunction
 """ END Custom Functions
 
