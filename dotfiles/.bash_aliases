@@ -14,6 +14,9 @@ alias du='du -h'
 # Simulate sprintf VAR PATTERN [ARGS]
 alias sprintf='printf -v'
 
+# Have jobs print PIDs in addition to Job#
+alias jobs='jobs -l'
+
 # Source any local aliases that may exist
 if [ -r "$HOME/.bash_aliases.local" ] ; then
 	source "$HOME/.bash_aliases.local"

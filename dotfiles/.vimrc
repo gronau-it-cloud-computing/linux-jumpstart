@@ -76,11 +76,15 @@ set stl+=COL\ %-8(%c%V%)								" Column number
 set stl+=%P												" Percentage through file
 """ END Status Line
 
-""" Plugin Settings
+""" Plugins
+call plug#begin('~/.vim/plugged')
+	Plug 'luochen1990/rainbow'
+	Plug 'vim-utils/vim-man'
+call plug#end()
 "" Rainbow Parens
 let g:rainbow_active = 1
 "" END Rainbow Parens
-""" END Plugin Settings
+""" END Plugin
 
 """ Keybindings
 " Disable arrow keys everywhere but command mode
@@ -167,7 +171,7 @@ function! FileSize()
 	let bytes = getfsize(expand("%:p")) " Get size of the file in bytes
 	if bytes < 0
 		return ""
-	elseif bytes < 1024 
+	elseif bytes < 1024
 		return bytes . "B"
 	elseif bytes < 1048576
 		return (bytes / 1024) . "KB"
