@@ -1,0 +1,4 @@
+sigusr1()
+{
+	builtin kill -SIGUSR1 "$@"
+}
