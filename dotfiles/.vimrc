@@ -77,9 +77,8 @@ set stl+=%P												" Percentage through file
 """ END Status Line
 
 """ Highlighting
-"" Cursor and CursorLine
-highlight Cursor ctermbg=DarkGrey ctermfg=LightGrey
-highlight CursorLine cterm=NONE ctermbg=DarkGrey
+"" CursorLine
+highlight CursorLine cterm=none ctermbg=8 ctermfg=none
 """ END Highlighting
 
 """ Plugins
