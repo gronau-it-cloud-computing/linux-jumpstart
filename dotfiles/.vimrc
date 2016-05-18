@@ -76,6 +76,12 @@ set stl+=COL\ %-8(%c%V%)								" Column number
 set stl+=%P												" Percentage through file
 """ END Status Line
 
+""" Highlighting
+"" Cursor and CursorLine
+highlight Cursor ctermbg=DarkGrey ctermfg=LightGrey
+highlight CursorLine cterm=NONE ctermbg=DarkGrey
+""" END Highlighting
+
 """ Plugins
 call plug#begin('~/.vim/plugged')
 	Plug 'luochen1990/rainbow'
@@ -148,7 +154,7 @@ command! -nargs=? Vilter let @z='' | execute 'v/<args>/y Z' | vert new | setl bt
 
 " Put the output of an arbitrary command into a scratch buffer
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-command! -complete=file -nargs=+ GitDiff call s:ExecGitDiff(<q-args>)
+command! -complete=file -nargs=* GitDiff call s:ExecGitDiff(<q-args>)
 
 " Wrapper around swap words for swapping quotes
 command! -range SwapQuotes <line1>,<line2>call s:SwapWords({"'":'"'})
@@ -181,6 +187,8 @@ function! FileSize()
 	return "(•̩̩̩̩＿•̩̩̩̩)"
 endfunction
 
+"" Functions to execute shell commands and put them in a scratch buffer
+" Bare function, takes any shell cmd
 function! s:ExecuteInShell(command)
 	let command = join(map(split(a:command), 'expand(v:val)'))
 	let winnr = bufwinnr('^' . command . '$')
@@ -191,12 +199,15 @@ function! s:ExecuteInShell(command)
 	silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
 endfunction
 
+" Wrapper to ExecuteInShell for git diff
 function! s:ExecGitDiff(files)
 	let files = join(map(split(a:files), 'expand(v:val)'))
 	call s:ExecuteInShell("git diff --cached " . files)
 	setlocal ft=git
 endfunction
 
+"" Functions for swapping arbitrary strings
+" Reverse a dictionary
 function! s:Mirror(dict)
     for [key, value] in items(a:dict)
         let a:dict[value] = key
@@ -208,6 +219,7 @@ function! s:S(number)
     return submatch(a:number)
 endfunction
 
+" Swap two arbitrary strings
 function! s:SwapWords(dict, ...) range
     let words = keys(a:dict) + values(a:dict)
     let words = map(words, 'escape(v:val, "|")')
