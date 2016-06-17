@@ -84,7 +84,7 @@ highlight CursorLine cterm=none ctermbg=8 ctermfg=none
 """ Plugins
 call plug#begin('~/.vim/plugged')
 	Plug 'luochen1990/rainbow'
-	Plug 'vim-utils/vim-man'
+	Plug 'sluidfoe/vim-man'
 call plug#end()
 "" Rainbow Parens
 let g:rainbow_active = 1
@@ -136,14 +136,18 @@ cnoremap <C-e>	<End>
 cnoremap <Esc>b	<S-Left>
 cnoremap <Esc>f	<S-Right>
 
+" Delete for real
+nnoremap <leader>d "_d
+nnoremap <leader>D "_D
+
 " Some shortcuts for system clipboards
 nnoremap <leader>p "+p
 nnoremap <leader>P "*p
 nnoremap <leader>y "+y
 nnoremap <leader>Y "*y
 
-" Quick unicode input
-inoremap <leader>u <C-v>u
+" Detect the current buffer's filetype
+nnoremap <silent> <leader>f :filetype detect<CR>
 """ END Keybindings
 
 """ Commands
@@ -164,9 +168,6 @@ cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
 
 " Mimic a vertical version of :sb
 cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
-
-" Write and re-edit the current file
-cabbrev we <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w\|e' : 'we')<CR>
 "" END abbreviations
 """ END Custom Commands
 
@@ -179,7 +180,7 @@ function! FileSize()
 	elseif bytes < 1024
 		return bytes . "B"
 	elseif bytes < 1048576
-		return (bytes / 1024) . "KB"
+		return (bytes / 1024) . "kB"
 	elseif bytes < 1073741824
 		return (bytes / 1048576) . "MB"
 	endif
@@ -229,7 +230,7 @@ function! s:SwapWords(dict, ...) range
     endif
     let pattern = '\v(' . join(words, '|') . ')'
     exe a:firstline . ',' . a:lastline . 's' . delimiter . pattern . delimiter
-        \ . '\=' . string(Mirror(a:dict)) . '[S(0)]'
+        \ . '\=' . string(<SID>Mirror(a:dict)) . '[<SID>S(0)]'
         \ . delimiter . 'g'
 endfunction
 """ END Custom Functions
