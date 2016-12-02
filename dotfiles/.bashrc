@@ -22,20 +22,11 @@ export HISTTIMEFORMAT='%Y%m%d-%H%M%S%t'	# Nice timestamps for the history file
 [ -d "$HOME/.bash_history.d" ] &&		# Use host-specific files if we have the dir for them
 	export HISTFILE="$HOME/.bash_history.d/$HOSTNAME"
 
+# coreutils 8.25 introduced insane defaults for ls
+export QUOTING_STYLE=literal
+
 # Custom prompt for sudo
 export SUDO_PROMPT='[sudo] Password for %u@%h: '
-
-# Enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ] ; then
-	[ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto -F'
-	alias dir='dir --color=auto'
-	alias vdir='vdir --color=auto'
-
-	alias grep='grep --color=auto'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
-fi
 
 # Enable programmable completion features
 if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
@@ -103,6 +94,13 @@ if [ -d "$HOME/.bash_func.d" ] ; then
 	for func in "$HOME/.bash_func.d"/* ; do
 		[ -r "$func" ] && source "$func"
 	done
+fi
+
+# Source bash completion plugins
+if [ -d "$HOME/.bash_completion.d" ] ; then
+    for comp in "$HOME/.bash_completion.d"/* ; do
+        [ -r "$comp" ] && source "$comp"
+    done
 fi
 
 # Put my bin on the front of PATH
