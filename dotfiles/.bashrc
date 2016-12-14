@@ -38,15 +38,20 @@ bind Space:magic-space
 [ -x /usr/bin/lesspipe ] && LESSOPEN="| lesspipe %s" && export LESSOPEN
 
 # Set PS1
+setaf()
+{
+    tput setaf "$1" || tput AF "$1"
+}
+
 # Pretty colors
-red='\[\e[31m\]'
-orange='\[\e[38;5;208m\]'
-yellow='\[\e[93m\]'
-green='\[\e[32m\]'
-blue='\[\e[34m\]'
-violet='\[\e[35m\]'
-white='\[\e[97m\]'
-norm='\[\e[39m\]'
+red='\['"$(setaf 1)"'\]'
+orange='\['"$(setaf 202)"'\]'
+yellow='\['"$(setaf 11)"'\]'
+green='\['"$(setaf 2)"'\]'
+blue='\['"$(setaf 4)"'\]'
+violet='\['"$(setaf 5)"'\]'
+white='\['"$(setaf 7)"'\]'
+norm='\['"$(tput sgr0 || tput me)"'\]'
 colors=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
 
 # Username
