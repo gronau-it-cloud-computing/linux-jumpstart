@@ -37,82 +37,11 @@ bind Space:magic-space
 # Automagical preprocessing of arguments to less
 [ -x /usr/bin/lesspipe ] && LESSOPEN="| lesspipe %s" && export LESSOPEN
 
-# Set PS1
-setaf()
-{
-    tput setaf "$1" || tput AF "$1"
-}
-
-# Pretty colors
-red='\['"$(setaf 1)"'\]'
-orange='\['"$(setaf 202)"'\]'
-yellow='\['"$(setaf 11)"'\]'
-green='\['"$(setaf 2)"'\]'
-blue='\['"$(setaf 4)"'\]'
-violet='\['"$(setaf 5)"'\]'
-white='\['"$(setaf 7)"'\]'
-norm='\['"$(tput sgr0 || tput me)"'\]'
-colors=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
-
-# Username
-un="${green}\\u${norm}"
-
-# At
-at="${green}@${norm}"
-
-# Hostname
-hn="${green}\\h${norm}"
-
-# Present directory
-pd="${blue}\\w${norm}"
-
-# Colour $ red if in an ssh session
-if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
-	ps="$red\\\$$norm"
-else
-	ps="$white\\\$$norm"
-fi
-
-# If we are in a "subshell" for this host, colour the brackets
-if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
-	lb="$white[$norm"
-	rb="$white]$norm"
-else
-	# The colour chosen will be one of ROYGBV
-	# Red is for the first subshell, orange for the second, etc.
-	color="${colors[($SHLVL - 2) % 6]}"
-	lb="$color[$norm"
-	rb="$color]$norm"
-fi
-
-# Prompt of the form [user@host pwd]$
-export PS1="${lb}${un}${at}${hn} ${pd}${rb}${ps} "
-
-# Get rid of all of the garbage we just defined
-unset red orange yellow green blue violet white color colors norm un hn pd ps lb rb
-
 # Make Vim the default editor if it exists
 [ -x /usr/bin/vim ] && export EDITOR=/usr/bin/vim
 
-# Source function definitions
-if [ -d "$HOME/.bash_func.d" ] ; then
-	for func in "$HOME/.bash_func.d"/* ; do
-		[ -r "$func" ] && source "$func"
-	done
-fi
-
-# Source bash completion plugins
-if [ -d "$HOME/.bash_completion.d" ] ; then
-    for comp in "$HOME/.bash_completion.d"/* ; do
-        [ -r "$comp" ] && source "$comp"
+if [ -d "${HOME}/.config/bash" ] ; then
+    for conf in "${HOME}/.config/bash"/* ; do
+        [ -f "${conf}" ] && source "${conf}"
     done
 fi
-
-# Put my bin on the front of PATH
-pathctl push -f "$HOME/bin"
-
-# Source alias definitions
-[ -r "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
-
-# Source any local options that may exist
-[ -r "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"

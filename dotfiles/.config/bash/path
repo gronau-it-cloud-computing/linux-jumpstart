@@ -1,0 +1,2 @@
+# Put my bin on the front of PATH
+pathctl push -f "$HOME/bin"

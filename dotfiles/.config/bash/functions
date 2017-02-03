@@ -1,0 +1,5 @@
+if [ -d "${HOME}/.config/bash/functions.d" ] ; then
+	for func in "${HOME}/.config/bash/functions.d"/* ; do
+		[ -r "${func}" ] && source "${func}"
+	done
+fi

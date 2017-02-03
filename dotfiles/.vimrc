@@ -151,7 +151,6 @@ nnoremap <silent> <leader>f :filetype detect<CR>
 """ END Keybindings
 
 """ Commands
-"" Custom commands
 " Put all lines matching the pattern argument into a scratch buffer
 command! -nargs=? Filter let @z='' | execute 'g/<args>/y Z' | vert new | setl bt=nofile | 0put! z
 command! -nargs=? Vilter let @z='' | execute 'v/<args>/y Z' | vert new | setl bt=nofile | 0put! z
@@ -162,7 +161,6 @@ command! -complete=file -nargs=* GitDiff call s:ExecGitDiff(<q-args>)
 
 " Wrapper around swap words for swapping quotes
 command! -range SwapQuotes <line1>,<line2>call s:SwapWords({"'":'"'})
-"" END Custom Commands
 
 "" Not actual commands, but abbreviations
 " Open the help buffer in a full window
@@ -171,7 +169,7 @@ cabbrev ho <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'tab h' : 'ho')<CR>
 " Mimic a vertical version of :sb
 cabbrev vsb <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert sb' : 'sb')<CR>
 "" END abbreviations
-""" END commands
+""" END Custom Commands
 
 """ Custom Functions
 " Function to get the filesize in bytes and convert it to human-readable units
@@ -186,7 +184,7 @@ function! FileSize()
 	elseif bytes < 1073741824
 		return (bytes / 1048576) . "MB"
 	endif
-	return "(•̩̩̩̩＿•̩̩̩̩)"
+	return "(╬ ಠ益ಠ)"
 endfunction
 
 "" Functions to execute shell commands and put them in a scratch buffer

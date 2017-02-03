@@ -23,7 +23,8 @@ alias ll='ls -alFh'
 # List all files excepting ., ..
 alias la='ls -A'
 
-alias tree='tree -F'
+# Make tree pretty
+alias tree='tree -F --charset=utf-8'
 
 # Show d[fu] with human-readable units
 alias df='df -h'
@@ -34,8 +35,3 @@ alias sprintf='printf -v'
 
 # Have jobs print PIDs in addition to Job#
 alias jobs='jobs -l'
-
-# Source any local aliases that may exist
-if [ -r "$HOME/.bash_aliases.local" ] ; then
-	source "$HOME/.bash_aliases.local"
-fi

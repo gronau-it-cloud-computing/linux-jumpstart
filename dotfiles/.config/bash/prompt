@@ -1,0 +1,112 @@
+setaf()
+{
+    tput setaf "$1" || tput AF "$1"
+}
+
+# Pretty colors
+red='\['"$(setaf 1)"'\]'
+orange='\['"$(setaf 202)"'\]'
+yellow='\['"$(setaf 11)"'\]'
+green='\['"$(setaf 2)"'\]'
+blue='\['"$(setaf 4)"'\]'
+violet='\['"$(setaf 5)"'\]'
+white='\['"$(setaf 7)"'\]'
+norm='\['"$(tput sgr0 || tput me)"'\]'
+colors=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
+
+__prompt_command_venv()
+{
+    if [ -n "${VIRTUAL_ENV}" ] ; then
+        venv="${VIRTUAL_ENV##*/}"
+        printf '(%s) ' "${white}${venv}${norm}"
+    fi
+}
+    
+__prompt_command_git()
+{
+    local g="$(git rev-parse --git-dir 2>/dev/null)"
+    if [ -n "$g" ]; then
+        local r
+        local b
+        if [ -d "$g/../.dotest" ]
+        then
+            local b="$(git symbolic-ref HEAD 2>/dev/null)"
+            r="|REBASING"
+        elif [ -d "$g/.dotest-merge" ]
+        then
+            r="|REBASING"
+            b="$(cat $g/.dotest-merge/head-name)"
+        elif [ -f "$g/MERGE_HEAD" ]
+        then
+            r="|MERGING"
+            b="$(git symbolic-ref HEAD 2>/dev/null)"
+        else
+            if [ -f $g/BISECT_LOG ]
+            then
+                r="|BISECTING"
+            fi
+            if ! b="$(git symbolic-ref HEAD 2>/dev/null)"
+            then
+                b="$(cut -c1-7 $g/HEAD)..."
+            fi
+        fi
+        if [ -n "$1" ]; then
+            printf "$1" "${b##refs/heads/}$r"
+        else
+            printf "(%s)" "${b##refs/heads/}$r"
+        fi
+    fi
+}
+
+__prompt_command_code()
+{
+    local status="${1}"
+
+    local code="$(printf "%3d" $status)"
+    if (( $status )) ; then
+        printf '%s' "[${red}${code}${norm}]"
+    else
+        printf '%s' "[${code}]"
+    fi
+}
+
+__prompt_command()
+{
+    local status=$?
+
+    # If we are in a "subshell" for this host, colour the brackets
+    if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
+        local lb="$white[$norm"
+        local rb="$white]$norm"
+    else
+        # The colour chosen will be one of ROYGBV
+        # Red is for the first subshell, orange for the second, etc.
+        local color="${colors[($SHLVL - 2) % 6]}"
+        local lb="$color[$norm"
+        local rb="$color]$norm"
+    fi
+
+    # Colour $ red if in an ssh session
+    if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
+        local ps="$red\\\$$norm"
+    else
+        local ps="$white\\\$$norm"
+    fi
+
+    local venv="$(__prompt_command_venv)"
+    local dir="${blue}${PWD}${norm}"
+    local git="$(__prompt_command_git)"
+    local line1="${venv}${dir} ${git}"
+
+    local hist='$(printf "[%6d]" \!)'
+    local jobs='$(printf "[%2d]" \j)'
+    local code="$(__prompt_command_code "$status")"
+    local user="${green}\\u${norm}"
+    local at="${green}@${norm}"
+    local host="${green}\\h${norm}"
+    local line2="${hist}${jobs}${code}${lb}${user}${at}${host}${rb}${ps}"
+
+    PS1="\n${line1}\n${line2} "
+}
+
+PROMPT_COMMAND=__prompt_command
