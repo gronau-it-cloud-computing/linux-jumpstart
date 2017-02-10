@@ -118,6 +118,9 @@ noremap <C-l> <C-w>l
 " Bind <leader>-<Direction> to move tabs
 noremap <leader>h gT
 noremap <leader>l gt
+" And <leader>-<Shift>-<Direction> to first/last tab
+noremap <silent> <leader>h :tabfirst<CR>
+noremap <silent> <leader>l :tablast<CR>
 
 " Next/Previous buffer
 nnoremap <leader>n :bn<CR>
@@ -209,29 +212,29 @@ endfunction
 "" Functions for swapping arbitrary strings
 " Reverse a dictionary
 function! s:Mirror(dict)
-    for [key, value] in items(a:dict)
-        let a:dict[value] = key
-    endfor
-    return a:dict
+	for [key, value] in items(a:dict)
+		let a:dict[value] = key
+	endfor
+	return a:dict
 endfunction
 
 function! s:S(number)
-    return submatch(a:number)
+	return submatch(a:number)
 endfunction
 
 " Swap two arbitrary strings
 function! s:SwapWords(dict, ...) range
-    let words = keys(a:dict) + values(a:dict)
-    let words = map(words, 'escape(v:val, "|")')
-    if(a:0 == 1)
-        let delimiter = a:1
-    else
-        let delimiter = '/'
-    endif
-    let pattern = '\v(' . join(words, '|') . ')'
-    exe a:firstline . ',' . a:lastline . 's' . delimiter . pattern . delimiter
-        \ . '\=' . string(<SID>Mirror(a:dict)) . '[<SID>S(0)]'
-        \ . delimiter . 'g'
+	let words = keys(a:dict) + values(a:dict)
+	let words = map(words, 'escape(v:val, "|")')
+	if(a:0 == 1)
+		let delimiter = a:1
+	else
+		let delimiter = '/'
+	endif
+	let pattern = '\v(' . join(words, '|') . ')'
+	exe a:firstline . ',' . a:lastline . 's' . delimiter . pattern . delimiter
+		\ . '\=' . string(<SID>Mirror(a:dict)) . '[<SID>S(0)]'
+		\ . delimiter . 'g'
 endfunction
 """ END Custom Functions
 

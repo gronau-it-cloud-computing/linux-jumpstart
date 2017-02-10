@@ -26,9 +26,11 @@ cd_opt()
 # Determine how to handle cd -
 cd_dash()
 {
-	[ "$OLDPWD" == "${DIRSTACK[1]}" ] \
-		&& bpushd > /dev/null \
-		|| bpushd "$OLDPWD" > /dev/null
+	if [ "$OLDPWD" == "${DIRSTACK[1]}" ] ; then
+		bpushd > /dev/null
+	else
+		bpushd "$OLDPWD" > /dev/null
+	fi
 }
 
 # Make cd a function so that cding manipulates dirstack
@@ -59,9 +61,11 @@ cd()
 	esac
 
 	# Don't put $HOME on the stack
-	[ "$PWD" == "$HOME" ] \
-		&& bcd "$dir" \
-		|| bpushd "$dir" > /dev/null
+	if [ "$PWD" == "$HOME" ] ; then
+		bcd "$dir"
+	else
+		bpushd "$dir" > /dev/null
+	fi
 }
 
 # Add some nicities to popd
@@ -69,9 +73,9 @@ popd()
 {
 	# There are no arguments to popd and nothing to pop
 	if [ -z "$1" ] && [ "${#DIRSTACK[@]}" -lt 2 ] ; then
-			# cd to HOME instead of complaining
-			bcd "$HOME"
-			return $?
+		# cd to HOME instead of complaining
+		bcd "$HOME"
+		return $?
 	fi
 
 	# I don't want this stack anymore
@@ -85,4 +89,10 @@ popd()
 
 	# popd as normal
 	bpopd "$@"
+}
+
+# Silence pushd by default
+pushd()
+{
+	bpushd "$@" > /dev/null
 }

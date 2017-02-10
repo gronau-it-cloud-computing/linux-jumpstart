@@ -41,7 +41,7 @@ bind Space:magic-space
 [ -x /usr/bin/vim ] && export EDITOR=/usr/bin/vim
 
 if [ -d "${HOME}/.config/bash" ] ; then
-    for conf in "${HOME}/.config/bash"/* ; do
-        [ -f "${conf}" ] && source "${conf}"
-    done
+	for conf in "${HOME}/.config/bash"/* ; do
+		[ -f "${conf}" ] && source "${conf}"
+	done
 fi
