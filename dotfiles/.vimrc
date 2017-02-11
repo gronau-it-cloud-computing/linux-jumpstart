@@ -27,11 +27,13 @@ set autoindent											" Turn on auto-indent
 set autowrite											" Automagically save before some commands
 set background=dark										" Look nice on a dark background
 set backspace=indent,eol,start							" backspace over everything
+set colorcolumn=80										" Colorize column 80
 set cursorline											" Highlight current line
 set diffopt=filler,vertical								" Keep files aligned, default to vsplit
 set fileformats=unix,dos								" Automagically detect format by EOL
 set hidden												" Keeps abandoned buffers loaded. Beware!
 set nohlsearch											" Do not highlight every match
+set noincsearch											" Do not search incrementally
 set lazyredraw											" Don't redraw while executing macros
 set listchars=tab:>-,trail:~,nbsp:.						" Show tabs, trailing spaces, and nbsp
 set listchars+=eol:$,extends:>,precedes:<				" Show EOL, mark long (unwrapped) lines
@@ -78,7 +80,10 @@ set stl+=%P												" Percentage through file
 
 """ Highlighting
 "" CursorLine
-highlight CursorLine cterm=none ctermbg=8 ctermfg=none
+highlight CursorLine cterm=NONE ctermbg=DarkGrey ctermfg=NONE
+
+"" ColorColumn
+highlight ColorColumn cterm=NONE ctermbg=DarkGrey ctermfg=NONE
 """ END Highlighting
 
 """ Plugins
@@ -119,8 +124,8 @@ noremap <C-l> <C-w>l
 noremap <leader>h gT
 noremap <leader>l gt
 " And <leader>-<Shift>-<Direction> to first/last tab
-noremap <silent> <leader>h :tabfirst<CR>
-noremap <silent> <leader>l :tablast<CR>
+noremap <silent> <leader>H :tabfirst<CR>
+noremap <silent> <leader>L :tablast<CR>
 
 " Next/Previous buffer
 nnoremap <leader>n :bn<CR>
