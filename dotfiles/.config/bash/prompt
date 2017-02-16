@@ -76,7 +76,7 @@ __prompt_command()
 
 	# If we are in a "subshell" for this host, colour the brackets
 	local bcolor=''
-	else
+	if [ $SHLVL -gt 1 ] || ! [[ $0 =~ -.+ ]] ; then
 		# The colour chosen will be one of ROYGBV
 		# Red is for the first subshell, orange for the second, etc.
 		local color="${colors[($SHLVL - 2) % 6]}"
