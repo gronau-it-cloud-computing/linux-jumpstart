@@ -76,19 +76,19 @@ __prompt_command()
 
 	# If we are in a "subshell" for this host, colour the brackets
 	local bcolor=''
-	if [ $SHLVL -gt 1 ] || ! [[ $0 =~ -.+ ]] ; then
+	if [ $SHLVL -gt 1 ] && ! [[ $0 =~ -.+ ]] ; then
 		# The colour chosen will be one of ROYGBV
 		# Red is for the first subshell, orange for the second, etc.
-		local color="${colors[($SHLVL - 2) % 6]}"
+		bcolor="${colors[($SHLVL - 2) % 6]}"
 	fi
 	local lb="${bcolor}[${norm}"
 	local rb="${bcolor}]${norm}"
 
 	# Colour $ red if in an ssh session
 	if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
-		local ps="$red\\\$$norm"
+		local ps="${red}\\\$${norm}"
 	else
-		local ps="$white\\\$$norm"
+		local ps="${white}\\\$${norm}"
 	fi
 
 	local venv="$(__prompt_command_venv)"
@@ -97,12 +97,12 @@ __prompt_command()
 	local line1="${venv}${dir} ${git}"
 
 	local hist='$(printf "[%6d]" \!)'
-	local jobs='$(printf "[%2d]" \j)'
+	local jobn='$(printf "[%2d]" \j)'
 	local code="$(__prompt_command_code "$status")"
 	local user="${green}\\u${norm}"
 	local at="${green}@${norm}"
 	local host="${green}\\h${norm}"
-	local line2="${hist}${jobs}${code}${lb}${user}${at}${host}${rb}${ps}"
+	local line2="${hist}${jobn}${code}${lb}${user}${at}${host}${rb}${ps}"
 
 	PS1="\n${line1}\n${line2} "
 }
