@@ -156,6 +156,9 @@ nnoremap <leader>Y "*y
 
 " Detect the current buffer's filetype
 nnoremap <silent> <leader>f :filetype detect<CR>
+
+" Refresh all loaded buffers
+nnoremap <leader>gr call refresh#RefreshBuffers()
 """ END Keybindings
 
 """ Commands
@@ -164,11 +167,11 @@ command! -nargs=? Filter let @z='' | execute 'g/<args>/y Z' | vert new | setl bt
 command! -nargs=? Vilter let @z='' | execute 'v/<args>/y Z' | vert new | setl bt=nofile | 0put! z
 
 " Put the output of an arbitrary command into a scratch buffer
-command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-command! -complete=file -nargs=* GitDiff call s:ExecGitDiff(<q-args>)
+command! -complete=shellcmd -nargs=+ Shell call shellexec#ExecuteInShell(<q-args>)
+command! -complete=file -nargs=* GitDiff call shellexec#ExecGitDiff(<q-args>)
 
 " Wrapper around swap words for swapping quotes
-command! -range SwapQuotes <line1>,<line2>call s:SwapWords({"'":'"'})
+command! -range SwapQuotes <line1>,<line2>call swap#SwapWords({"'":'"'})
 
 "" Not actual commands, but abbreviations
 " Open the help buffer in a full window
@@ -193,53 +196,6 @@ function! FileSize()
 		return (bytes / 1048576) . "MB"
 	endif
 	return "(╬ ಠ益ಠ)"
-endfunction
-
-"" Functions to execute shell commands and put them in a scratch buffer
-" Bare function, takes any shell cmd
-function! s:ExecuteInShell(command)
-	let command = join(map(split(a:command), 'expand(v:val)'))
-	let winnr = bufwinnr('^' . command . '$')
-	silent! execute  winnr < 0 ? 'vert botright new ' . fnameescape(command) : winnr . 'wincmd w'
-	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
-	silent! execute 'silent %!' . command
-	silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-	silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
-endfunction
-
-" Wrapper to ExecuteInShell for git diff
-function! s:ExecGitDiff(files)
-	let files = join(map(split(a:files), 'expand(v:val)'))
-	call s:ExecuteInShell("git diff --cached " . files)
-	setlocal ft=git
-endfunction
-
-"" Functions for swapping arbitrary strings
-" Reverse a dictionary
-function! s:Mirror(dict)
-	for [key, value] in items(a:dict)
-		let a:dict[value] = key
-	endfor
-	return a:dict
-endfunction
-
-function! s:S(number)
-	return submatch(a:number)
-endfunction
-
-" Swap two arbitrary strings
-function! s:SwapWords(dict, ...) range
-	let words = keys(a:dict) + values(a:dict)
-	let words = map(words, 'escape(v:val, "|")')
-	if(a:0 == 1)
-		let delimiter = a:1
-	else
-		let delimiter = '/'
-	endif
-	let pattern = '\v(' . join(words, '|') . ')'
-	exe a:firstline . ',' . a:lastline . 's' . delimiter . pattern . delimiter
-		\ . '\=' . string(<SID>Mirror(a:dict)) . '[<SID>S(0)]'
-		\ . delimiter . 'g'
 endfunction
 """ END Custom Functions
 

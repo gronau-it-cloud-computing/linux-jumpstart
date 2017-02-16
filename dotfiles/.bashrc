@@ -38,7 +38,12 @@ bind Space:magic-space
 [ -x /usr/bin/lesspipe ] && LESSOPEN="| lesspipe %s" && export LESSOPEN
 
 # Make Vim the default editor if it exists
-[ -x /usr/bin/vim ] && export EDITOR=/usr/bin/vim
+if [ -x "${HOME}/bin/vim" ] ; then
+	export EDITOR="${HOME}/bin/vim" 
+elif [ -x /usr/bin/vim ] ; then
+	export EDITOR=/usr/bin/vim
+fi
+export SUDO_EDITOR="${EDITOR}"
 
 if [ -d "${HOME}/.config/bash" ] ; then
 	for conf in "${HOME}/.config/bash"/* ; do

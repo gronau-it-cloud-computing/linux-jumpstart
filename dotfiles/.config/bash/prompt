@@ -75,16 +75,14 @@ __prompt_command()
 	local status=$?
 
 	# If we are in a "subshell" for this host, colour the brackets
-	if [[ $SHLVL -lt 2 || $0 =~ -.+ ]] ; then
-		local lb="$white[$norm"
-		local rb="$white]$norm"
+	local bcolor=''
 	else
 		# The colour chosen will be one of ROYGBV
 		# Red is for the first subshell, orange for the second, etc.
 		local color="${colors[($SHLVL - 2) % 6]}"
-		local lb="$color[$norm"
-		local rb="$color]$norm"
 	fi
+	local lb="${bcolor}[${norm}"
+	local rb="${bcolor}]${norm}"
 
 	# Colour $ red if in an ssh session
 	if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
