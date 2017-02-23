@@ -1,4 +1,4 @@
-function! RefreshBuffers()
+function! refresh#RefreshBuffers()
 	set autoread
 	checktime
 	set noautoread

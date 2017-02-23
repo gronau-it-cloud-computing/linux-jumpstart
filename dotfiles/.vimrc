@@ -158,7 +158,7 @@ nnoremap <leader>Y "*y
 nnoremap <silent> <leader>f :filetype detect<CR>
 
 " Refresh all loaded buffers
-nnoremap <leader>gr call refresh#RefreshBuffers()
+nnoremap <silent> <leader>gr :call refresh#RefreshBuffers()<CR>
 """ END Keybindings
 
 """ Commands
