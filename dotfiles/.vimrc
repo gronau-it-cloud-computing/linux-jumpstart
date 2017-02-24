@@ -79,10 +79,7 @@ set stl+=%P												" Percentage through file
 """ END Status Line
 
 """ Highlighting
-"" CursorLine
 highlight CursorLine cterm=NONE ctermbg=DarkGrey ctermfg=NONE
-
-"" ColorColumn
 highlight ColorColumn cterm=NONE ctermbg=DarkGrey ctermfg=NONE
 """ END Highlighting
 
