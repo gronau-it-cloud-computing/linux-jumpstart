@@ -65,10 +65,10 @@ __prompt_command_code()
 	local code="$(printf "%3d" $status)"
 	if (( $status == 0 )) ; then
 		printf '%s' "[${code}]"
-    elif (( $status <= 128 )) || (( $status == 255 )) ; then
+	elif (( $status <= 128 )) || (( $status == 255 )) ; then
 		printf '%s' "[${red}${code}${norm}]"
 	else
-        printf '%s' "[${yellow}${code}${norm}]"
+		printf '%s' "[${yellow}${code}${norm}]"
 	fi
 }
 
