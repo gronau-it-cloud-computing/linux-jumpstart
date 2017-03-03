@@ -1,97 +1,145 @@
 setaf()
 {
-	tput setaf "$1" || tput AF "$1"
+	tput setaf "${1}" || tput AF "${1}"
 }
 
 # Pretty colors
+black='\['"$(setaf 16)"'\]'
+brown='\['"$(setaf 94)"'\]'
 red='\['"$(setaf 1)"'\]'
 orange='\['"$(setaf 202)"'\]'
 yellow='\['"$(setaf 11)"'\]'
 green='\['"$(setaf 2)"'\]'
 blue='\['"$(setaf 4)"'\]'
 violet='\['"$(setaf 5)"'\]'
+grey='\['"$(setaf 8)"'\]'
 white='\['"$(setaf 7)"'\]'
+gold='\['"$(setaf 3)"'\]'
+silver='\['"$(setaf 249)"'\]'
 norm='\['"$(tput sgr0 || tput me)"'\]'
-colors=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
+color_lvl=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
 
 __prompt_command_venv()
 {
-	if [ -n "${VIRTUAL_ENV}" ] ; then
+	if [[ -n "${VIRTUAL_ENV}" ]] ; then
 		venv="${VIRTUAL_ENV##*/}"
 		printf '(%s) ' "${white}${venv}${norm}"
 	fi
 }
 
+__prompt_command_git_branch()
+{
+	local g="${1}"
+
+	local r=''
+	if [[ -d "$g/rebase-merge" ]] ; then
+		if [[ -f "$g/rebase-merge/interactive" ]] ; then
+			r="|REBASE-i"
+		else
+			r="|REBASE-m"
+		fi
+	else
+		if [[ -d "$g/rebase-apply" ]] ; then
+			if [[ -f "$g/rebase-apply/rebasing" ]] ; then
+				r="|REBASE"
+			elif [[ -f "$g/rebase-apply/applying" ]] ; then
+				r="|AM"
+			else
+				r="|AM/REBASE"
+			fi
+		elif [[ -f "$g/MERGE_HEAD" ]] ; then
+			r="|MERGING"
+		elif [[ -f "$g/CHERRY_PICK_HEAD" ]] ; then
+			r="|CHERRY-PICKING"
+		elif [[ -f "$g/REVERT_HEAD" ]] ; then
+			r="|REVERTING"
+		elif [[ -f "$g/BISECT_LOG" ]] ; then
+			r="|BISECTING"
+		fi
+	fi
+
+	local b="$(git rev-parse --abbrev-ref HEAD)"
+	[[ "${b}" == 'HEAD' ]] && b="$(git rev-parse --short HEAD)"
+	printf "%s" "${b##refs/heads/}${r}"
+}
+
+__prompt_command_git_color()
+{
+	local color=''
+
+	while read -r line ; do
+		code="${line:0:2}"
+		case "${code}" in
+			\?\?)
+				color="${yellow}" ;;
+			*)
+				color="${red}" ; break ;;
+		esac
+	done < <(git status --porcelain -unormal 2>/dev/null)
+
+	printf '%s' "${color}"
+}
+
 __prompt_command_git()
 {
-	local g="$(git rev-parse --git-dir 2>/dev/null)"
-	if [ -n "$g" ]; then
-		local r
-		local b
-		if [ -d "$g/../.dotest" ]
-		then
-			local b="$(git symbolic-ref HEAD 2>/dev/null)"
-			r="|REBASING"
-		elif [ -d "$g/.dotest-merge" ]
-		then
-			r="|REBASING"
-			b="$(cat $g/.dotest-merge/head-name)"
-		elif [ -f "$g/MERGE_HEAD" ]
-		then
-			r="|MERGING"
-			b="$(git symbolic-ref HEAD 2>/dev/null)"
-		else
-			if [ -f $g/BISECT_LOG ]
-			then
-				r="|BISECTING"
-			fi
-			if ! b="$(git symbolic-ref HEAD 2>/dev/null)"
-			then
-				b="$(cut -c1-7 $g/HEAD)..."
-			fi
-		fi
-		if [ -n "$1" ]; then
-			printf "$1" "${b##refs/heads/}$r"
-		else
-			printf "(%s)" "${b##refs/heads/}$r"
-		fi
+	local g
+	g="$(git rev-parse --git-dir 2>/dev/null)"
+	if (( "$?" == 0 )) ; then
+		local branch="$(__prompt_command_git_branch "${g}")"
+		local color="$(__prompt_command_git_color)"
+
+		printf '(%s)' "${color}${branch}${norm}"
 	fi
 }
 
 __prompt_command_code()
 {
-	local status="${1}"
+	local code="${1}"
+	local color=''
 
-	local code="$(printf "%3d" $status)"
-	if (( $status == 0 )) ; then
-		printf '%s' "[${code}]"
-	elif (( $status <= 128 )) || (( $status == 255 )) ; then
-		printf '%s' "[${red}${code}${norm}]"
-	else
-		printf '%s' "[${yellow}${code}${norm}]"
+	if (( code > 0 )) ; then
+		if (( code > 128)) && (( code < 255 )) ; then
+			color="${yellow}"
+		else
+			color="${red}"
+		fi
 	fi
+	printf '[%s%3d%s]' "${color}" "${code}" "${norm}"
+}
+
+# If we are in a "subshell" for this host, colour the brackets
+__prompt_command_bracket_color()
+{
+	local bcolor=''
+	if [[ $SHLVL -gt 1 ]] && ! [[ $0 =~ -.+ ]] ; then
+		# The colour chosen will be one of ROYGBV
+		# Red is for the first subshell, orange for the second, etc.
+		bcolor="${color_lvl[($SHLVL - 2) % 6]}"
+	fi
+	printf '%s' "${bcolor}"
+}
+
+# Colour $ red if in an ssh session
+__prompt_command_symbol()
+{
+	local color=''
+	if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH2_CLIENT" ]] ; then
+		color="${red}"
+	else
+		color="${white}"
+	fi
+
+	printf '%s\\\$%s' "${color}" "${norm}"
 }
 
 __prompt_command()
 {
 	local status=$?
 
-	# If we are in a "subshell" for this host, colour the brackets
-	local bcolor=''
-	if [ $SHLVL -gt 1 ] && ! [[ $0 =~ -.+ ]] ; then
-		# The colour chosen will be one of ROYGBV
-		# Red is for the first subshell, orange for the second, etc.
-		bcolor="${colors[($SHLVL - 2) % 6]}"
-	fi
+	local bcolor="$(__prompt_command_bracket_color)"
 	local lb="${bcolor}[${norm}"
 	local rb="${bcolor}]${norm}"
 
-	# Colour $ red if in an ssh session
-	if [ -n "$SSH_CLIENT" -o -n "$SSH2_CLIENT" ] ; then
-		local ps="${red}\\\$${norm}"
-	else
-		local ps="${white}\\\$${norm}"
-	fi
 
 	local venv="$(__prompt_command_venv)"
 	local dir="${blue}${PWD}${norm}"
@@ -101,10 +149,9 @@ __prompt_command()
 	local hist='$(printf "[%6d]" \!)'
 	local jobn='$(printf "[%2d]" \j)'
 	local code="$(__prompt_command_code "$status")"
-	local user="${green}\\u${norm}"
-	local at="${green}@${norm}"
-	local host="${green}\\h${norm}"
-	local line2="${hist}${jobn}${code}${lb}${user}${at}${host}${rb}${ps}"
+	local user_at_host="${green}\\u@\\h${norm}"
+	local ps="$(__prompt_command_symbol)"
+	local line2="${hist}${jobn}${code}${lb}${user_at_host}${rb}${ps}"
 
 	PS1="\n${line1}\n${line2} "
 }
