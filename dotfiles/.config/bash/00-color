@@ -1,0 +1,19 @@
+setaf()
+{
+	tput setaf "${1}" || tput AF "${1}"
+}
+
+# Pretty colors
+export black="$(setaf 16)"
+export brown="$(setaf 94)"
+export red="$(setaf 1)"
+export orange="$(setaf 202)"
+export yellow="$(setaf 11)"
+export green="$(setaf 2)"
+export blue="$(setaf 4)"
+export violet="$(setaf 5)"
+export grey="$(setaf 8)"
+export white="$(setaf 7)"
+export gold="$(setaf 3)"
+export silver="$(setaf 249)"
+export norm="$(tput sgr0 || tput me)"

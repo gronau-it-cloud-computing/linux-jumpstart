@@ -1,29 +1,25 @@
-setaf()
-{
-	tput setaf "${1}" || tput AF "${1}"
-}
-
-# Pretty colors
-black='\['"$(setaf 16)"'\]'
-brown='\['"$(setaf 94)"'\]'
-red='\['"$(setaf 1)"'\]'
-orange='\['"$(setaf 202)"'\]'
-yellow='\['"$(setaf 11)"'\]'
-green='\['"$(setaf 2)"'\]'
-blue='\['"$(setaf 4)"'\]'
-violet='\['"$(setaf 5)"'\]'
-grey='\['"$(setaf 8)"'\]'
-white='\['"$(setaf 7)"'\]'
-gold='\['"$(setaf 3)"'\]'
-silver='\['"$(setaf 249)"'\]'
-norm='\['"$(tput sgr0 || tput me)"'\]'
-color_lvl=([0]="$red" "$orange" "$yellow" "$green" "$blue" "$violet")
+# Colors with zero-width escape sequence
+_prblack="\[$black\]"
+_prbrown="\[$brown\]"
+_prred="\[$red\]"
+_prorange="\[$orange\]"
+_pryellow="\[$yellow\]"
+_prgreen="\[$green\]"
+_prblue="\[$blue\]"
+_prviolet="\[$violet\]"
+_prgrey="\[$grey\]"
+_prwhite="\[$white\]"
+_prgold="\[$gold\]"
+_prsilver="\[$silver\]"
+_prnorm="\[$norm\]"
+color_lvl=([0]="$_prred" "$_prorange" "$_pryellow" "$_prgreen" \
+	"$_prblue" "$_prviolet")
 
 __prompt_command_venv()
 {
 	if [[ -n "${VIRTUAL_ENV}" ]] ; then
 		venv="${VIRTUAL_ENV##*/}"
-		printf '(%s) ' "${white}${venv}${norm}"
+		printf '(%s) ' "${_prwhite}${venv}${_prnorm}"
 	fi
 }
 
@@ -71,9 +67,9 @@ __prompt_command_git_color()
 		code="${line:0:2}"
 		case "${code}" in
 			\?\?)
-				color="${yellow}" ;;
+				color="${_pryellow}" ;;
 			*)
-				color="${red}" ; break ;;
+				color="${_prred}" ; break ;;
 		esac
 	done < <(git status --porcelain -unormal 2>/dev/null)
 
@@ -88,7 +84,7 @@ __prompt_command_git()
 		local branch="$(__prompt_command_git_branch "${g}")"
 		local color="$(__prompt_command_git_color)"
 
-		printf '(%s)' "${color}${branch}${norm}"
+		printf '(%s)' "${color}${branch}${_prnorm}"
 	fi
 }
 
@@ -99,12 +95,12 @@ __prompt_command_code()
 
 	if (( code > 0 )) ; then
 		if (( code > 128)) && (( code < 255 )) ; then
-			color="${yellow}"
+			color="${_pryellow}"
 		else
-			color="${red}"
+			color="${_prred}"
 		fi
 	fi
-	printf '[%s%3d%s]' "${color}" "${code}" "${norm}"
+	printf '[%s%3d%s]' "${color}" "${code}" "${_prnorm}"
 }
 
 # If we are in a "subshell" for this host, colour the brackets
@@ -124,12 +120,12 @@ __prompt_command_symbol()
 {
 	local color=''
 	if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH2_CLIENT" ]] ; then
-		color="${red}"
+		color="${_prred}"
 	else
-		color="${white}"
+		color="${_prwhite}"
 	fi
 
-	printf '%s\\\$%s' "${color}" "${norm}"
+	printf '%s\\$%s' "${color}" "${_prnorm}"
 }
 
 __prompt_command()
@@ -137,19 +133,19 @@ __prompt_command()
 	local status=$?
 
 	local bcolor="$(__prompt_command_bracket_color)"
-	local lb="${bcolor}[${norm}"
-	local rb="${bcolor}]${norm}"
+	local lb="${bcolor}[${_prnorm}"
+	local rb="${bcolor}]${_prnorm}"
 
 
 	local venv="$(__prompt_command_venv)"
-	local dir="${blue}${PWD}${norm}"
+	local dir="${_prblue}${PWD}${_prnorm}"
 	local git="$(__prompt_command_git)"
 	local line1="${venv}${dir} ${git}"
 
 	local hist='$(printf "[%6d]" \!)'
 	local jobn='$(printf "[%2d]" \j)'
 	local code="$(__prompt_command_code "$status")"
-	local user_at_host="${green}\\u@\\h${norm}"
+	local user_at_host="${_prgreen}\\u@\\h${_prnorm}"
 	local ps="$(__prompt_command_symbol)"
 	local line2="${hist}${jobn}${code}${lb}${user_at_host}${rb}${ps}"
 
@@ -159,10 +155,10 @@ __prompt_command()
 PROMPT_COMMAND=__prompt_command
 
 # Set PS4 for useful debugging
-_ps4_lb='{'
+_ps4_lb="${yellow}{${norm}"
 _ps4_source='${BASH_SOURCE}'
 _ps4_func='${FUNCNAME[0]:+:${FUNCNAME[0]}():}'
 _ps4_line='${LINENO}'
-_ps4_rb='}'
+_ps4_rb="${yellow}}${norm}"
 export PS4="+ ${_ps4_lb}${_ps4_source}:${_ps4_func}${_ps4_line}${_ps4_rb} "
 unset _ps4_lb _ps4_source _ps4_func _ps4_line _ps4_rb
