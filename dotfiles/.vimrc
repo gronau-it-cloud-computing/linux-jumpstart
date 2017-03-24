@@ -94,6 +94,51 @@ let g:rainbow_active = 1
 """ END Plugin
 
 """ Keybindings
+"" Buffer, window, and tab movement
+" Bind C-<Direction> to move windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Bind <leader>-<Direction> to move tabs
+nnoremap <leader>h gT
+nnoremap <leader>l gt
+" And <leader>-<Shift>-<Direction> to first/last tab
+nnoremap <silent> <leader>H :tabfirst<CR>
+nnoremap <silent> <leader>L :tablast<CR>
+
+" Next/Previous buffer
+nnoremap <leader>n :bn<CR>
+nnoremap <leader>p :bp<CR>
+"" END buffer/window/tab movement
+
+"" Editing keybindings
+" Delete for real
+noremap <leader>d "_d
+noremap <leader>D "_D
+
+" Make Y act like you'd expect it to
+noremap Y y$
+
+" Some shortcuts for system clipboards
+noremap <leader>p "+p
+noremap <leader>P "*p
+noremap <leader>y "+y
+noremap <leader>Y "*y
+"" END editing keybindings
+
+"" Command line keybindings
+" Set up default readline-style movement for command line
+cnoremap <C-a>	<Home>
+cnoremap <C-e>	<End>
+cnoremap <Esc>b	<S-Left>
+cnoremap <Esc>f	<S-Right>
+
+" Bind :w!! to WRITE WITH EXTREME PREJUDICE
+cnoremap w!! w !sudo tee % >/dev/null
+"" END command line keybindings
+
 " Disable arrow keys everywhere but command mode
 noremap		<LEFT>	<NOP>
 noremap		<DOWN>	<NOP>
@@ -108,54 +153,15 @@ inoremap	<UP>	<NOP>
 noremap <F2> :setlocal spelllang=en_us spell! spell?<CR>
 inoremap <F2> <C-o>:setlocal spelllang=en_us spell! spell?<CR>
 
-" Bind :w!! to WRITE WITH EXTREME PREJUDICE
-cnoremap w!! w !sudo tee % >/dev/null
-
-" Bind C-<Direction> to move windows
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-
-" Bind <leader>-<Direction> to move tabs
-noremap <leader>h gT
-noremap <leader>l gt
-" And <leader>-<Shift>-<Direction> to first/last tab
-noremap <silent> <leader>H :tabfirst<CR>
-noremap <silent> <leader>L :tablast<CR>
-
-" Next/Previous buffer
-nnoremap <leader>n :bn<CR>
-nnoremap <leader>p :bp<CR>
-
-" Make Y act like you'd expect it to
-nnoremap Y y$
-
-" Shortcuts for .vimrc stuff
-nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
-nnoremap <silent> <leader>ev :tabedit $MYVIMRC<CR>
-
-" Set up default readline keys for commandline
-cnoremap <C-a>	<Home>
-cnoremap <C-e>	<End>
-cnoremap <Esc>b	<S-Left>
-cnoremap <Esc>f	<S-Right>
-
-" Delete for real
-nnoremap <leader>d "_d
-nnoremap <leader>D "_D
-
-" Some shortcuts for system clipboards
-nnoremap <leader>p "+p
-nnoremap <leader>P "*p
-nnoremap <leader>y "+y
-nnoremap <leader>Y "*y
-
 " Detect the current buffer's filetype
 nnoremap <silent> <leader>f :filetype detect<CR>
 
 " Refresh all loaded buffers
 nnoremap <silent> <leader>gr :call refresh#RefreshBuffers()<CR>
+
+" Shortcuts for .vimrc stuff
+nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :tabedit $MYVIMRC<CR>
 """ END Keybindings
 
 """ Commands
