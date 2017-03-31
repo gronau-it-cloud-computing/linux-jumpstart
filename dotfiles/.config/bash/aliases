@@ -35,3 +35,5 @@ alias sprintf='printf -v'
 
 # Have jobs print PIDs in addition to Job#
 alias jobs='jobs -l'
+
+alias svim="sudo ${HOME}/bin/vim"
