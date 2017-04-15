@@ -1,0 +1,24 @@
+if [ -n "${TMUX}" ] ; then
+	refresh()
+	{
+		local agent="$(tmux show-environment | grep '^SSH_AGENT_PID')"
+		local askpass="$(tmux show-environment | grep '^SSH_ASKPASS')"
+		local authsock="$(tmux show-environment | grep '^SSH_AUTH_SOCK')"
+		local term="$(tmux show-environment | grep '^TERM')"
+
+		__refresh_export "$agent" "$askpass" "$authsock" "$term"
+	}
+
+	__refresh_export()
+	{
+		for var in "$@" ; do
+			[ -z "$var" ] && continue
+			export "$var"
+		done
+	}
+else
+	refresh()
+	{
+		false
+	}
+fi

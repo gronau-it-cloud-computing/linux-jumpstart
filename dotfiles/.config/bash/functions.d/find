@@ -1,0 +1,7 @@
+findd() { find -type d "$@" ; }
+findds() { findd "$@" | sort ; }
+
+findf() { find -type f "$@" ; }
+findfs() { findf "$@" | sort ; }
+
+finds() { find "$@" | sort ; }
