@@ -85,7 +85,7 @@ highlight ColorColumn cterm=NONE ctermbg=DarkGrey ctermfg=NONE
 
 """ Plugins
 call plug#begin('~/.vim/plugged')
-	Plug 'luochen1990/rainbow'
+	Plug 'sluidfoe/rainbow'
 	Plug 'sluidfoe/vim-man'
 call plug#end()
 "" Rainbow Parens
