@@ -36,4 +36,7 @@ alias sprintf='printf -v'
 # Have jobs print PIDs in addition to Job#
 alias jobs='jobs -l'
 
+alias sgvim="sudo ${HOME}/bin/gvim"
+alias sgview="sudo ${HOME}/bin/gview"
 alias svim="sudo ${HOME}/bin/vim"
+alias sview="sudo ${HOME}/bin/view"
