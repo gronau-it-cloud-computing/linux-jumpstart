@@ -13,18 +13,18 @@ pathctl()
 
 	# Determine if the action specified is valid
 	case "$action" in
-		push)	_pathctl_add push $force "$@"
-				;;
-		queue)	_pathctl_add queue $force "$@"
-				;;
-		remove) _pathctl_rem "$@"
-				;;
-		*)		_pathctl_usage && return 1
-				;;
+		push)		_pathctl_add push $force "$@"
+					;;
+		queue)		_pathctl_add queue $force "$@"
+					;;
+		rm|remove)	_pathctl_rm "$@"
+					;;
+		*)			_pathctl_usage ; return 1
+					;;
 	esac
 	shift
 
-	_pathctl_fin
+	_pathctl_end
 }
 
 # Add new dirs to PATH
@@ -53,7 +53,7 @@ _pathctl_add()
 				continue
 			# If force is on, remove the offender
 			else
-				_pathctl_rem "$dir" || return 1
+				_pathctl_rm "$dir" || return 1
 			fi
 		fi
 
@@ -70,7 +70,7 @@ _pathctl_add()
 }
 
 # Remove all instances of dir from PATH
-_pathctl_rem()
+_pathctl_rm()
 {
 	# Process $@
 	for dir ; do
@@ -106,7 +106,7 @@ _pathctl_clean_path()
 }
 
 # Steps to be taken at the end of a successful call to pathctl
-_pathctl_fin()
+_pathctl_end()
 {
 	# Clean up PATH
 	_pathctl_clean_path
