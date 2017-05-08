@@ -1,27 +1,7 @@
 # ~/.bash_aliases: used to add aliases in bash(1)
 
-# Enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ] ; then
-	[ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto -F'
-	alias dir='dir --color=auto'
-	alias vdir='vdir --color=auto'
-
-	alias grep='grep --color=auto'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
-else
-	# Show type-indicating characters following filenames
-	alias ls='ls -F'
-fi
-
 # Pass aliases through sudo
 alias sudo='sudo '
-
-# Show all files in long format with type characters and human-readable units
-alias ll='ls -alFh'
-# List all files excepting ., ..
-alias la='ls -A'
 
 # Make tree pretty
 alias tree='tree -F --charset=utf-8'
@@ -36,7 +16,8 @@ alias sprintf='printf -v'
 # Have jobs print PIDs in addition to Job#
 alias jobs='jobs -l'
 
-alias sgvim="sudo ${HOME}/bin/gvim"
-alias sgview="sudo ${HOME}/bin/gview"
-alias svim="sudo ${HOME}/bin/vim"
-alias sview="sudo ${HOME}/bin/view"
+if [ -d "${HOME}/.config/bash/aliases.d" ] ; then
+	for func in "${HOME}/.config/bash/aliases.d"/* ; do
+		[ -r "${func}" ] && source "${func}"
+	done
+fi

@@ -1,0 +1,16 @@
+if [ -x /usr/bin/dircolors ] ; then
+	if [ -r "$HOME/.dircolors" ] ; then
+        eval "$(dircolors -b "$HOME/.dircolors")"
+    else
+        eval "$(dircolors -b)"
+    fi
+	alias ls='ls --color=auto -F'
+else
+	# Show type-indicating characters following filenames
+	alias ls='ls -F'
+fi
+
+# Show all files in long format with type characters and human-readable units
+alias ll='ls -alFh'
+# List all files excepting ., ..
+alias la='ls -A'

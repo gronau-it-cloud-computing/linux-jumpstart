@@ -1,0 +1,6 @@
+alias sgview="sudo ${HOME}/bin/gview"
+alias sgvim="sudo ${HOME}/bin/gvim"
+alias sgvimdiff="sudo ${HOME}/bin/gvimdiff"
+alias sview="sudo ${HOME}/bin/view"
+alias svim="sudo ${HOME}/bin/vim"
+alias svimdiff="sudo ${HOME}/bin/vimdiff"
