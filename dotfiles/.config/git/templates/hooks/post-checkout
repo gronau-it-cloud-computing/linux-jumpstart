@@ -6,7 +6,7 @@ curr_head="${2}"
 flag="${3}"
 
 # If prev_head is all zeros, then this is a git-clone
-if [[ $prev_head =~ 0+ ]] ; then
+if [[ $prev_head =~ ^0+$ ]] ; then
     if [ -r .upstream ] ; then
         git remote add upstream "$(<.upstream)"
     fi
