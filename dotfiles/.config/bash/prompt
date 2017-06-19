@@ -108,16 +108,16 @@ __prompt_command_code()
 	printf '[%s%3d%s]' "${color}" "${code}" "${_prnorm}"
 }
 
-# If we are in a "subshell" for this host, colour the brackets
-__prompt_command_bracket_color()
+# If we are in a "subshell" for this host, colour the hostname
+__prompt_command_host_color()
 {
-	local bcolor=''
+	local hcolor="${_prwhite}"
 	if [[ $SHLVL -gt 1 ]] && ! [[ $0 =~ -.+ ]] ; then
 		# The colour chosen will be one of ROYGBV
 		# Red is for the first subshell, orange for the second, etc.
-		bcolor="${color_lvl[($SHLVL - 2) % 6]}"
+		hcolor="${color_lvl[($SHLVL - 2) % 6]}"
 	fi
-	printf '%s' "${bcolor}"
+	printf '%s' "${hcolor}"
 }
 
 # Colour $ red if in an ssh session
@@ -137,24 +137,29 @@ __prompt_command()
 {
 	local status=$?
 
-	local bcolor="$(__prompt_command_bracket_color)"
-	local lb="${bcolor}[${_prnorm}"
-	local rb="${bcolor}]${_prnorm}"
-
-
+	# Line 1
+	# Show directory information, including venv and git status
 	local venv="$(__prompt_command_venv)"
 	local dir="${_prblue}${PWD}${_prnorm}"
 	local git="$(__prompt_command_git)"
 	local line1="${venv}${dir} ${git}"
 
+	# Line 2
+	# Show the FQDN of the current host
+	local hcolor="$(__prompt_command_host_color)"
+	local line2="${hcolor}\\H${_prnorm}"
+
+	# Line 3
+	# Show history number, number of jobs, exit status, and user
 	local hist='$(printf "[%6d]" \!)'
 	local jobn='$(printf "[%2d]" \j)'
 	local code="$(__prompt_command_code "$status")"
-	local user_at_host="${_prgreen}\\u@\\h${_prnorm}"
+	local user="[${_prgreen}\\u${_prnorm}]"
 	local ps="$(__prompt_command_symbol)"
-	local line2="${hist}${jobn}${code}${lb}${user_at_host}${rb}${ps}"
+	local line3="${hist}${jobn}${code}${user}${ps} "
 
-	PS1="\n${line1}\n${line2} "
+	# Throw 'em all together and, baby, you got a stew goin'
+	PS1="\n${line1}\n${line2}\n${line3}"
 }
 
 PROMPT_COMMAND=__prompt_command
