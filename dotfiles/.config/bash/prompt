@@ -108,16 +108,16 @@ __prompt_command_code()
 	printf '[%s%3d%s]' "${color}" "${code}" "${_prnorm}"
 }
 
-# If we are in a "subshell" for this host, colour the hostname
-__prompt_command_host_color()
+# If we are in a "subshell" for this host, colour the brackets
+__prompt_command_bracket_color()
 {
-	local hcolor="${_prwhite}"
+	local bcolor=''
 	if [[ $SHLVL -gt 1 ]] && ! [[ $0 =~ -.+ ]] ; then
 		# The colour chosen will be one of ROYGBV
 		# Red is for the first subshell, orange for the second, etc.
-		hcolor="${color_lvl[($SHLVL - 2) % 6]}"
+		bcolor="${color_lvl[($SHLVL - 2) % 6]}"
 	fi
-	printf '%s' "${hcolor}"
+	printf '%s' "${bcolor}"
 }
 
 # Colour $ red if in an ssh session
@@ -137,29 +137,34 @@ __prompt_command()
 {
 	local status=$?
 
-	# Line 1
+	# Color brackets bashed on the depth of SHLVL
+	local bcolor="$(__prompt_command_bracket_color)"
+	local lb="${bcolor}[${_prnorm}"
+	local rb="${bcolor}]${_prnorm}"
+
 	# Show directory information, including venv and git status
 	local venv="$(__prompt_command_venv)"
 	local dir="${_prblue}${PWD}${_prnorm}"
 	local git="$(__prompt_command_git)"
-	local line1="${venv}${dir} ${git}"
+	local line_dir="${venv}${dir} ${git}\n"
 
-	# Line 2
-	# Show the FQDN of the current host
-	local hcolor="$(__prompt_command_host_color)"
-	local line2="${hcolor}\\H${_prnorm}"
+	local line_fqdn=''
+	local user_at_host='\u@\h'
+	if [ -n "${BASH_PROMPT_FQDN}" ] ; then
+		line_fqdn="${_prwhite}\H${_prnorm}\n"
+		user_at_host='\u'
+	fi
+	user_at_host="${_prgreen}${user_at_host}${_prnorm}"
 
-	# Line 3
 	# Show history number, number of jobs, exit status, and user
 	local hist='$(printf "[%6d]" \!)'
 	local jobn='$(printf "[%2d]" \j)'
 	local code="$(__prompt_command_code "$status")"
-	local user="[${_prgreen}\\u${_prnorm}]"
 	local ps="$(__prompt_command_symbol)"
-	local line3="${hist}${jobn}${code}${user}${ps} "
+	local line_misc="${hist}${jobn}${code}${lb}${user_at_host}${rb}${ps}"
 
 	# Throw 'em all together and, baby, you got a stew goin'
-	PS1="\n${line1}\n${line2}\n${line3}"
+	PS1="\n${line_dir}${line_fqdn}${line_misc} "
 }
 
 PROMPT_COMMAND=__prompt_command
