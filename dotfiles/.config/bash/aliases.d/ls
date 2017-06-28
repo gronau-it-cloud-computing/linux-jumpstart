@@ -12,5 +12,8 @@ fi
 
 # Show all files in long format with type characters and human-readable units
 alias ll='ls -alFh'
+# List non-dotfiles long-ly
+alias lll='ls -lFh'
+
 # List all files excepting ., ..
 alias la='ls -A'
