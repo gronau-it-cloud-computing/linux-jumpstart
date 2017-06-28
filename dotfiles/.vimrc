@@ -68,8 +68,9 @@ set stl+=%-35.35f\ 										" Filename (with relative path, or as typed)
 set stl+=%-7.7([%{&ff}]%)								" File format
 set stl+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
 set stl+=%6.6{FileSize()}								" File size
-set stl+=%4.4(%4.4m%)									" Modified flag
+set stl+=%5.5(%5.5m%)									" Modified flag
 set stl+=%4.4(%4.4r%)									" Readonly flag
+set stl+=%-7.7(%{(&eol?\\"\":\"[noeol]\")}%)			" No EOL flag
 set stl+=%-7.7(%{(&bomb?\"[BOM]\":\"\")}%)				" Byte-order mark flag
 set stl+=%=												" Left/Right division point
 set stl+=%-8.8(0x%04B%)									" Show value of byte under cursor in hex
