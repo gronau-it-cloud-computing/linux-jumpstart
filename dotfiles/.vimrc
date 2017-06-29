@@ -64,7 +64,7 @@ set ssop+=winsize										" Size of each window
 " Status Line
 set laststatus=2										" Always show status line
 set statusline=%4.4([%02.2n]%)\ 						" Show the buffer number
-set stl+=%-35.35f\ 										" Filename (with relative path, or as typed)
+set stl+=%-30.30(%f\ %)									" Filename (with relative path, or as typed)
 set stl+=%-7.7([%{&ff}]%)								" File format
 set stl+=%-15.15([%{''.(&fenc!=''?&fenc:&enc).''}]%)	" Encoding
 set stl+=%6.6{FileSize()}								" File size
