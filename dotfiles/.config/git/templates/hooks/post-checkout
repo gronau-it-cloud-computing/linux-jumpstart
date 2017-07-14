@@ -1,13 +1,27 @@
 #!/bin/bash
 
-# Parameters as documented in githooks(5)
-prev_head="${1}"
-curr_head="${2}"
-flag="${3}"
+main()
+{
+	# Parameters as documented in githooks(5)
+	local prev_head="${1}"
+	local curr_head="${2}"
+	local flag="${3}"
 
-# If prev_head is all zeros, then this is a git-clone
-if [[ $prev_head =~ ^0+$ ]] ; then
-    if [ -r .upstream ] ; then
-        git remote add upstream "$(<.upstream)"
-    fi
-fi
+	# If prev_head is all zeros, then this is a git-clone
+	if [[ $prev_head =~ ^0+$ ]] ; then
+		set_user_by_origin
+	fi
+}
+
+set_user_by_origin()
+{
+	local origin="$(git remote get-url origin)"
+	case "${origin}" in
+		*github.com/sluidfoe/*)
+			git config user.name 'sluidfoe'
+			git config user.email 'sluidfoe@gmail.com'
+			;;
+	esac
+}
+
+main "$@"
