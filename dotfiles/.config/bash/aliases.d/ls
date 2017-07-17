@@ -1,12 +1,8 @@
-if [ -x /usr/bin/dircolors ] ; then
-	if [ -r "$HOME/.dircolors" ] ; then
-        eval "$(dircolors -b "$HOME/.dircolors")"
-    else
-        eval "$(dircolors -b)"
-    fi
-	alias ls='ls --color=auto -F'
+# Turn automagic coloring on is LS_COLORS is set
+# Always show file-type character after filename
+if [ -n "${LS_COLORS}" ] ; then
+	alias ls='ls -F --color=auto'
 else
-	# Show type-indicating characters following filenames
 	alias ls='ls -F'
 fi
 

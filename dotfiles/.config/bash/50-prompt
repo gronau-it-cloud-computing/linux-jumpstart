@@ -137,6 +137,13 @@ __prompt_command()
 {
 	local status=$?
 
+	# Disable xtrace, since __prompt_command generates a lot of noise
+	local xtrace=1
+	if _check_xtrace ; then
+		xtrace=0
+		set +x
+	fi
+
 	# Color brackets bashed on the depth of SHLVL
 	local bcolor="$(__prompt_command_bracket_color)"
 	local lb="${bcolor}[${_prnorm}"
@@ -165,6 +172,11 @@ __prompt_command()
 
 	# Throw 'em all together and, baby, you got a stew goin'
 	PS1="\n${line_dir}${line_fqdn}${line_misc} "
+
+	# Re-enable xtrace if it was set
+	if [ $xtrace -eq 0 ] ; then
+		set -x
+	fi
 }
 
 PROMPT_COMMAND=__prompt_command

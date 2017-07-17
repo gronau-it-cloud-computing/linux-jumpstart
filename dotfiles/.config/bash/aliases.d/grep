@@ -1,11 +1,5 @@
-if [ -x /usr/bin/dircolors ] ; then
-	if [ -r "$HOME/.dircolors" ] ; then
-        eval "$(dircolors -b "$HOME/.dircolors")"
-    else
-        eval "$(dircolors -b)"
-    fi
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+if [ -n "${LS_COLORS}" ] ; then
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi

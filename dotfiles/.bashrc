@@ -47,6 +47,8 @@ export SUDO_EDITOR="${EDITOR}"
 
 if [ -d "${HOME}/.config/bash" ] ; then
 	for conf in "${HOME}/.config/bash"/* ; do
-		[ -f "${conf}" ] && source "${conf}"
+		if [ -f "${conf}" ] ; then
+            source "${conf}"
+        fi
 	done
 fi

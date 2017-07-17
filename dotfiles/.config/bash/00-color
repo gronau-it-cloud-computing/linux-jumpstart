@@ -17,3 +17,11 @@ export white="$(setaf 7)"
 export gold="$(setaf 3)"
 export silver="$(setaf 249)"
 export norm="$(tput sgr0 || tput me)"
+
+if [ -x /usr/bin/dircolors ] ; then
+	if [ -r "$HOME/.dircolors" ] ; then
+		eval "$(dircolors -b "$HOME/.dircolors")"
+	else
+		eval "$(dircolors -b)"
+	fi
+fi
