@@ -1,0 +1,9 @@
+_check_xtrace()
+{
+	case "$-" in
+		*x*)
+			return 0
+			;;
+	esac
+	return 1
+}
