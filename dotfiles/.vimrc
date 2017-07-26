@@ -123,6 +123,8 @@ noremap <leader>D "_D
 noremap Y y$
 
 """ Some shortcuts for system clipboards
+noremap <leader>d "+d
+noremap <leader>D "*d
 noremap <leader>p "+p
 noremap <leader>P "*p
 noremap <leader>y "+y
