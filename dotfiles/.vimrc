@@ -115,10 +115,6 @@ nnoremap <leader>p :bp<CR>
 "" END buffer/window/tab movement
 
 "" Editing keybindings
-""" Delete for real
-noremap <leader>d "_d
-noremap <leader>D "_D
-
 """ Make Y act like you'd expect it to
 noremap Y y$
 
