@@ -1,0 +1,4 @@
+progs=( poke sync-all )
+if type _known_hosts >/dev/null 2>&1 ; then
+	complete -F _known_hosts "${progs[@]}"
+fi
