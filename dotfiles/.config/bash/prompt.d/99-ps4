@@ -1,0 +1,8 @@
+# Set PS4 for useful debugging
+_ps4_lb="${yellow}{${norm}"
+_ps4_source='${BASH_SOURCE}'
+_ps4_func='${FUNCNAME[0]:+:${FUNCNAME[0]}():}'
+_ps4_line='${LINENO}'
+_ps4_rb="${yellow}}${norm}"
+export PS4="+ ${_ps4_lb}${_ps4_source}:${_ps4_func}${_ps4_line}${_ps4_rb} "
+unset _ps4_lb _ps4_source _ps4_func _ps4_line _ps4_rb

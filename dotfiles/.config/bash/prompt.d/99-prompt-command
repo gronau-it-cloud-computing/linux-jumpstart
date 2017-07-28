@@ -1,0 +1,48 @@
+__prompt_command()
+{
+	local status=$?
+
+	# Disable xtrace, since __prompt_command generates a lot of noise
+	local xtrace=1
+	if _check_xtrace ; then
+		xtrace=0
+		set +x
+	fi
+
+	# Color brackets bashed on the depth of SHLVL
+	local bcolor="$(__prompt_command_bracket_color)"
+	local lb="${bcolor}[${_prnorm}"
+	local rb="${bcolor}]${_prnorm}"
+
+	# Show directory information, including chroot, venv, and git status
+    local chroot="$(__prompt_command_chroot)"
+	local venv="$(__prompt_command_venv)"
+	local dir="${_prblue}${PWD}${_prnorm}"
+	local git="$(__prompt_command_git)"
+	local line_dir="${chroot}${venv}${dir} ${git}\n"
+
+	local line_fqdn=''
+	local user_at_host='\u@\h'
+	if [ -n "${BASH_PS1_FQDN}" ] ; then
+		line_fqdn="${_prwhite}\H${_prnorm}\n"
+		user_at_host='\u'
+	fi
+	user_at_host="${_prgreen}${user_at_host}${_prnorm}"
+
+	# Show history number, number of jobs, exit status, and user
+	local hist='$(printf "[%6d]" \!)'
+	local jobn='$(printf "[%2d]" \j)'
+	local code="$(__prompt_command_code "$status")"
+	local ps="$(__prompt_command_symbol)"
+	local line_misc="${hist}${jobn}${code}${lb}${user_at_host}${rb}${ps}"
+
+	# Throw 'em all together and, baby, you got a stew goin'
+	PS1="\n${line_dir}${line_fqdn}${line_misc} "
+
+	# Re-enable xtrace if it was set
+	if [ $xtrace -eq 0 ] ; then
+		set -x
+	fi
+}
+
+PROMPT_COMMAND=__prompt_command

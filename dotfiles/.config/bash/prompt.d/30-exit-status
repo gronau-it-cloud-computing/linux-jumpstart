@@ -1,0 +1,14 @@
+__prompt_command_code()
+{
+	local code="${1}"
+	local color=''
+
+	if (( code > 0 )) ; then
+		if (( code > 128)) && (( code < 255 )) ; then
+			color="${_pryellow}"
+		else
+			color="${_prred}"
+		fi
+	fi
+	printf '[%s%3d%s]' "${color}" "${code}" "${_prnorm}"
+}

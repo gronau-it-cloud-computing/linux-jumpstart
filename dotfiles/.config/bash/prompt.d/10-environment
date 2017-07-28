@@ -1,0 +1,43 @@
+# If we are in a "subshell" for this host, colour the brackets
+__prompt_command_bracket_color()
+{
+	local bcolor=''
+	if [[ $SHLVL -gt 1 ]] && ! [[ $0 =~ -.+ ]] ; then
+		# The colour chosen will be one of ROYGBV
+		# Red is for the first subshell, orange for the second, etc.
+		bcolor="${color_lvl[($SHLVL - 2) % 6]}"
+	fi
+	printf '%s' "${bcolor}"
+}
+
+# Colour $ red if in an ssh session
+__prompt_command_symbol()
+{
+	local color=''
+	if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH2_CLIENT" ]] ; then
+		color="${_prred}"
+	else
+		color="${_prwhite}"
+	fi
+
+	printf '%s\\$%s' "${color}" "${_prnorm}"
+}
+
+# Add <chroot> before the directory if in a chroot
+__prompt_command_chroot()
+{
+    init_mount="$(awk '$5=="/" {print $1}' </proc/1/mountinfo)"
+    self_mount="$(awk '$5=="/" {print $1}' </proc/$$/mountinfo)"
+    if [ "${init_mount}" != "${self_mount}" ] ; then
+		printf '<%s> ' "${_prwhite}chroot${_prnorm}"
+    fi
+}
+
+# Print the venv name before the directory
+__prompt_command_venv()
+{
+	if [[ -n "${VIRTUAL_ENV}" ]] ; then
+		venv="${VIRTUAL_ENV##*/}"
+		printf '(%s) ' "${_prwhite}${venv}${_prnorm}"
+	fi
+}

@@ -1,0 +1,16 @@
+# Colors with zero-width escape sequence
+_prblack="\[$black\]"
+_prbrown="\[$brown\]"
+_prred="\[$red\]"
+_prorange="\[$orange\]"
+_pryellow="\[$yellow\]"
+_prgreen="\[$green\]"
+_prblue="\[$blue\]"
+_prviolet="\[$violet\]"
+_prgrey="\[$grey\]"
+_prwhite="\[$white\]"
+_prgold="\[$gold\]"
+_prsilver="\[$silver\]"
+_prnorm="\[$norm\]"
+_pr_color_lvl=([0]="$_prred" "$_prorange" "$_pryellow" "$_prgreen" \
+	"$_prblue" "$_prviolet")
